@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'Norwester';
+  src: url('/fonts/norwester.otf') format('opentype');
+}
+
+:root {
+  --bg-color: #1B3720;
+  --main-color: #1B3720;
+  --secondary-color: #EFE8D2;
+
+  --font-family: 'Norwester'
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--secondary-color);
+  font-family: var(--font-family);
+}
+
+h1 {
+  font-size: 64px;
+  line-height: 1;
+}

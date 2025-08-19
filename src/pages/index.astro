@@ -1,5 +1,5 @@
 ---
-
+import '../styles/global.css';
 ---
 
 <html lang="en">
@@ -11,6 +11,24 @@
 		<title>Astro</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<main>
+			<img src="/logo.png" alt="Logo Tigullio Verticale" />
+			<h1>Tigullio <br /> Verticale</h1>
+		</main>
 	</body>
 </html>
+
+<style>
+	main {
+		height: 100vh;
+		width: 100vw;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	h1 {
+		text-align: center;
+	}
+</style>
