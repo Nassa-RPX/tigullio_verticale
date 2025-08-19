@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+
+import Logo from '../components/Logo.astro'
+import Tigullio from '../components/Tigullio.astro'
 ---
 
 <html lang="en">
@@ -12,7 +15,12 @@ import '../styles/global.css';
 	</head>
 	<body>
 		<main>
-			<img src="/logo.png" alt="Logo Tigullio Verticale" />
+			<section class="tigullio-section">
+				<Tigullio />
+			</section>
+			<section class="logo-section">
+				<Logo />
+			</section>
 			<h1>Tigullio <br /> Verticale</h1>
 		</main>
 	</body>
@@ -22,13 +30,44 @@ import '../styles/global.css';
 	main {
 		height: 100vh;
 		width: 100vw;
+		position: relative;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
 	}
 
+	.tigullio-section {
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+	}
+
+	.logo-section {
+		width: 250px;
+		margin-bottom: 0.5rem;
+	}
+
 	h1 {
 		text-align: center;
+	}
+
+	@media screen and (min-width: 1200px) {
+		main {
+			flex-direction: row;
+		}
+
+		h1 {
+			text-align: left;
+		}
+
+		.tigullio-section {
+			display: none;
+		}
+
+		.logo-section {
+			margin-right: 1.5rem;
+		}
 	}
 </style>
