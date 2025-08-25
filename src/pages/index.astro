@@ -5,26 +5,30 @@ import Logo from '../components/Logo.astro'
 import Tigullio from '../components/Tigullio.astro'
 ---
 
+
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Tigullio Verticale</title>
 	</head>
 	<body>
 		<main>
 			<section class="tigullio-section">
 				<Tigullio />
 			</section>
-			<section class="logo-section">
+			<section class="load-animation logo-section">
 				<Logo />
 			</section>
-			<h1>Tigullio <br /> Verticale</h1>
+
+			<h1 class="load-animation">Tigullio <br /> Verticale</h1>
 		</main>
 	</body>
 </html>
+
+<script src='../scripts/home/animations.ts' />
 
 <style>
 	main {
