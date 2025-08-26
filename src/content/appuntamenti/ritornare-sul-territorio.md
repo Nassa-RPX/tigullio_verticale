@@ -1,0 +1,1 @@
+Escursione ad anello sulle alture di Lavagna, alla riscoperta del passato rapporto fra mondo rurale, pietra e acqua, e dedicata alla lettura di tutti questi elementi per comprendere il territorio nella sua interezza e verticalità, fra passato e opportunità future.

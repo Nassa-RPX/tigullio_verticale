@@ -1,0 +1,44 @@
+---
+import { getEntry } from 'astro:content';
+import { render } from 'astro:content';
+interface Props { slug: string; }
+
+const { slug } = Astro.props;
+const event = await getEntry('event', slug);
+
+if(!event) { throw new Error(`Entry not found for slug: ${slug}`); }
+
+const { Content } = await render(event);
+---
+
+<div class='event-content'>
+  <Content />
+</div>
+
+<style is:global>
+.event-content {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.event-content p {
+  font-size: 0.9rem;
+}
+
+.event-content ul {
+  width: 90%;
+  margin: 0 auto;
+}
+
+
+
+</style>
+
+
+
+
+
+

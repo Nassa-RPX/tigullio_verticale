@@ -1,0 +1,74 @@
+---
+import { db, Program, eq, Date } from 'astro:db';
+
+import Layout from '@/layouts/Layout.astro';
+import EventContent from '@/components/Event.astro'
+import { getEntry } from 'astro:content';
+import { render } from 'astro:content';
+import { Event } from 'astro:db';
+
+export async function getStaticPaths() {
+  const entities = await db.select().from(Program).innerJoin(Date, eq(Program.year, Date.programYear));
+  return entities.map(entity => ({
+    params: { year: entity.Date.programYear.toString(), slug: entity.Date.slug },
+    props: { program: entity.Program, date: entity.Date }
+  }));
+}
+
+const { date } = Astro.props;
+
+const events = await db.select().from(Event).where(eq(Event.dateId, date.id));
+const collection = await getEntry('date', date.slug);
+if(!collection) { throw new Error(`Entry not found for slug: ${date.slug}`); }
+
+const { Content } = await render(collection);
+
+---
+
+
+<Layout title={`${date.title} | Tigullio Verticale`}>
+  <section class="page-container">
+    <div class="program-title-container">
+      <a href={`/programma/${date.programYear}`}>Indietro</a>
+      <h1 id="program-year">{date.title}</h1>
+    </div>
+    <div class="description">
+      <Content />
+    </div>
+
+
+    {events.map(event => (
+    <div class="card inverted">
+      <span class="card-info"> {date.date.toLocaleDateString('it-It')} |  {date.location} </span>
+      <h2> {event.title} </h2>
+      <EventContent slug={event.slug} />
+    </div>
+    ))}
+  </section>
+</Layout>
+
+<style scoped>
+.program-title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .8rem;
+}
+
+.program-title-container a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-weight: bold;
+  transition: transform .3s ease-in-out;
+}
+
+.program-title-container a:hover {
+  transform: scale(0.95);
+}
+
+
+.description {
+  text-align: center;
+
+}
+</style>

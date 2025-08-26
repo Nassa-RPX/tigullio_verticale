@@ -1,0 +1,21 @@
+---
+import { render } from 'astro:content';
+import { getEntry } from 'astro:content';
+
+interface Props {
+  description: string | null;
+  slug: string;
+}
+
+const { description, slug } = Astro.props;
+
+const date = await getEntry('date', slug);
+
+if(!date) { throw new Error(`No description found for slug: ${slug}`); }
+const { Content} = await render(date);
+---
+
+<div class="date-description">
+  {description ? <p class="description">{description}</p> : <Content />} 
+</div>
+

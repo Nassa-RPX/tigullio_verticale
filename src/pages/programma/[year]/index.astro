@@ -1,0 +1,28 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Dates from '@/components/Dates.astro';
+
+import { db, Program } from 'astro:db';
+
+export async function getStaticPaths() {
+  const programs = await db.select().from(Program);
+  return programs.map(program => ({
+    params: { year: program.year.toString()},
+    props: { program }
+  }));
+
+}
+
+const { program } = Astro.props;
+---
+
+
+<Layout title={`Programma ${program.year} | Tigullio Verticale`}>
+  <section class="page-container">
+    <h1 id="program-year">Programma {program.year}</h1>
+    <Dates programYear={program.year}/>
+  </section>
+</Layout>
+
+<script src='../../../scripts/program/program-animations.ts' />
+
