@@ -47,11 +47,67 @@ export default async function seed() {
 		{
 			slug: 'civilta-pietra-acqua',
 			title: "La civilta' della pietra e dell’acqua",
-			location: 'Lavagna(GE)',
-			date: new Date('2025-09-13'),
+			location: 'Lavagna (GE)',
+			dateTime: '13/09/2025',
 			requiredPrenotation: true,
 			dateId: 1,
+			hasDescription: true,
 		},
+
+		{
+			slug: 'sporcarsi-le-mani',
+			title: 'Sporcarsi le mani',
+			location: "Rapallo (GE)",
+			dateTime: '20/09/2025',
+			requiredPrenotation: true,
+			dateId: 2,
+			hasDescription: true,
+		},
+		{
+			slug: 'riconoscere-piante',
+			title: 'Riconoscere le piante e il loro utilizzo',
+			location: "Santa Margherita Ligure (GE)",
+			dateTime: '12:00',
+			requiredPrenotation: true,
+			dateId: 3,
+		},
+
+		{
+			slug: 'fare-apicoltura',
+			title: 'Fare Apicoltura: dall\'arnia alla tavola',
+			location: "Santa Margherita Ligure (GE)",
+			dateTime: "14:00",
+			requiredPrenotation: true,
+			dateId: 3,
+		},
+
+		{
+			slug: 'pesci-foresti',
+			title: 'Pesci Foresti: mare sempre piu\' caldo, nuove specie di pesci e nuove opportunita\'',
+			location: "Santa Margherita Ligure (GE)",
+			dateTime: '15:00',
+			requiredPrenotation: false,
+			dateId: 3,
+		},
+
+		{
+			slug: 'abbandono-animali-selvatici',
+			title: 'Abbandono del territorio e ritorno degli animali selvatici',
+			location: "Santa Margherita Ligure (GE)",
+			dateTime: '16:00',
+			requiredPrenotation: false,
+			dateId: 3,
+		},
+
+		{
+			slug: 'altra-santa',
+			title: 'L\'altra santa',
+			location: "Santa Margherita Ligure (GE)",
+			dateTime: '28/09/2025',
+			requiredPrenotation: true,
+			hasDescription: true,
+			dateId: 4,
+		}
 	])
 
 }

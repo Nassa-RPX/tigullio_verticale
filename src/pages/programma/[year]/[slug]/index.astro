@@ -18,6 +18,7 @@ export async function getStaticPaths() {
 const { date } = Astro.props;
 
 const events = await db.select().from(Event).where(eq(Event.dateId, date.id));
+const hasMultipleEvents = events.length > 1;
 const collection = await getEntry('date', date.slug);
 if(!collection) { throw new Error(`Entry not found for slug: ${date.slug}`); }
 
@@ -30,18 +31,26 @@ const { Content } = await render(collection);
     <div class="page-title-container gsapped-in">
       <GoBack id="event-go-back" href={`/programma/${date.programYear}`} />
       <h1 id="program-year" class="page-title">{date.title}</h1>
+
+      { hasMultipleEvents && ( 
+        <div class="date-multiple-info"> 
+          <span>{date.date.toLocaleDateString('it-IT')}</span>  
+          <span>{date.location}</span>
+        </div>)
+      }
     </div>
+
     <div class="date-description gsapped-in">
       <Content />
     </div>
 
 
     {events.map(event => (
-    <div class="card inverted gsapped-in">
-      <span class="card-info important"> {date.date.toLocaleDateString('it-It')} |  {date.location} </span>
-      <h2 class='card-title'> {event.title} </h2>
-      <EventContent slug={event.slug} />
-    </div>
+      <div class="card inverted gsapped-in">
+        <span class="card-info important"> {event.dateTime} {!hasMultipleEvents && `| ${date.location}`} </span>
+        <h2 class:list={['card-title', { multiple: hasMultipleEvents }]}> {event.title} </h2>
+       { event.hasDescription && <EventContent slug={event.slug} /> }
+      </div>
     ))}
   </section>
 </Layout>
@@ -51,5 +60,15 @@ const { Content } = await render(collection);
 <style scoped>
 .date-description {
   text-align: center;
+}
+
+.date-multiple-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+
 }
 </style>

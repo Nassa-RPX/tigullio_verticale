@@ -1,7 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro'	
-import Logo from '../components/Logo.astro'
+import Layout from '../layouts/Layout.astro';	
+import Logo from '../components/Logo.astro';
+import BookmarkIcon from '@/assets/icons/bookmark.svg';
+
 ---
+
 <Layout title="Home">
 	<div class="home-container">
 		<section class="load-animation logo-section gsapped-in">
@@ -11,7 +14,10 @@ import Logo from '../components/Logo.astro'
 		<h1 class="load-animation gsapped-in">Tigullio <br /> Verticale</h1>
 
 		<div class="load-animation gsapped-in home-btns">
-			<button id="program-btn" class="main-btn" data-year={2025}>Programma 2025</button>
+			<button id="program-btn" class="main-btn" data-year={2025}>
+				<BookmarkIcon height="24" />
+				<span>Programma 2025</span>
+			</button>
 		</div>
 	</div>
 </Layout>

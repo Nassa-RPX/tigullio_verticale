@@ -33,5 +33,9 @@
   & &-title {
     text-transform: uppercase;
     font-size: 1.5rem;
+
+    &.multiple {
+      font-size: 1.3rem;
+    }
   }
 }

@@ -26,8 +26,9 @@ export const Event = defineTable({
     slug: column.text({ unique: true }),
     title: column.text(),
     location: column.text(),
-    date: column.date(),
+    dateTime: column.text(),
     timeInfo: column.text({ optional: true }),
+    hasDescription: column.boolean({ optional: true, default: false }),
     requiredPrenotation: column.boolean({ default: false }),
     dateId: column.number({ references: () => Date.columns.id, optional: true }),
   }
