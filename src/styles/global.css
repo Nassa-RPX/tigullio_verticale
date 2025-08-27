@@ -39,3 +39,7 @@ h5,
 h6 {
   font-family: var(--font-family-title);
 }
+
+.gsapped-in {
+  opacity: 0;
+}

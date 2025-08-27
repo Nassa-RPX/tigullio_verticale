@@ -1,0 +1,17 @@
+---
+import LeftArrow from "@/assets/icons/left-arrow.svg";
+
+interface Props {
+  href: string;
+  id?: string;
+  text?: string;
+}
+
+const { href, id, text = "Indietro" } = Astro.props;
+---
+
+<a id={id} href={href}>
+  <LeftArrow height="14" /> 
+  {text}
+</a>
+

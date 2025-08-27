@@ -2,32 +2,57 @@
 import Layout from '../layouts/Layout.astro'	
 import Logo from '../components/Logo.astro'
 ---
-<Layout title="Tigullio Verticale">
-	<section class="load-animation logo-section">
-		<Logo />
-	</section>
+<Layout title="Home">
+	<div class="home-container">
+		<section class="load-animation logo-section gsapped-in">
+			<Logo />
+		</section>
 
-	<h1 class="load-animation">Tigullio <br /> Verticale</h1>
+		<h1 class="load-animation gsapped-in">Tigullio <br /> Verticale</h1>
+
+		<div class="load-animation gsapped-in home-btns">
+			<button id="program-btn" class="main-btn" data-year={2025}>Programma 2025</button>
+		</div>
+	</div>
 </Layout>
 
 <script src='../scripts/home/animations.ts' />
 
 <style>
+	.home-container {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
 	.logo-section {
-		width: 250px;
-		margin-bottom: 0.5rem;
+		width: 150px;
+	}
+
+	.home-btns {
+		margin-top: 1.5rem;
 	}
 
 	h1 {
 		text-align: center;
 	}
 
+
 	@media screen and (min-width: 1200px) {
+		.home-container {
+			flex-direction: row;
+		}
+
 		h1 {
 			text-align: left;
 		}
 
 		.logo-section {
+			wihth: 250px;
 			margin-right: 1.5rem;
 		}
 	}

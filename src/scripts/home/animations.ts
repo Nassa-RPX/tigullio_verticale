@@ -1,16 +1,8 @@
 import gsap from 'gsap';
 
+export const homeTimeline = gsap.timeline();
 
-gsap.fromTo('#tv-tigullio', {
-  scale: 1.3,
-}, {
-  scale: 1,
-  ease: 'power2.inOut',
-})
-
-const timeline = gsap.timeline();
-
-timeline.fromTo('.load-animation', {
+homeTimeline.fromTo('.load-animation', {
   opacity: 0,
   y: 50
 }, {
@@ -21,3 +13,13 @@ timeline.fromTo('.load-animation', {
   ease: 'power2.inOut'
 })
 
+const programBtn = document.querySelector('#program-btn');
+
+if (programBtn) {
+  programBtn.addEventListener('click', () => {
+    homeTimeline.reverse().then(() => {
+      const year = programBtn.getAttribute('data-year');
+      window.location.href = `/programma/${year ?? '2025'}`;
+    });
+  });
+}

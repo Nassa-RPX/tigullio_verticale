@@ -3,6 +3,7 @@ import Layout from '@/layouts/Layout.astro';
 import Dates from '@/components/Dates.astro';
 
 import { db, Program } from 'astro:db';
+import GoBack from '@/components/GoBack.astro';
 
 export async function getStaticPaths() {
   const programs = await db.select().from(Program);
@@ -17,12 +18,17 @@ const { program } = Astro.props;
 ---
 
 
-<Layout title={`Programma ${program.year} | Tigullio Verticale`}>
-  <section class="page-container">
-    <h1 id="program-year">Programma {program.year}</h1>
+<Layout title={`Programma ${program.year}`}>
+  <div class="top-space" />
+  <section class="page">
+    <div class="page-title-container gsapped-in">
+      <GoBack id="program-go-back" href={"/"} />
+      <h1 id="program-year" class='page-title'>Programma {program.year}</h1>
+    </div>
+
     <Dates programYear={program.year}/>
   </section>
 </Layout>
 
-<script src='../../../scripts/program/program-animations.ts' />
+<script src='@/scripts/program.script.ts' />
 
