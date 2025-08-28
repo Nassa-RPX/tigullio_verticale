@@ -1,0 +1,45 @@
+---
+import GoBack from "@/components/GoBack.astro";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="Newsletter">
+	<div id="idle-page" class="page full">
+		<div class='page-title-container'>
+			<GoBack href="/" id="newsletter-go-bac"  />
+			<h1 class="page-title">Newsletter</h1>
+		</div>
+		<span class="newsletter-description">Iscritivi alla nostra newsletter per rimanere aggiornato sulle ultime novità!</span>
+
+		<form id="newsletter-form" class="form inverted">
+			<div class="input-control">
+				<label for="email">Email</label>
+				<input type="email" id="email" name="email" required />
+			</div>
+
+			<div class="input-control">
+				<label for="name">Nome</label>
+				<input type="text" id="name" name="name" required />
+			</div>
+			<button type="submit">
+				<span id="btn-idle">Iscriviti</span>
+				<span id="btn-loading" class="hidden">...</span>
+			</button>
+		</form>
+	</div>
+
+	<div id="success-page" class="page full hidden success">
+		<h1 class="page-title">Newsletter</h1>
+		<span class="text-center">Grazie per esserti iscritto alla nostra newsletter!</span>
+	</div>
+</Layout>
+
+<script src="@/scripts/newsletter.script.ts" />
+
+<style scoped>
+
+#newsletter-form {
+	margin-top: 1rem;
+}
+
+</style>

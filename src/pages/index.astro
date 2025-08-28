@@ -14,10 +14,14 @@ import BookmarkIcon from '@/assets/icons/bookmark.svg';
 		<h1 class="load-animation gsapped-in">Tigullio <br /> Verticale</h1>
 
 		<div class="load-animation gsapped-in home-btns">
-			<button id="program-btn" class="main-btn" data-year={2025}>
+			<button id="program-btn" class="btn main" data-year={2025}>
 				<BookmarkIcon height="24" />
 				<span>Programma 2025</span>
 			</button>
+
+			<a href="/newsletter" class="btn outline small">
+				Iscriviti alla Newsletter
+			</a>
 		</div>
 	</div>
 </Layout>
@@ -41,6 +45,10 @@ import BookmarkIcon from '@/assets/icons/bookmark.svg';
 
 	.home-btns {
 		margin-top: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		align-items: center;
 	}
 
 	h1 {

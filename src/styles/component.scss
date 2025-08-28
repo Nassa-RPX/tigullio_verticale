@@ -1,19 +1,4 @@
 @use 'components/card';
 @use 'components/page';
-
-
-.main-btn {
-  padding: 0.7rem 1.5rem;
-  background-color: var(--secondary-color);
-  color: var(--main-color);
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+@use 'components/form';
+@use 'components/btn';
