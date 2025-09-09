@@ -47,7 +47,7 @@ const { Content } = await render(collection);
 
     {events.map(event => (
       <div class="card inverted gsapped-in">
-        <span class="card-info important"> {event.dateTime} {!hasMultipleEvents && `| ${date.location}`} </span>
+        <span class="card-info important"> {event.info} {!hasMultipleEvents && `| ${date.location}`} </span>
         <h2 class:list={['card-title', { multiple: hasMultipleEvents }]}> {event.title} </h2>
        { event.hasDescription && <EventContent slug={event.slug} /> }
       </div>
