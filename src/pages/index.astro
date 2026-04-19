@@ -1,66 +1,86 @@
 ---
-import Layout from '../layouts/Layout.astro';	
-import Logo from '../components/Logo.astro';
-import BookmarkIcon from '@/assets/icons/bookmark.svg';
-
+import Layout from "../layouts/Layout.astro";
+import Logo from "../components/Logo.astro";
+import BookmarkIcon from "@/assets/icons/bookmark.svg";
 ---
 
 <Layout title="Home">
-	<div class="home-container">
-		<section class="load-animation logo-section gsapped-in">
-			<Logo />
-		</section>
+  <div class="home-container">
+    <div class="load-animation gsapped-in home-links">
+      <a href="/chi-siamo">Chi Siamo</a>
+      <a href="/programma">Archivio Programmi</a>
+    </div>
 
-		<h1 class="load-animation gsapped-in">Tigullio <br /> Verticale</h1>
+    <section class="load-animation logo-section gsapped-in">
+      <Logo />
+    </section>
 
-		<div class="load-animation gsapped-in home-btns">
-			<button id="program-btn" class="btn main" data-year={2025}>
-				<BookmarkIcon height="24" />
-				<span>Programma 2025</span>
-			</button>
+    <h1 class="load-animation gsapped-in">Tigullio <br /> Verticale</h1>
 
-			<a href="/newsletter" class="btn outline small">
-				Iscriviti alla Newsletter
-			</a>
-		</div>
-	</div>
+    <div class="load-animation gsapped-in home-btns">
+      <button id="program-btn" class="btn main" data-year={2026}>
+        <BookmarkIcon height="24" />
+        <span>Programma 2026</span>
+      </button>
+
+      <a href="/newsletter" class="btn outline small"> Iscriviti alla Newsletter </a>
+    </div>
+  </div>
 </Layout>
 
-<script src='../scripts/home/animations.ts' />
+<script src="../scripts/home/animations.ts"></script>
 
 <style>
-	.home-container {
-		height: 100%;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 0.5rem;
-	}
+  .home-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-	.logo-section {
-		width: 150px;
-	}
+  .logo-section {
+    width: 150px;
+  }
 
-	.home-btns {
-		margin-top: 1.5rem;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		align-items: center;
-	}
+  .home-btns {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
 
-	h1 {
-		text-align: center;
-	}
+  h1 {
+    text-align: center;
+  }
 
+  .home-links {
+    display: none;
+  }
 
-	@media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1200px) {
+    .home-links {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
 
-		.logo-section {
-			wihth: 250px;
-			margin-right: 1.5rem;
-		}
-	}
+    .home-links a::after {
+      content: "/";
+      margin-left: 0.5rem;
+    }
+
+    .home-links a:last-child::after {
+      content: "";
+    }
+
+    .logo-section {
+      wihth: 250px;
+      margin-right: 1.5rem;
+    }
+  }
 </style>

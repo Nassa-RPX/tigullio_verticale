@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 @font-face {
-  font-family: 'Norwester';
-  src: url('/fonts/norwester.otf') format('opentype');
+  font-family: "Norwester";
+  src: url("/fonts/norwester.otf") format("opentype");
 }
 
 :root {
-  --bg-color: #1B3720;
-  --main-color: #1B3720;
-  --secondary-color: #EFE8D2;
+  --bg-color: #1b3720;
+  --main-color: #1b3720;
+  --secondary-color: #efe8d2;
 
-  --font-family-title: 'Norwester';
-  --font-family-body: 'Noto Sans', sans-serif;
+  --font-family-title: "Norwester";
+  --font-family-body: "Noto Sans", sans-serif;
 }
 
 * {
@@ -42,4 +42,9 @@ h6 {
 
 .gsapped-in {
   opacity: 0;
+}
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
 }
