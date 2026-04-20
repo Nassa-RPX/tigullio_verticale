@@ -1,5 +1,39 @@
 ---
+import GoBack from "@/components/GoBack.astro";
 import Layout from "../../layouts/Layout.astro";
+import { db } from "astro:db";
+import { Program } from "astro:db";
+
+const programs = await db.select().from(Program).orderBy(Program.year);
+console.log("Programs:", programs);
 ---
 
-<Layout title="Archivio Programmi"> Archivio Programmi </Layout>
+<Layout title="Archivio Programmi">
+  <div class="top-space"></div>
+  <section class="page">
+    <div class="page-title-container">
+      <GoBack id="program-go-back" href={"/"} />
+      <h1 id="program-year" class="page-title">Archivio Programmi</h1>
+    </div>
+    <div class="programs-list">
+      {
+        programs.map((program) => (
+          <div class="card">
+            <span class="card-info important" />
+            <a class="card-title" href={`/programma/${program.year}`}>
+              {program.title}{" "}
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<style scoped>
+  .programs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>
