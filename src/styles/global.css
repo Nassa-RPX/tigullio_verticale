@@ -1,19 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
-
-@font-face {
-  font-family: "Norwester";
-  src: url("/fonts/norwester.otf") format("opentype");
-}
-
-:root {
-  --bg-color: #1b3720;
-  --main-color: #1b3720;
-  --secondary-color: #efe8d2;
-
-  --font-family-title: "Norwester";
-  --font-family-body: "Noto Sans", sans-serif;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -21,8 +5,8 @@
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--secondary-color);
+  background-color: var(--bg);
+  color: var(--fg);
   font-family: var(--font-family-body);
 }
 
@@ -45,6 +29,6 @@ h6 {
 }
 
 a {
-  color: var(--secondary-color);
+  color: var(--fg);
   text-decoration: none;
 }

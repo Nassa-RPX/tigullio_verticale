@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { tigullioTimeline } from "../layouts.scripts";
 
 export const homeTimeline = gsap.timeline();
 
@@ -23,8 +24,10 @@ window.addEventListener("load", () => {
   if (programBtn) {
     programBtn.addEventListener("click", () => {
       homeTimeline.reverse().then(() => {
-        const year = programBtn.getAttribute("data-year");
-        window.location.href = `/programma/${year ?? "2025"}`;
+        tigullioTimeline.reverse().then(() => {
+          const year = programBtn.getAttribute("data-year");
+          window.location.href = `/programma/${year ?? "2025"}`;
+        });
       });
     });
   }

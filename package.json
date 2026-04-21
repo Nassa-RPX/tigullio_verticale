@@ -13,6 +13,7 @@
   "dependencies": {
     "@astrojs/db": "^0.17.1",
     "astro": "^5.12.3",
+    "astro-theme-toggle": "^0.8.0",
     "gsap": "^3.13.0",
     "sass": "^1.91.0"
   }

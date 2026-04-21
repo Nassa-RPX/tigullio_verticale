@@ -1,0 +1,115 @@
+---
+import { Toggle } from "astro-theme-toggle";
+---
+
+<button class="drawer-icon" aria-label="Apri menu" aria-expanded="false" aria-controls="drawer-panel">
+  <span class="drawer-icon__bar"></span>
+  <span class="drawer-icon__bar"></span>
+  <span class="drawer-icon__bar"></span>
+</button>
+
+<div class="drawer-overlay" id="drawer-overlay" aria-hidden="true">
+  <nav class="drawer-panel" id="drawer-panel" aria-hidden="true">
+    <Toggle style="width: 1rem; height: 1rem;" />
+
+    <ul class="drawer-panel__nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/programma">Programma</a></li>
+      <li><a href="/chi-siamo">Chi siamo</a></li>
+      <li><a href="/newsletter">Newsletter</a></li>
+    </ul>
+  </nav>
+</div>
+
+<script>
+  import "@/components/Drawer/drawer.script";
+</script>
+
+<style scoped>
+  /* --- Toggle button --- */
+  .drawer-icon {
+    display: inline-block;
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.35rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: 1200px) {
+    .drawer-icon {
+      display: none;
+    }
+  }
+
+  .drawer-icon__bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--bg);
+    border-radius: 2px;
+    transform-origin: center;
+    transition: background-color 0.2s;
+  }
+
+  /* --- Overlay --- */
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    background-color: var(--fg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* --- Drawer panel --- */
+  .drawer-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1080;
+    height: 100dvh;
+    width: 100vw;
+    background-color: var(--bg);
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    transform: translateX(100%);
+    will-change: transform;
+  }
+
+  /* --- Nav links --- */
+  .drawer-panel__nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .drawer-panel__nav a {
+    font-family: var(--font-family-title);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    color: var(--fg);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateX(1.5rem);
+    display: inline-block;
+  }
+
+  .drawer-panel__nav a:hover {
+    color: var(--fg-dark);
+  }
+</style>
