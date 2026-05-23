@@ -1,12 +1,12 @@
 ---
-import GoBack from "@/components/GoBack.astro";
+import GoBack from "@/components/GoBack/GoBack.astro";
 import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="Newsletter">
   <div id="idle-page" class="page full">
     <div class="page-title-container">
-      <GoBack href="/" id="newsletter-go-bac" />
+      <GoBack href="/" id="newsletter-go-back" />
       <h1 class="page-title">Newsletter</h1>
     </div>
     <span class="newsletter-description"
@@ -41,5 +41,10 @@ import Layout from "@/layouts/Layout.astro";
 <style scoped>
   #newsletter-form {
     margin-top: 1rem;
+  }
+  @media screen and (min-width: 1200px) {
+    #newsletter-form {
+      width: 50%;
+    }
   }
 </style>

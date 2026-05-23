@@ -10,8 +10,11 @@ interface Props {
 const { href, id, text = "Indietro" } = Astro.props;
 ---
 
-<a id={id} href={href}>
-  <LeftArrow height="14" /> 
+<a id={id} href={href} class="go-back">
+  <LeftArrow height="14" />
   {text}
 </a>
 
+<script>
+  import "./go-back.script";
+</script>

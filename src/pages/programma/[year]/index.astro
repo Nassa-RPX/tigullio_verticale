@@ -1,34 +1,31 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import Dates from '@/components/Dates.astro';
+import Layout from "@/layouts/Layout.astro";
+import Dates from "@/components/Dates.astro";
 
-import { db, Program } from 'astro:db';
-import GoBack from '@/components/GoBack.astro';
+import { db, Program } from "astro:db";
+import GoBack from "@/components/GoBack/GoBack.astro";
 
 export async function getStaticPaths() {
   const programs = await db.select().from(Program);
-  return programs.map(program => ({
-    params: { year: program.year.toString()},
-    props: { program }
+  return programs.map((program) => ({
+    params: { year: program.year.toString() },
+    props: { program },
   }));
-
 }
 
 const { program } = Astro.props;
 ---
 
-
 <Layout title={`Programma ${program.year}`}>
-  <div class="top-space" />
+  <div class="top-space"></div>
   <section class="page">
     <div class="page-title-container gsapped-in">
       <GoBack id="program-go-back" href={"/"} />
-      <h1 id="program-year" class='page-title'>Programma {program.year}</h1>
+      <h1 id="program-year" class="page-title">Programma {program.year}</h1>
     </div>
 
-    <Dates programYear={program.year}/>
+    <Dates programYear={program.year} />
   </section>
 </Layout>
 
-<script src='@/scripts/program.script.ts' />
-
+<script src="@/scripts/program.script.ts"></script>
