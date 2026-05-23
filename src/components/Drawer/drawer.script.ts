@@ -1,4 +1,6 @@
+import { homeTimeline } from "@/scripts/home/animations";
 import { tigullioTimeline } from "@/scripts/layouts.scripts";
+import { programTimeline } from "@/scripts/program.script";
 import gsap from "gsap";
 
 const btn = document.querySelector<HTMLButtonElement>(".drawer-icon")!;
@@ -8,11 +10,17 @@ const navLinks = panel.querySelectorAll<HTMLAnchorElement>(".drawer-panel__nav a
 const bars = btn.querySelectorAll<HTMLElement>(".drawer-icon__bar");
 
 const style = getComputedStyle(document.documentElement);
-const colorClosed = style.getPropertyValue("--bg").trim();
 const colorOpen = style.getPropertyValue("--fg").trim();
 
 let isOpen = false;
 let isClosing = false;
+
+const map: Record<string, gsap.core.Timeline | undefined> = {
+  "/": homeTimeline,
+  "/programma": programTimeline,
+  "/newsletter": undefined,
+  "chi-siamo": undefined,
+};
 
 const openTl = gsap
   .timeline({ paused: true })
@@ -86,8 +94,6 @@ btn.addEventListener("click", () => {
   isOpen ? closeDrawer() : openDrawer();
 });
 
-// overlay.addEventListener("click", closeDrawer);
-
 navLinks.forEach((link) => {
   link.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -97,7 +103,9 @@ navLinks.forEach((link) => {
     const nextUrl = new URL(href, window.location.href);
 
     await closeDrawer();
-    await tigullioTimeline.reverse();
+    const currentTimeline = map[window.location.pathname];
+    if (currentTimeline) await currentTimeline.reverse();
+    if (isMobile()) await tigullioTimeline.reverse();
 
     if (nextUrl.href !== window.location.href) {
       window.location.href = nextUrl.href;
