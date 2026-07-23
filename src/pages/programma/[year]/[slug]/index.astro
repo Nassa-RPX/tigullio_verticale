@@ -1,42 +1,60 @@
 ---
-import { db, Program, Event, eq, Date } from "astro:db";
-import { getEntry, render } from "astro:content";
+import { PortableText } from "astro-portabletext";
 
 import Layout from "@/layouts/Layout.astro";
 import EventContent from "@/components/Event.astro";
 import GoBack from "@/components/GoBack/GoBack.astro";
+import { sanityClient, type DateDoc } from "@/lib/sanity";
 
 export async function getStaticPaths() {
-  const entities = await db.select().from(Program).innerJoin(Date, eq(Program.year, Date.programYear));
-  return entities.map((entity) => ({
-    params: { year: entity.Date.programYear.toString(), slug: entity.Date.slug },
-    props: { program: entity.Program, date: entity.Date },
+  const dates: Array<DateDoc> = await sanityClient.fetch(`
+    *[_type == "appuntamento"] {
+      "year": programYear->year,
+      "slug": slug.current,
+      "program": programYear->{ year, title },
+      date,
+      title,
+      location,
+      timeInfo,
+      body
+    }
+  `);
+  return dates.map((date: any) => ({
+    params: { year: date.year.toString(), slug: date.slug },
+    props: { date },
   }));
 }
 
 const { date } = Astro.props;
 
-const events = await db.select().from(Event).where(eq(Event.dateId, date.id));
+const events = await sanityClient.fetch(
+  `
+  *[_type == "event" && date->slug.current == $dateSlug] | order(_createdAt asc) {
+    "slug": slug.current,
+    title,
+    location,
+    info,
+    hasDescription,
+    requiredPrenotation,
+    body
+  }
+`,
+  { dateSlug: date.slug },
+);
 const hasMultipleEvents = events.length > 1;
-const collection = await getEntry("date", date.slug);
-if (!collection) {
-  throw new Error(`Entry not found for slug: ${date.slug}`);
-}
-
-const { Content } = await render(collection);
 ---
 
 <Layout title={`${date.title}`}>
   <div class="top-space"></div>
   <section class="page">
     <div class="page-title-container gsapped-in">
-      <GoBack id="event-go-back" href={`/programma/${date.programYear}`} />
+      <GoBack id="event-go-back" href={`/programma/${date.year}`} />
       <h1 id="program-year" class="page-title">{date.title}</h1>
 
       {
         hasMultipleEvents && (
           <div class="date-multiple-info">
-            <span>{date.date.toLocaleDateString("it-IT")}</span>
+            <span>{new Date(date.date).toLocaleDateString("it-IT")}</span>
             <span>{date.location}</span>
           </div>
         )
@@ -44,18 +62,18 @@ const { Content } = await render(collection);
     </div>
 
     <div class="date-description gsapped-in">
-      <Content />
+      <PortableText value={date.body} />
     </div>
 
     {
-      events.map((event) => (
+      events.map((event: any) => (
         <div class="card inverted gsapped-in">
           <span class="card-info important">
             {" "}
             {event.info} {!hasMultipleEvents && `| ${date.location}`}{" "}
           </span>
           <h2 class:list={["card-title", { multiple: hasMultipleEvents }]}> {event.title} </h2>
-          {event.hasDescription && <EventContent slug={event.slug} />}
+          {event.hasDescription && <EventContent body={event.body} />}
         </div>
       ))
     }

@@ -1,18 +1,13 @@
 ---
-import { getEntry } from 'astro:content';
-import { render } from 'astro:content';
-interface Props { slug: string; }
+import { PortableText } from 'astro-portabletext';
 
-const { slug } = Astro.props;
-const event = await getEntry('event', slug);
+interface Props { body: unknown[]; }
 
-if(!event) { throw new Error(`Entry not found for slug: ${slug}`); }
-
-const { Content } = await render(event);
+const { body } = Astro.props;
 ---
 
 <div class='event-content'>
-  <Content />
+  <PortableText value={body} />
 </div>
 
 <style is:global>
@@ -37,9 +32,4 @@ const { Content } = await render(event);
   color: inherit;
 }
 </style>
-
-
-
-
-
 

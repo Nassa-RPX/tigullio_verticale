@@ -2,12 +2,12 @@
 import Layout from "@/layouts/Layout.astro";
 import Dates from "@/components/Dates.astro";
 
-import { db, Program } from "astro:db";
+import { sanityClient, type Program } from "@/lib/sanity";
 import GoBack from "@/components/GoBack/GoBack.astro";
 
 export async function getStaticPaths() {
-  const programs = await db.select().from(Program);
-  return programs.map((program) => ({
+  const programs: Array<Program> = await sanityClient.fetch(`*[_type == "program"] { year, title }`);
+  return programs.map((program: any) => ({
     params: { year: program.year.toString() },
     props: { program },
   }));

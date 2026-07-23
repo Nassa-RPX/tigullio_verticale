@@ -1,15 +1,23 @@
 ---
-import { eq, db, Date as DbDate } from 'astro:db';
+import { sanityClient } from '@/lib/sanity';
 
 interface Props { programYear: number; }
 
-const { programYear} = Astro.props;
-const dates = await db.select().from(DbDate).where(eq(DbDate.programYear, programYear))
+const { programYear } = Astro.props;
+const dates = await sanityClient.fetch(`
+  *[_type == "appuntamento" && programYear->year == $programYear] | order(date asc) {
+    "slug": slug.current,
+    title,
+    location,
+    date,
+    timeInfo
+  }
+`, { programYear });
 
 ---
 
 <section class="dates-list">
-  {dates.map((date) => (
+  {dates.map((date: any) => (
     <div class="card interactive gsapped-in" data-slug={date.slug} data-year={programYear} >
 
     <span class="card-info important">

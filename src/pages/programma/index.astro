@@ -1,11 +1,11 @@
 ---
 import GoBack from "@/components/GoBack/GoBack.astro";
 import Layout from "../../layouts/Layout.astro";
-import { db } from "astro:db";
-import { Program } from "astro:db";
+import { sanityClient, type Program } from "@/lib/sanity";
 
-const programs = await db.select().from(Program).orderBy(Program.year);
-console.log("Programs:", programs);
+const programs: Array<Program> = await sanityClient.fetch(`
+  *[_type == "program"] | order(year asc) { year, title }
+`);
 ---
 
 <Layout title="Archivio Programmi">
