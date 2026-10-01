@@ -12,9 +12,10 @@ media.add('(prefers-reduced-motion: no-preference)', () => {
   if (!hero) return;
   if (!heroAnimated) {
     heroAnimated = true;
-    gsap.from(hero.querySelectorAll('.page-hero__inner > *'), {
-      opacity: 0, y: 24, duration: .95, stagger: .12, ease: 'power3.out', clearProps: 'opacity,transform',
-    });
+    gsap.fromTo(hero.querySelectorAll('.page-hero__inner > *'),
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: .95, stagger: .12, ease: 'power3.out' },
+    );
   }
   gsap.to(hero.querySelector('.contour'), {
     yPercent: 14, ease: 'none',

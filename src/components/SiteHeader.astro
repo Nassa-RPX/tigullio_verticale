@@ -2,7 +2,7 @@
 import Logo from "./Logo.astro";
 ---
 
-<header class="site-header" data-header>
+<header class="site-header" data-header data-home={Astro.url.pathname === "/" ? "" : undefined}>
   <div class="container site-header__inner">
     <a class="wordmark site-header__brand" href="/" aria-label="Tigullio Verticale — home">
       <span class="site-header__logo" aria-hidden="true"><Logo /></span>
@@ -57,6 +57,9 @@ import Logo from "./Logo.astro";
   .site-header__brand {
     padding: .35rem;
     flex: none;
+    transition: opacity .3s var(--ease), transform .3s var(--ease);
+  }
+  .site-header[data-home]:not(.is-scrolled) .site-header__brand {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;

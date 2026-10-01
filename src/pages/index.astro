@@ -22,15 +22,6 @@ const next = splitDates(dates).upcoming[0];
       <div class="hero__logo" aria-hidden="true">
         <Logo />
       </div>
-      <script is:inline>
-        (() => {
-          const logo = document.currentScript?.previousElementSibling;
-          if (logo && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            logo.classList.add('is-logo-preparing');
-            setTimeout(() => logo.classList.remove('is-logo-preparing'), 2000);
-          }
-        })();
-      </script>
       <h1 class="hero__wordmark">Tigullio<br />Verticale</h1>
       <div class="hero__cta">
         <a class="btn btn--solid btn--lg" href={season ? `/programma/${season}` : "/programma"} data-current-program>
@@ -183,10 +174,6 @@ const next = splitDates(dates).upcoming[0];
 </Layout>
 <script src="@/scripts/home/motion.ts"></script>
 <style>
-  .hero[data-home-motion] .hero__inner > * {
-    animation: none;
-  }
-  .hero__logo.is-logo-preparing { opacity: 0; }
   .hero__logo :global(svg) { overflow: visible; }
   .hero__scroll {
     padding: 0.5rem;

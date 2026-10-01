@@ -40,7 +40,6 @@ reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) scro
 const media = gsap.matchMedia();
 const reveal = createScrollReveal();
 let heroAnimated = false;
-if (reducedMotion.matches) hero?.querySelector('.hero__logo')?.classList.remove('is-logo-preparing');
 media.add('(prefers-reduced-motion: no-preference)', () => {
   if (!hero) return;
   const distance = matchMedia('(min-width: 861px)').matches ? 32 : 20;
@@ -49,10 +48,11 @@ media.add('(prefers-reduced-motion: no-preference)', () => {
     heroAnimated = true;
     const logo = hero.querySelector<HTMLElement>('.hero__logo');
     if (logo) resetLogo = animateHeroLogo(logo);
-    gsap.from(hero.querySelectorAll('.hero__wordmark, .hero__cta'), {
-      opacity: 0, y: distance, delay: .35, duration: .85, stagger: .14, ease: 'power3.out', clearProps: 'opacity,transform',
-    });
-    if (scrollLink) gsap.from(scrollLink, { opacity: 0, delay: .7, duration: .6, clearProps: 'opacity' });
+    gsap.fromTo(hero.querySelectorAll('.hero__wordmark, .hero__cta'),
+      { opacity: 0, y: distance },
+      { opacity: 1, y: 0, delay: .35, duration: .85, stagger: .14, ease: 'power3.out' },
+    );
+    if (scrollLink) gsap.fromTo(scrollLink, { opacity: 0 }, { opacity: 1, delay: .7, duration: .6 });
   }
   gsap.to(hero.querySelector('.contour'), {
     yPercent: 18, ease: 'none',

@@ -1366,44 +1366,41 @@ body.drawer-open {
   color: var(--muted);
 }
 
-/* --- Entrance motion (hero only — content below the fold stays visible) ---- */
-@keyframes rise-in {
-  from {
+/* Startup entrance states are present before the first paint; GSAP animates them to rest. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion-ready] .hero[data-home-motion] .hero__inner > *,
+  html[data-motion-ready] .page-hero[data-about-motion] .page-hero__inner > *,
+  html[data-motion-ready] .page-hero[data-program-motion] .page-hero__inner > *,
+  html[data-motion-ready] .page-hero[data-newsletter-motion] .page-hero__inner > * {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(24px);
   }
-  to {
-    opacity: 1;
+
+  html[data-motion-ready] [data-program-years] .section-head__text > *,
+  html[data-motion-ready] [data-program-years] .tabs,
+  html[data-motion-ready] [data-newsletter-benefits] > .kicker,
+  html[data-motion-ready] [data-newsletter-benefits] > h2,
+  html[data-motion-ready] [data-newsletter-benefits] .feature {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  html[data-motion-ready] .hero[data-home-motion] .hero__logo {
     transform: none;
   }
+
+  html[data-motion-ready] .hero[data-home-motion] .hero__scroll {
+    opacity: 0;
+  }
 }
-.hero__inner > *,
-.page-hero__inner > * {
-  animation: rise-in 0.7s var(--ease) both;
+
+/* Keep page exits deliberately short and low-motion. */
+main {
+  transition: opacity 160ms var(--ease), transform 160ms var(--ease);
 }
-.hero__inner > *:nth-child(1),
-.page-hero__inner > *:nth-child(1) {
-  animation-delay: 0.04s;
-}
-.hero__inner > *:nth-child(2),
-.page-hero__inner > *:nth-child(2) {
-  animation-delay: 0.12s;
-}
-.hero__inner > *:nth-child(3),
-.page-hero__inner > *:nth-child(3) {
-  animation-delay: 0.2s;
-}
-.hero__inner > *:nth-child(4),
-.page-hero__inner > *:nth-child(4) {
-  animation-delay: 0.28s;
-}
-.hero__inner > *:nth-child(5),
-.page-hero__inner > *:nth-child(5) {
-  animation-delay: 0.36s;
-}
-.hero__inner > *:nth-child(6),
-.page-hero__inner > *:nth-child(6) {
-  animation-delay: 0.44s;
+html.is-leaving main {
+  opacity: 0.86;
+  transform: translateY(-4px);
 }
 
 @media (prefers-reduced-motion: reduce) {

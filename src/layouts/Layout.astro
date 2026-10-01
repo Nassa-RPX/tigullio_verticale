@@ -21,6 +21,9 @@ const { title, description = 'Tigullio Verticale vuole riscoprire la relazione f
     <script is:inline>
       (() => { let saved; try { saved = localStorage.getItem('tv-theme'); } catch {} const theme = saved === 'light' || saved === 'dark' ? saved : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; document.documentElement.dataset.theme = theme; document.documentElement.style.colorScheme = theme; })();
     </script>
+    <script is:inline>
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.motionReady = '';
+    </script>
   </head>
   <body><a class="skip-link" href="#main">Vai al contenuto</a><BrandSprite /><SiteHeader /><main id="main" tabindex="-1"><slot /></main><SiteFooter /></body>
 </html>

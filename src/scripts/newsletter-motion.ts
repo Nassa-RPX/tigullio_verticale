@@ -24,9 +24,10 @@ media.add('(prefers-reduced-motion: no-preference)', () => {
   if (!hero) return;
   if (!heroAnimated) {
     heroAnimated = true;
-    gsap.from(hero.querySelectorAll('.page-hero__inner > *'), {
-      opacity: 0, y: 24, duration: .95, stagger: .12, ease: 'power3.out', clearProps: 'opacity,transform',
-    });
+    gsap.fromTo(hero.querySelectorAll('.page-hero__inner > *'),
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: .95, stagger: .12, ease: 'power3.out' },
+    );
   }
   gsap.to(hero.querySelector('.contour'), {
     yPercent: 14, ease: 'none',
@@ -36,11 +37,11 @@ media.add('(prefers-reduced-motion: no-preference)', () => {
   if (benefits && !benefitsAnimated) {
     benefitsAnimated = true;
     const titles = Array.from(benefits.children).filter(node => node.matches('.kicker, h2'));
-    gsap.from([...titles, ...benefits.querySelectorAll('.feature')], {
-      opacity: 0, y: 24, duration: .85, stagger: .14, ease: 'power3.out',
-      immediateRender: true, clearProps: 'opacity,transform',
-      scrollTrigger: { trigger: benefits, start: 'top 88%', once: true },
-    });
+    gsap.fromTo([...titles, ...benefits.querySelectorAll('.feature')],
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: .85, stagger: .14, ease: 'power3.out',
+        scrollTrigger: { trigger: benefits, start: 'top 88%', once: true } },
+    );
   }
   if (formPanel && !formPanel.contains(document.activeElement)) formTween = reveal(formPanel, formPanel);
   const program = document.querySelector('[data-newsletter-program]');

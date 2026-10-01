@@ -18,6 +18,26 @@ document.querySelectorAll('[data-theme-toggle]').forEach(button => button.addEve
   applyTheme(saved);
 }));
 system.addEventListener('change', () => { if (saved !== 'light' && saved !== 'dark') applyTheme(system.matches ? 'light' : 'dark'); });
+
+// Let ordinary same-site links leave the current page with a short, subtle fade.
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let leaving = false;
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || !(event.target instanceof Element)) return;
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const link = event.target.closest<HTMLAnchorElement>('a[href]');
+  if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+  const destination = new URL(link.href, location.href);
+  if (destination.origin !== location.origin) return;
+  if (destination.pathname === location.pathname && destination.search === location.search) return;
+  if (reducedMotion.matches || leaving) return;
+
+  event.preventDefault();
+  leaving = true;
+  document.documentElement.classList.add('is-leaving');
+  window.setTimeout(() => location.assign(destination.href), 180);
+});
+
 const header = document.querySelector('[data-header]');
 const onScroll = () => header?.classList.toggle('is-scrolled', scrollY > 24);
 onScroll();

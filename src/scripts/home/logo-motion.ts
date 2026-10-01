@@ -15,10 +15,9 @@ export function animateHeroLogo(container: HTMLElement): () => void {
       for (const attr of Array.from(path.attributes)) if (!attributes.has(attr.name)) path.removeAttribute(attr.name);
       for (const [name, value] of attributes) path.setAttribute(name, value);
     }
-    container.classList.remove('is-logo-preparing');
   };
 
-  if (!waves.length) { restore(); return () => {}; }
+  if (!waves.length) { restore(); gsap.set(container, { opacity: 1 }); return () => {}; }
 
   // Match points before playback, while hidden, to keep the first frame flat
   // and avoid any geometric jump when the morph starts.
@@ -32,7 +31,8 @@ export function animateHeroLogo(container: HTMLElement): () => void {
   });
   gsap.set(waves, { opacity: 0 });
   gsap.set(mark, { opacity: 0, y: -145, rotation: -16, scale: .65, svgOrigin: '461.75 65.35' });
-  container.classList.remove('is-logo-preparing');
+  // The container starts hidden in CSS; reveal it only after its SVG parts are prepared.
+  gsap.set(container, { opacity: 1 });
 
   timeline.to(waves, { opacity: 1, duration: .18, stagger: .035 }, 0);
   bands.forEach(({ path, end }, index) => {

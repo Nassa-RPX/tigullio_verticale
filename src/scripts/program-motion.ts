@@ -61,9 +61,10 @@ media.add('(prefers-reduced-motion: no-preference)', context => {
   if (!hero) return;
   if (!heroAnimated) {
     heroAnimated = true;
-    gsap.from(hero.querySelectorAll('.page-hero__inner > *'), {
-      opacity: 0, y: 24, duration: .95, stagger: .12, ease: 'power3.out', clearProps: 'opacity,transform',
-    });
+    gsap.fromTo(hero.querySelectorAll('.page-hero__inner > *'),
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: .95, stagger: .12, ease: 'power3.out' },
+    );
   }
   gsap.to(hero.querySelector('.contour'), {
     yPercent: 14, ease: 'none',
@@ -71,10 +72,11 @@ media.add('(prefers-reduced-motion: no-preference)', context => {
   });
   if (years && !yearsAnimated) {
     yearsAnimated = true;
-    yearsTween = gsap.from(years.querySelectorAll('.section-head__text > *, .tabs'), {
-      opacity: 0, y: 24, duration: .8, stagger: .12, ease: 'power3.out', clearProps: 'opacity,transform',
-      scrollTrigger: { trigger: years, start: 'top 90%', once: true },
-    });
+    yearsTween = gsap.fromTo(years.querySelectorAll('.section-head__text > *, .tabs'),
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: .8, stagger: .12, ease: 'power3.out',
+        scrollTrigger: { trigger: years, start: 'top 90%', once: true } },
+    );
     if (years.contains(document.activeElement)) finish(yearsTween);
   }
   const sync = context.add('syncProgramList', prepareList);
