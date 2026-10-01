@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import AppointmentList from "@/components/AppointmentList.astro";
 import FeaturedAppointment from "@/components/FeaturedAppointment.astro";
 import NewsletterForm from "@/components/NewsletterForm.astro";
+import Logo from "@/components/Logo.astro";
 import { getContent } from "@/lib/sanity";
 import { activeSeason, splitDates } from "@/lib/calendar";
 const { programs, dates } = await getContent();
@@ -19,8 +20,17 @@ const next = splitDates(dates).upcoming[0];
     </div>
     <div class="hero__inner">
       <div class="hero__logo" aria-hidden="true">
-        <svg viewBox="0 0 919 610"><use href="#tv-logo"></use></svg>
+        <Logo />
       </div>
+      <script is:inline>
+        (() => {
+          const logo = document.currentScript?.previousElementSibling;
+          if (logo && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            logo.classList.add('is-logo-preparing');
+            setTimeout(() => logo.classList.remove('is-logo-preparing'), 2000);
+          }
+        })();
+      </script>
       <h1 class="hero__wordmark">Tigullio<br />Verticale</h1>
       <div class="hero__cta">
         <a class="btn btn--solid btn--lg" href={season ? `/programma/${season}` : "/programma"} data-current-program>
@@ -176,6 +186,8 @@ const next = splitDates(dates).upcoming[0];
   .hero[data-home-motion] .hero__inner > * {
     animation: none;
   }
+  .hero__logo.is-logo-preparing { opacity: 0; }
+  .hero__logo :global(svg) { overflow: visible; }
   .hero__scroll {
     padding: 0.5rem;
     border-radius: 0.25rem;

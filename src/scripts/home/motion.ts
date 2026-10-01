@@ -2,6 +2,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { createScrollReveal } from '../scroll-reveal';
+import { animateHeroLogo } from './logo-motion';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -39,13 +40,17 @@ reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) scro
 const media = gsap.matchMedia();
 const reveal = createScrollReveal();
 let heroAnimated = false;
+if (reducedMotion.matches) hero?.querySelector('.hero__logo')?.classList.remove('is-logo-preparing');
 media.add('(prefers-reduced-motion: no-preference)', () => {
   if (!hero) return;
   const distance = matchMedia('(min-width: 861px)').matches ? 32 : 20;
+  let resetLogo: (() => void) | undefined;
   if (!heroAnimated) {
     heroAnimated = true;
-    gsap.from(hero.querySelectorAll('.hero__inner > *'), {
-      opacity: 0, y: distance, duration: 1, stagger: .14, ease: 'power3.out', clearProps: 'opacity,transform',
+    const logo = hero.querySelector<HTMLElement>('.hero__logo');
+    if (logo) resetLogo = animateHeroLogo(logo);
+    gsap.from(hero.querySelectorAll('.hero__wordmark, .hero__cta'), {
+      opacity: 0, y: distance, delay: .35, duration: .85, stagger: .14, ease: 'power3.out', clearProps: 'opacity,transform',
     });
     if (scrollLink) gsap.from(scrollLink, { opacity: 0, delay: .7, duration: .6, clearProps: 'opacity' });
   }
@@ -63,6 +68,7 @@ media.add('(prefers-reduced-motion: no-preference)', () => {
     section.querySelectorAll('.next-card:not([hidden]), [data-feature-empty]:not([hidden]), [data-home-season]:not([hidden]) .event-card, .feature, .band__inner > div')
       .forEach(node => reveal(node, node));
   });
+  return () => resetLogo?.();
 });
 
 // Fonts can move the section boundaries after the initial layout.
