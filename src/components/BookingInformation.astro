@@ -1,0 +1,58 @@
+---
+import type { Booking } from "@/lib/content";
+interface Props {
+  booking?: Booking;
+  title?: string;
+  id?: string;
+  heading?: "h2" | "h3" | "h4";
+}
+const { booking, title = "Prenotazione", id, heading: Heading = "h2" } = Astro.props;
+const contact = booking?.contact;
+const hasContactDetails = contact?.name || contact?.phone || contact?.email;
+---
+
+{
+  booking?.required && (
+    <section class="event-facts event-booking" id={id} tabindex={id ? -1 : undefined}>
+      <Heading class="event-side-title">{title}</Heading>
+      <p class="event-booking__notice">La prenotazione è obbligatoria.</p>
+      {(booking.maxParticipants || hasContactDetails) && (
+        <dl class="event-facts__list">
+          {booking.maxParticipants && (
+            <div>
+              <dt>Numero massimo di partecipanti</dt>
+              <dd>{booking.maxParticipants} persone</dd>
+            </div>
+          )}
+          {hasContactDetails && contact && (
+            <div>
+              <dt>Contatto per prenotare</dt>
+              <dd>
+                {contact.name && <p>{contact.name}</p>}
+                {contact.phone && (
+                  <p>
+                    <a class="event-contact" href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}>
+                      {contact.phone}
+                    </a>
+                  </p>
+                )}
+                {contact.email && (
+                  <p>
+                    <a class="event-contact" href={`mailto:${contact.email}`}>
+                      {contact.email}
+                    </a>
+                  </p>
+                )}
+              </dd>
+            </div>
+          )}
+        </dl>
+      )}
+      {contact?.url && /^https?:\/\//.test(contact.url) && (
+        <a class="btn btn--solid event-booking__cta" href={contact.url}>
+          Prenota
+        </a>
+      )}
+    </section>
+  )
+}

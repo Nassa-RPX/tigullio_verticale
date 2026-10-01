@@ -1,0 +1,27 @@
+---
+import { PortableText } from "astro-portabletext";
+import type { TypedObject } from "astro-portabletext/types";
+interface Props {
+  body?: TypedObject[];
+  title: string;
+}
+const { body = [], title } = Astro.props;
+const first = body[0];
+const normalize = (value: string) => value.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase("it-IT");
+// Some historical descriptions repeat their title as the first heading.
+// Keep the CMS content intact and retain headings containing annotated links.
+const repeatedTitle =
+  first?._type === "block" &&
+  /^h[1-6]$/.test(first.style) &&
+  !first.markDefs?.length &&
+  normalize((first.children || []).map((span: { text?: string }) => span.text || "").join("")) === normalize(title);
+const blocks = repeatedTitle ? body.slice(1) : body;
+---
+
+{
+  blocks.length > 0 && (
+    <div class="prose">
+      <PortableText value={blocks} />
+    </div>
+  )
+}

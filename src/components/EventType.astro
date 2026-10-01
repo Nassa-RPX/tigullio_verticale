@@ -1,0 +1,16 @@
+---
+import type { EventKind } from "@/lib/content";
+interface Props {
+  kind?: EventKind;
+}
+const { kind } = Astro.props;
+const labels = { walk: "Scarpinata", meeting: "Incontro", series: "Festival" };
+---
+
+{
+  kind && (
+    <span class="event-type" data-event-kind={kind}>
+      {labels[kind]}
+    </span>
+  )
+}

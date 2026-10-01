@@ -1,0 +1,42 @@
+---
+import type { DateDoc } from "@/lib/content";
+import EventDateRange from "./EventDateRange.astro";
+interface Props {
+  event: DateDoc;
+}
+const { event } = Astro.props;
+const count = event.kind === "series" ? event.series?.meetings.length || 0 : 0;
+const bookingLabel =
+  event.kind === "series"
+    ? event.series?.bookingMode === "series" && event.series.booking?.required
+      ? "Prenotazione della serie obbligatoria"
+      : event.series?.bookingMode === "sessions" && event.series.meetings.some((slot) => slot.booking?.required)
+        ? event.series.meetings.every((slot) => slot.booking?.required)
+          ? "Prenotazione dei singoli incontri obbligatoria"
+          : "Prenotazione per alcuni incontri"
+        : undefined
+    : event.booking?.required
+      ? "Prenotazione obbligatoria"
+      : undefined;
+const hasRange = !!event.endDate && event.endDate !== event.date;
+---
+
+{
+  (hasRange || event.timeInfo || count || bookingLabel) && (
+    <div class="event-card__facts">
+      {hasRange && <EventDateRange date={event.date} endDate={event.endDate} />}
+      {event.timeInfo && (
+        <span>
+          {event.kind && (event.kind === "walk" ? "Ritrovo " : "Ore ")}
+          {event.timeInfo}
+        </span>
+      )}
+      {count > 0 && (
+        <span>
+          {count} {count === 1 ? "incontro" : "incontri"}
+        </span>
+      )}
+      {bookingLabel && <span class="event-card__booking">{bookingLabel}</span>}
+    </div>
+  )
+}

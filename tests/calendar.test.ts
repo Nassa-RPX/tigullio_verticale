@@ -5,6 +5,12 @@ import { JSDOM } from 'jsdom';
 import { refreshCalendar } from '../src/scripts/calendar';
 
 const item = (_id: string, date: string, year = 2026) => ({ _id, date, year });
+test('series remains upcoming until its end date, and same-day events sort by time', () => {
+  const series = { ...item('series', '2026-10-01'), endDate: '2026-10-03' };
+  assert.equal(splitDates([series], '2026-10-02').upcoming.length, 1);
+  assert.equal(splitDates([series], '2026-10-04').past.length, 1);
+  assert.deepEqual(splitDates([{ ...item('a', '2026-10-01'), startTime: '15:00' }, { ...item('b', '2026-10-01'), startTime: '12:00' }], '2026-10-01').upcoming.map(x => x._id), ['b', 'a']);
+});
 test('Rome calendar stays correct across midnight and DST', () => {
   assert.equal(today(new Date('2026-10-01T22:01:00Z')), '2026-10-02');
   assert.equal(today(new Date('2026-03-28T23:30:00Z')), '2026-03-29');

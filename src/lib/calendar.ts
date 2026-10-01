@@ -1,4 +1,4 @@
-export interface CalendarItem { _id: string; date: string; year: number }
+export interface CalendarItem { _id: string; date: string; year: number; endDate?: string; startTime?: string }
 export const TIME_ZONE = 'Europe/Rome';
 export function today(now = new Date()): string {
   const parts = new Intl.DateTimeFormat('en-CA', { timeZone: TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now);
@@ -12,15 +12,15 @@ export function dateParts(date: string) {
     long: new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'long', year: 'numeric', timeZone: TIME_ZONE }).format(value) };
 }
 export function splitDates<T extends CalendarItem>(items: T[], day = today()) {
-  const tie = (a: T, b: T) => a._id.localeCompare(b._id);
+  const tie = (a: T, b: T) => (a.startTime || '').localeCompare(b.startTime || '') || a._id.localeCompare(b._id);
   return {
-    upcoming: items.filter(item => item.date >= day).sort((a, b) => a.date.localeCompare(b.date) || tie(a, b)),
-    past: items.filter(item => item.date < day).sort((a, b) => b.date.localeCompare(a.date) || tie(a, b)),
+    upcoming: items.filter(item => (item.endDate || item.date) >= day).sort((a, b) => a.date.localeCompare(b.date) || tie(a, b)),
+    past: items.filter(item => (item.endDate || item.date) < day).sort((a, b) => b.date.localeCompare(a.date) || tie(a, b)),
   };
 }
 export function activeSeason(programs: { year: number }[], dates: CalendarItem[], day = today()): number | undefined {
   const years = programs.map(program => program.year).sort((a, b) => b - a);
-  return years.find(year => dates.some(date => date.year === year && date.date >= day)) ?? years[0];
+  return years.find(year => dates.some(date => date.year === year && (date.endDate || date.date) >= day)) ?? years[0];
 }
 export function millisecondsUntilTomorrow(now = new Date()) {
   const day = today(now);

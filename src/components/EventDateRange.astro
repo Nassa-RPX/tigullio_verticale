@@ -1,0 +1,23 @@
+---
+import { dateParts } from "@/lib/calendar";
+interface Props {
+  date: string;
+  endDate?: string;
+}
+const { date, endDate } = Astro.props;
+---
+
+<span class="event-date-range">
+  <time datetime={date}>{dateParts(date).long}</time>
+  {
+    endDate && endDate !== date && (
+      <>
+        <>
+          <span aria-hidden="true"> – </span>
+          <span class="visually-hidden"> fino al </span>
+          <time datetime={endDate}>{dateParts(endDate).long}</time>
+        </>
+      </>
+    )
+  }
+</span>

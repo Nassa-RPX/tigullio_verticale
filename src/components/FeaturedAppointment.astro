@@ -1,12 +1,14 @@
 ---
 import type { DateDoc } from '@/lib/sanity';
 import { dateParts } from '@/lib/calendar';
+import EventType from './EventType.astro';
+import EventCardFacts from './EventCardFacts.astro';
 interface Props { date: DateDoc; hidden: boolean }
 const { date, hidden } = Astro.props;
 const parts = dateParts(date.date);
 ---
-<article class="next-card" data-feature-date={date.date} data-feature-id={date._id} hidden={hidden} aria-label="Prossimo appuntamento">
+<article class="next-card" data-feature-date={date.date} data-feature-end-date={date.endDate} data-feature-start-time={date.startTime} data-feature-id={date._id} hidden={hidden} aria-label="Prossimo evento">
   <div class="next-card__date"><span class="next-card__day">{parts.day}</span><span class="next-card__month">{parts.month}</span><span class="next-card__year">{parts.year}</span></div>
-  <div class="next-card__body"><div class="next-card__meta"><span class="badge-next">Prossimo</span><span class="place">{date.location}</span></div><h3 class="next-card__title">{date.title}</h3><p class="next-card__detail">{date.timeInfo || 'Dettagli in arrivo'}</p></div>
-  <a class="btn btn--outline next-card__cta" href={`/programma/${date.year}/${date.slug}`}>Scopri l’appuntamento</a>
+  <div class="next-card__body"><div class="next-card__meta"><span class="badge-next">Prossimo</span><EventType kind={date.kind} /><span class="place">{date.location}</span></div><h3 class="next-card__title">{date.title}</h3><p class="next-card__detail">{date.summary || (!date.kind && date.timeInfo) || 'Dettagli in arrivo'}</p><EventCardFacts event={date} /></div>
+  <a class="btn btn--outline next-card__cta" href={`/programma/${date.year}/${date.slug}`}>Scopri l’evento</a>
 </article>

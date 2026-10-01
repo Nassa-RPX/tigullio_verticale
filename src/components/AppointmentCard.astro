@@ -1,12 +1,42 @@
 ---
-import type { DateDoc } from '@/lib/sanity';
-import { dateParts } from '@/lib/calendar';
-interface Props { date: DateDoc; index?: number; next?: boolean; past?: boolean }
+import type { DateDoc } from "@/lib/sanity";
+import { dateParts } from "@/lib/calendar";
+import EventType from "./EventType.astro";
+import EventCardFacts from "./EventCardFacts.astro";
+interface Props {
+  date: DateDoc;
+  index?: number;
+  next?: boolean;
+  past?: boolean;
+}
 const { date, index = 1, next = false, past = false } = Astro.props;
 const parts = dateParts(date.date);
 ---
-<a class:list={['event-card', { 'event-card--next': next, 'event-card--past': past }]} href={`/programma/${date.year}/${date.slug}`} data-appointment data-date={date.date} data-year={date.year} data-id={date._id}>
-  <div class="event-card__date"><span class="event-card__day">{parts.day}</span><span class="event-card__month">{parts.shortMonth} {parts.year}</span></div>
-  <div class="event-card__body"><div class="event-card__meta"><span class="badge-next" data-next-badge hidden={!next}>Prossimo</span><span class="place">{date.location}</span></div><h3 class="event-card__title">{date.title}</h3>{date.timeInfo && <p class="event-card__detail">{date.timeInfo}</p>}</div>
-  <span class="event-card__index" data-card-index>{String(index).padStart(2, '0')}</span>
+
+<a
+  class:list={["event-card", { "event-card--next": next, "event-card--past": past }]}
+  href={`/programma/${date.year}/${date.slug}`}
+  data-appointment
+  data-date={date.date}
+  data-end-date={date.endDate}
+  data-start-time={date.startTime}
+  data-year={date.year}
+  data-id={date._id}
+>
+  <div class="event-card__date">
+    <span class="event-card__day">{parts.day}</span><span class="event-card__month"
+      >{parts.shortMonth} {parts.year}</span
+    >
+  </div>
+  <div class="event-card__body">
+    <div class="event-card__meta">
+      <span class="badge-next" data-next-badge hidden={!next}>Prossimo</span><EventType kind={date.kind} /><span
+        class="place">{date.location}</span
+      >
+    </div>
+    <h3 class="event-card__title">{date.title}</h3>
+    {date.summary && <p class="event-card__summary">{date.summary}</p>}
+    <EventCardFacts event={date} />
+  </div>
+  <span class="event-card__index" data-card-index>{String(index).padStart(2, "0")}</span>
 </a>

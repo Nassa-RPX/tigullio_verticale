@@ -1,8 +1,74 @@
 ---
-import type { PracticalInfo } from '@/lib/sanity';
-interface Props { info?: PracticalInfo; title?: string; required?: boolean }
-const { info, title = 'Informazioni pratiche', required = false } = Astro.props;
-const labels: Record<string, string> = { meeting: 'Appuntamento', distance: 'Distanza', elevation: 'Dislivello', difficulty: 'Difficoltà', duration: 'Durata', equipment: 'Equipaggiamento', booking: 'Prenotazione' };
+import type { PracticalInfo } from "@/lib/sanity";
+interface Props {
+  info?: PracticalInfo;
+  title?: string;
+  required?: boolean;
+}
+const { info, title = "Informazioni pratiche", required = false } = Astro.props;
+const labels: Record<string, string> = {
+  meeting: "Ritrovo",
+  distance: "Distanza",
+  elevation: "Dislivello",
+  difficulty: "Difficoltà",
+  duration: "Durata",
+  equipment: "Equipaggiamento",
+  booking: "Prenotazione",
+};
+const icons: Record<keyof PracticalInfo, string> = {
+  meeting: "i-pin",
+  distance: "i-footprints",
+  elevation: "i-mountain",
+  difficulty: "i-compass",
+  duration: "i-clock",
+  equipment: "i-backpack",
+  booking: "i-calendar",
+};
 const rows = Object.entries(labels).filter(([key]) => info?.[key as keyof PracticalInfo]?.trim());
 ---
-{(rows.length > 0 || required) && <section class="event-facts"><h3 class="event-side-title">{title}</h3><dl class="event-facts__list">{rows.map(([key, label]) => <div><dt>{label}</dt><dd>{info![key as keyof PracticalInfo]}</dd></div>)}{required && !info?.booking?.trim() && <div><dt>Prenotazione</dt><dd>Prenotazione obbligatoria</dd></div>}</dl></section>}
+
+{
+  (rows.length > 0 || required) && (
+    <section class="event-facts">
+      <>
+        <h2 class="event-side-title">{title}</h2>
+        <dl class="event-facts__list">
+          {rows.map(([key, label]) => (
+            <div class="practical-fact">
+              <dt>
+                <svg class="practical-fact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href={`#${icons[key as keyof PracticalInfo]}`} /></svg>
+                <span>{label}</span>
+              </dt>
+              <dd>{info![key as keyof PracticalInfo]}</dd>
+            </div>
+          ))}
+          {required && !info?.booking?.trim() && (
+            <div class="practical-fact">
+              <dt>
+                <svg class="practical-fact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-calendar" /></svg>
+                <span>Prenotazione</span>
+              </dt>
+              <dd>Prenotazione obbligatoria</dd>
+            </div>
+          )}
+        </dl>
+      </>
+    </section>
+  )
+}
+
+<style>
+  .practical-fact dt {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    margin-bottom: .35rem;
+  }
+  .practical-fact__icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    flex: none;
+    color: var(--accent-ink);
+  }
+  .practical-fact dd { padding-left: 1.8rem; }
+</style>
