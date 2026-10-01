@@ -1,9 +1,12 @@
 import { defineCliConfig } from "sanity/cli";
+import { sanityEnvironment } from "./config/environment.mjs";
+
+const { projectId, dataset } = sanityEnvironment(process.env);
 
 export default defineCliConfig({
   api: {
-    projectId: process.env.PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.PUBLIC_SANITY_DATASET,
+    projectId,
+    dataset,
   },
   deployment: {
     appId: "o9n9j13dnpqgqe9k0bvon8or",

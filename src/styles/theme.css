@@ -1,43 +1,86 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+/* Self-hosted brand fonts — captured from the origin's own network stack.
+   Noto Sans (variable woff2, latin subset) + Norwester (otf). No external requests. */
 
 @font-face {
-  font-family: "Norwester";
-  src: url("/fonts/norwester.otf") format("opentype");
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/noto-sans-latin.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: italic;
+  font-weight: 100 900;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/noto-sans-latin-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Norwester';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/norwester.otf') format('opentype');
+}
+
+/* ============================================================================
+   Tigullio Verticale — design system
+   Brand tokens sourced from the origin's stylesheet (see brand-spec.md).
+   ========================================================================== */
+
+/* --- Tokens ---------------------------------------------------------------- */
 :root {
-  color-scheme: light dark;
+  --font-display: "Norwester", "Noto Sans", sans-serif;
+  --font-body: "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --main: #1b3720;
-  --main-dark: #162c1a;
-  --secondary: #efe8d2;
-  --secondary-dark: #d5c286;
+  /* Signature canvas = forest green (dark theme).
+     Base brand values are copied verbatim from the origin's computed tokens:
+     --main #1b3720, --secondary #efe8d2, --secondary-dark #d5c286, --main-dark #162c1a.
+     Derived tints/states use oklch() around those anchors. */
+  --bg: #1b3720;               /* origin --main          oklch(30.7% 0.053 148.4) */
+  --surface: oklch(35.5% 0.052 148.6);
+  --surface-2: oklch(39% 0.05 148.8);
+  --fg: #efe8d2;               /* origin --secondary     oklch(93.1% 0.03 92.3) */
+  --muted: oklch(80% 0.026 115);
+  --faint: oklch(66% 0.03 125);
+  --border: oklch(47% 0.045 148);
+  --border-strong: oklch(60% 0.05 145);
+  --accent: #d5c286;           /* origin --secondary-dark oklch(81.6% 0.081 92.6) */
+  --accent-ink: oklch(85% 0.085 92);
+  --danger: oklch(72% 0.16 28);
 
-  --fg: light-dark(var(--main), var(--secondary));
-  --bg: light-dark(var(--secondary), var(--main));
+  --shadow: 0 18px 40px -24px oklch(15% 0.03 150 / 0.85);
+  --ring: 0 0 0 3px oklch(81.6% 0.081 92.6 / 0.55);
 
-  --fg-dark: light-dark(var(--main-dark), var(--secondary-dark));
-  --bg-dark: light-dark(var(--secondary-dark), var(--main-dark));
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 14px;
 
-  color: var(--fg);
-  background: var(--bg);
+  --container: 1180px;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --section-y: clamp(4rem, 9vw, 8rem);
 
-  --bg-color: #1b3720;
-  --main-color: #1b3720;
-  --secondary-color: #efe8d2;
-
-  --font-family-title: "Norwester";
-  --font-family-body: "Noto Sans", sans-serif;
-}
-
-:root[data-theme="system"] {
-  color-scheme: light dark;
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-}
-
-:root[data-theme="dark"] {
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #efe8d2;               /* origin --secondary, swapped */
+  --surface: oklch(96.6% 0.018 92);
+  --surface-2: oklch(89.5% 0.032 91);
+  --fg: #1b3720;               /* origin --main, swapped */
+  --muted: oklch(44% 0.032 145);
+  --faint: oklch(58% 0.028 130);
+  --border: oklch(82% 0.03 100);
+  --border-strong: oklch(70% 0.04 120);
+  --accent: #d5c286;
+  --accent-ink: oklch(48% 0.095 78);
+  --danger: oklch(52% 0.17 28);
+  --shadow: 0 18px 40px -26px oklch(45% 0.04 120 / 0.5);
+  --ring: 0 0 0 3px oklch(48% 0.095 78 / 0.4);
+  color-scheme: light;
 }

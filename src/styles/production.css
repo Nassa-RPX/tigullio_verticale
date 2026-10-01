@@ -1,0 +1,22 @@
+[hidden] { display: none !important; }
+.tabs .tab[aria-current="page"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.program-cta { flex-direction: row; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.event-body .prose { max-width: 100%; overflow-wrap: anywhere; }
+.event-body .prose ul, .event-body .prose ol { padding-left: 1.4rem; }
+.event-body .prose li + li { margin-top: .35rem; }
+.event-body .prose a { text-decoration: underline; text-underline-offset: .2em; }
+.event-body .prose h2 { font-size: clamp(1.3rem, 1.1rem + 1vw, 1.9rem); }
+.event-body .prose h3 { font-size: 1.2rem; }
+.event-body .prose blockquote { border-left: 2px solid var(--accent); padding-left: 1rem; }
+.event-body .prose p { white-space: pre-line; }
+.event-facts__list dd { white-space: pre-line; overflow-wrap: anywhere; }
+.event-side, .event-body { min-width: 0; }
+.event-meta__info { color: var(--muted); }
+.event-section .badge-next { align-self: flex-start; }
+.newsletter-widget { width: 100%; }
+.season-group + .season-group { margin-top: 1.5rem; }
+[data-preview="true"] .season-group + .season-group { margin-top: .9rem; }
+.event-section__title, .event-card__title, .next-card__title { overflow-wrap: anywhere; }
+.tabs { flex-wrap: wrap; }
+.drawer [role="dialog"] { overflow-y: auto; max-height: 100dvh; }
+@media (max-width: 620px) { .section-head--row { flex-wrap: wrap; } }

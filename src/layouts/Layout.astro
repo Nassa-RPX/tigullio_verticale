@@ -1,91 +1,29 @@
 ---
-import "@/styles/theme.css";
-import "@/styles/global.css";
-import "@/styles/component.scss";
-import "@/styles/utilities.scss";
-
-import Tigullio from "@/components/Tigullio.astro";
-import { ThemeScript, Toggle } from "astro-theme-toggle";
-import Drawer from "@/components/Drawer/Drawer.astro";
-
-interface Props {
-  title: string;
-}
-
-const { title } = Astro.props;
+import '@/styles/theme.css';
+import '@/styles/global.css';
+import '@/styles/editorial.css';
+import '@/styles/event.css';
+import '@/styles/production.css';
+import BrandSprite from '@/components/BrandSprite.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+interface Props { title: string; description?: string }
+const { title, description = 'Tigullio Verticale vuole riscoprire la relazione fra costa ed entroterra, fra il territorio e chi lo abita.' } = Astro.props;
 ---
-
-<html lang="it">
+<!doctype html>
+<html lang="it" data-theme="dark">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta
-      name="description"
-      content="Tigullio Verticale vuole riscoprire la relazione fra costa ed entroterra, fra il territorio e chi lo abita"
-    />
-    <title>{title} | Tigullio Verticale</title>
-    <ThemeScript />
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} /><meta name="theme-color" content="#1b3720" />
+    <title>{title} | Tigullio Verticale</title><link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="preload" href="/fonts/norwester.otf" as="font" type="font/otf" crossorigin />
+    <link rel="preload" href="/fonts/noto-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      (() => { let saved; try { saved = localStorage.getItem('tv-theme'); } catch {} const theme = saved === 'light' || saved === 'dark' ? saved : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; document.documentElement.dataset.theme = theme; document.documentElement.style.colorScheme = theme; })();
+    </script>
   </head>
-
-  <body>
-    <Drawer />
-    <div class="theme-switcher-container">
-      <Toggle style="width: 1.5rem; height: 1.5rem;" />
-    </div>
-    <main>
-      <section class="tigullio-section">
-        <Tigullio />
-      </section>
-
-      <slot />
-    </main>
-  </body>
+  <body><a class="skip-link" href="#main">Vai al contenuto</a><BrandSprite /><SiteHeader /><main id="main" tabindex="-1"><slot /></main><SiteFooter /></body>
 </html>
-
-<script src="@/scripts/layouts.scripts.ts"></script>
-
-<style scoped>
-  main {
-    height: 100vh;
-    width: 100vw;
-    position: relative;
-  }
-
-  .tigullio-section {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    /* z-index: -200; */
-  }
-  .tigullio-section svg {
-    transform: scale(2);
-  }
-
-  .theme-switcher-container {
-    display: none;
-    @media screen and (min-width: 1200px) {
-      display: block;
-      position: fixed;
-      top: 1.25rem;
-      right: 1.25rem;
-      z-index: 1100;
-    }
-  }
-
-  @media screen and (min-width: 1200px) {
-    main {
-      flex-direction: row;
-    }
-
-    .tigullio-section {
-      display: none;
-    }
-
-    .logo-section {
-      margin-right: 1.5rem;
-    }
-  }
-</style>
+<script src="@/scripts/site.ts"></script>
+<script src="@/scripts/calendar.ts"></script>
+<script src="@/scripts/newsletter.ts"></script>

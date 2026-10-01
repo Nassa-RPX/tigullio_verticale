@@ -1,10 +1,12 @@
 import { defineType, defineField } from 'sanity';
+import { editorialFields } from './practicalInfo';
 
 export default defineType({
   name: 'event',
   type: 'document',
   title: 'Evento',
   fields: [
+    ...editorialFields,
     defineField({
       name: 'slug',
       type: 'slug',

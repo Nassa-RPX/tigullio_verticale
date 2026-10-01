@@ -1,39 +1,7 @@
 ---
-import GoBack from "@/components/GoBack/GoBack.astro";
-import Layout from "../../layouts/Layout.astro";
-import { sanityClient, type Program } from "@/lib/sanity";
-
-const programs: Array<Program> = await sanityClient.fetch(`
-  *[_type == "program"] | order(year asc) { year, title }
-`);
+import Layout from "@/layouts/Layout.astro";
+import ProgramView from "@/components/ProgramView.astro";
+import { getContent } from "@/lib/sanity";
+const { programs, dates } = await getContent();
 ---
-
-<Layout title="Archivio Programmi">
-  <div class="top-space"></div>
-  <section class="page">
-    <div class="page-title-container">
-      <GoBack id="program-go-back" href={"/"} />
-      <h1 id="program-year" class="page-title">Archivio Programmi</h1>
-    </div>
-    <div class="programs-list">
-      {
-        programs.map((program) => (
-          <div class="card">
-            <span class="card-info important" />
-            <a class="card-title" href={`/programma/${program.year}`}>
-              {program.title}{" "}
-            </a>
-          </div>
-        ))
-      }
-    </div>
-  </section>
-</Layout>
-
-<style scoped>
-  .programs-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-</style>
+<Layout title="Programma"><ProgramView programs={programs} dates={dates} selected={programs[0]?.year} /></Layout>

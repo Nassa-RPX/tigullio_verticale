@@ -1,50 +1,60 @@
 ---
-import GoBack from "@/components/GoBack/GoBack.astro";
-import Layout from "@/layouts/Layout.astro";
+import Layout from '@/layouts/Layout.astro';
+import NewsletterForm from '@/components/NewsletterForm.astro';
 ---
-
 <Layout title="Newsletter">
-  <div id="idle-page" class="page full">
-    <div class="page-title-container">
-      <GoBack href="/" id="newsletter-go-back" />
-      <h1 class="page-title">Newsletter</h1>
-    </div>
-    <span class="newsletter-description"
-      >Iscritivi alla nostra newsletter per rimanere aggiornato sulle ultime novità!</span
-    >
-
-    <form id="newsletter-form" class="form inverted">
-      <div class="input-control">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required />
+    <section class="page-hero">
+      <div class="contour-wrap" aria-hidden="true">
+        <svg class="contour" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice"><use href="#contour-band" /></svg>
       </div>
-
-      <div class="input-control">
-        <label for="name">Nome</label>
-        <input type="text" id="name" name="name" required />
+      <div class="container page-hero__inner">
+        <span class="kicker">Newsletter</span>
+        <h1 class="display-l">Resta in cammino</h1>
+        <p class="lede">Iscriviti per ricevere le nuove date, i racconti dal territorio e gli inviti agli appuntamenti fra costa ed entroterra.</p>
       </div>
-      <button type="submit">
-        <span id="btn-idle">Iscriviti</span>
-        <span id="btn-loading" class="hidden">...</span>
-      </button>
-    </form>
-  </div>
+    </section>
 
-  <div id="success-page" class="page full hidden success">
-    <h1 class="page-title">Newsletter</h1>
-    <span class="text-center">Grazie per esserti iscritto alla nostra newsletter!</span>
-  </div>
-</Layout>
+    <section class="section section--tight">
+      <div class="container split split--wide-left">
+        <div class="section-head__text">
+          <span class="kicker">Cosa ricevi</span>
+          <h2 class="display-m">Poche email, tutte utili</h2>
+          <ul class="grid" style="list-style:none;gap:1.1rem;margin-top:.6rem">
+            <li class="feature">
+              <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-calendar" /></svg></span>
+              <h3>Nuove date</h3>
+              <p>Il nuovo programma e ogni appuntamento, appena viene definito.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-book-open" /></svg></span>
+              <h3>Racconti dalle camminate</h3>
+              <p>Storie, luoghi e incontri raccolti lungo i sentieri del Tigullio.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-mail" /></svg></span>
+              <h3>Inviti diretti</h3>
+              <p>Un promemoria prima di ogni appuntamento in programma.</p>
+            </li>
+          </ul>
+        </div>
 
-<script src="@/scripts/newsletter.script.ts"></script>
+        <div>
+          <div class="panel panel--fill" style="gap:1.4rem">
+            <NewsletterForm id="full" />
+          </div>
+        </div>
+      </div>
+    </section>
 
-<style scoped>
-  #newsletter-form {
-    margin-top: 1rem;
-  }
-  @media screen and (min-width: 1200px) {
-    #newsletter-form {
-      width: 50%;
-    }
-  }
-</style>
+    <section class="section section--tight">
+      <div class="container">
+        <div class="panel" style="flex-direction:row;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+          <div class="section-head__text" style="gap:.4rem">
+            <h2 class="display-s">Preferisci iniziare dal programma?</h2>
+            <p class="muted">Guarda gli appuntamenti delle stagioni 2026 e 2025.</p>
+          </div>
+          <a class="btn btn--outline btn--lg" href="/programma">Vai al programma</a>
+        </div>
+      </div>
+    </section>
+  </Layout>

@@ -1,0 +1,18 @@
+---
+interface Props { compact?: boolean; id?: string }
+const { compact = false, id = 'newsletter' } = Astro.props;
+---
+<div class="newsletter-widget" data-newsletter-widget>
+  <form class="form" data-newsletter={compact ? 'compact' : 'full'} novalidate>
+    <div class:list={{ 'form__row': !compact }}>
+      {!compact && <div class="field"><label for={`${id}-name`}>Nome</label><input id={`${id}-name`} name="name" type="text" autocomplete="given-name" placeholder="Come ti chiami" required aria-describedby={`${id}-name-error`} /><span id={`${id}-name-error`} class="field__error" aria-live="polite"></span></div>}
+      <div class="field"><label for={`${id}-email`}>Email</label><input id={`${id}-email`} name="email" type="email" inputmode="email" autocomplete="email" placeholder="nome@email.it" required aria-describedby={`${id}-email-error`} /><span id={`${id}-email-error`} class="field__error" aria-live="polite"></span></div>
+    </div>
+    {!compact && <label class="form__consent"><input name="consent" type="checkbox" required /><span>Acconsento a ricevere la newsletter di Tigullio Verticale. Posso disiscrivermi in qualsiasi momento.</span></label>}
+    <button class="btn btn--solid btn--lg btn--block" type="submit">{compact ? 'Iscriviti' : 'Iscriviti alla newsletter'}</button>
+    <div class="form-status" data-form-status role="status" aria-live="polite"></div>
+    <p class="form__note">{compact ? 'Puoi disiscriverti in qualsiasi momento.' : 'Ti scriviamo solo quando c’è qualcosa da raccontare.'} <a class="italic" href="/newsletter">Scopri la newsletter</a>.</p>
+    <noscript><p class="muted">Attiva JavaScript per inviare il modulo.</p></noscript>
+  </form>
+  <div class="form-success" data-form-success hidden role="status" tabindex="-1"><h2 class="display-s">Iscrizione registrata</h2><p class="muted">Grazie! Riceverai le prossime comunicazioni all’indirizzo indicato.</p><a class="link-arrow" href="/programma">Intanto, guarda il programma <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></div>
+</div>

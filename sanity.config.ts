@@ -2,16 +2,16 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schemaTypes";
+import { sanityEnvironment } from "./config/environment.mjs";
 
-const env = (import.meta as any).env || (process as any).env || {};
-
-console.log("Sanity config env:", env, import.meta, process.env);
+const env = typeof process !== 'undefined' ? { ...process.env, ...import.meta.env } : import.meta.env;
+const { projectId, dataset } = sanityEnvironment(env);
 
 export default defineConfig({
   name: "tigullio-verticale",
-  title: "Tigullio Verticale",
-  projectId: env.SANITY_STUDIO_PROJECT_ID,
-  dataset: env.SANITY_STUDIO_DATASET,
+  title: dataset === 'staging' ? 'Tigullio Verticale — Staging' : 'Tigullio Verticale',
+  projectId,
+  dataset,
   plugins: [structureTool(), visionTool()],
   schema: {
     types: schemaTypes,

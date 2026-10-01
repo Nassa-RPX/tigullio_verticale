@@ -1,10 +1,12 @@
 import { defineType, defineField } from 'sanity';
+import { editorialFields } from './practicalInfo';
 
 export default defineType({
   name: 'appuntamento',
   type: 'document',
   title: 'Appuntamento',
   fields: [
+    ...editorialFields,
     defineField({
       name: 'slug',
       type: 'slug',

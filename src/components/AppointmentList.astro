@@ -1,0 +1,20 @@
+---
+import type { DateDoc } from '@/lib/sanity';
+import { splitDates } from '@/lib/calendar';
+import AppointmentCard from './AppointmentCard.astro';
+interface Props { dates: DateDoc[]; preview?: boolean }
+const { dates, preview = false } = Astro.props;
+const groups = splitDates(dates);
+---
+<div data-date-list data-preview={preview ? 'true' : 'false'}>
+  {!preview && <p class="muted" data-no-upcoming hidden={!dates.length || !!groups.upcoming.length}>Non ci sono prossimi appuntamenti in questa stagione. Gli incontri già svolti restano qui in archivio.</p>}
+  <div class="season-group" data-group="upcoming" hidden={!groups.upcoming.length}>
+    {!preview && <h3 class="season-group__label" data-group-label>Prossimi appuntamenti · {groups.upcoming.length}</h3>}
+    <div class="event-list" data-list="upcoming">{groups.upcoming.map((date, i) => <AppointmentCard date={date} index={i + 1} next={i === 0} />)}</div>
+  </div>
+  <div class="season-group" data-group="past" hidden={!groups.past.length}>
+    {!preview && <h3 class="season-group__label" data-group-label>Già svolti · {groups.past.length}</h3>}
+    <div class="event-list" data-list="past">{groups.past.map((date, i) => <AppointmentCard date={date} index={i + 1 + (preview ? groups.upcoming.length : 0)} past />)}</div>
+  </div>
+  <p class="muted" data-list-empty hidden={dates.length > 0}>Nessun appuntamento in archivio per questa stagione.</p>
+</div>

@@ -2,13 +2,16 @@
 import { defineConfig } from "astro/config";
 
 import sanity from "@sanity/astro";
+import { sanityEnvironment } from "./config/environment.mjs";
+
+const { projectId, dataset } = sanityEnvironment(process.env);
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     sanity({
-      projectId: "879g27iz",
-      dataset: "test2",
+      projectId,
+      dataset,
       useCdn: false, // for static builds
     }),
   ],

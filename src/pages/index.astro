@@ -1,89 +1,127 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Logo from "../components/Logo.astro";
-import BookmarkIcon from "@/assets/icons/bookmark.svg";
-import { Toggle } from "astro-theme-toggle";
+import Layout from '@/layouts/Layout.astro';
+import AppointmentList from '@/components/AppointmentList.astro';
+import FeaturedAppointment from '@/components/FeaturedAppointment.astro';
+import NewsletterForm from '@/components/NewsletterForm.astro';
+import { getContent } from '@/lib/sanity';
+import { activeSeason, splitDates } from '@/lib/calendar';
+const { programs, dates } = await getContent();
+const season = activeSeason(programs, dates);
+const next = splitDates(dates).upcoming[0];
 ---
-
 <Layout title="Home">
-  <div class="home-container">
-    <div class="load-animation gsapped-in home-links">
-      <a href="/chi-siamo">Chi Siamo</a>
-      <a href="/programma">Archivio Programmi</a>
-      <Toggle style="width: 1rem; height: 1rem;" />
-    </div>
-
-    <section class="load-animation logo-section gsapped-in">
-      <Logo />
+    <section class="hero">
+      <div class="contour-wrap" aria-hidden="true">
+        <svg class="contour" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice"><use href="#contour-band" /></svg>
+      </div>
+      <div class="hero__inner">
+        <div class="hero__logo" aria-hidden="true">
+          <svg viewBox="0 0 919 610"><use href="#tv-logo" /></svg>
+        </div>
+        <h1 class="hero__wordmark">Tigullio<br />Verticale</h1>
+        <div class="hero__cta">
+          <a class="btn btn--solid btn--lg" href={season ? `/programma/${season}` : "/programma"} data-current-program>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book-open" /></svg>
+            Programma <span data-season-year>{season ?? ""}</span>
+          </a>
+          <a class="btn btn--outline btn--lg" href="/newsletter">Iscriviti alla newsletter</a>
+        </div>
+      </div>
+      <span class="hero__scroll" aria-hidden="true">Scorri <svg viewBox="0 0 24 24"><use href="#i-arrow-down" /></svg></span>
     </section>
 
-    <h1 class="load-animation gsapped-in">Tigullio <br /> Verticale</h1>
+    <section class="section idea-editorial" id="idea">
+      <div class="container idea-editorial__inner">
+        <header class="idea-editorial__head">
+          <span class="kicker">L’idea</span>
+          <h2 class="idea-editorial__title">Due metà.<br /><span>Un solo paesaggio.</span></h2>
 
-    <div class="load-animation gsapped-in home-btns">
-      <button id="program-btn" class="btn main" data-year={2026}>
-        <BookmarkIcon height="24" />
-        <span>Programma 2026</span>
-      </button>
+          <div class="idea-axis" aria-label="La relazione fra costa ed entroterra">
+            <span class="idea-axis__place">Costa</span>
+            <span class="idea-axis__line" aria-hidden="true">
+              <span class="idea-axis__mark"><svg viewBox="0 0 124 131"><use href="#tv-mark" /></svg></span>
+            </span>
+            <span class="idea-axis__place">Entroterra</span>
+          </div>
+        </header>
 
-      <a id="newsletter" href="/newsletter" class="btn outline small"> Iscriviti alla Newsletter </a>
-    </div>
-  </div>
-</Layout>
+        <div class="idea-editorial__body">
+          <p class="idea-editorial__intro">Il Tigullio è conosciuto per il suo mare. Molto meno si parla dell’entroterra che lo tiene in piedi: le valli, i boschi, i sentieri, i paesi che si svuotano.</p>
 
-<script src="../scripts/home/animations.ts"></script>
+          <blockquote class="idea-editorial__quote">Riscoprire la relazione fra il territorio e chi lo abita.</blockquote>
 
-<style>
-  .home-container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-  }
+          <div class="idea-editorial__prose">
+            <p>Tigullio Verticale mette in relazione queste due metà. Organizza appuntamenti che attraversano il territorio — dalla costa alle valli — per guardarlo da vicino, riconoscerlo e raccontarlo.</p>
+            <p>Il programma cresce di stagione in stagione: camminate, incontri e serate pensate insieme a chi quei luoghi li vive.</p>
+          </div>
+        </div>
+      </div>
 
-  .logo-section {
-    width: 150px;
-  }
 
-  .home-btns {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-  }
+    </section>
 
-  h1 {
-    text-align: center;
-  }
+    <section class="section section--tight"><div class="container"><div class="section-head"><span class="kicker" data-feature-label>{next ? 'Prossimo appuntamento' : 'Restiamo in cammino'}</span></div>{dates.map(date => <FeaturedAppointment date={date} hidden={date._id !== next?._id} />)}<div class="panel panel--fill" data-feature-empty hidden={!!next}><h2 class="display-s">Prossimo programma in arrivo</h2><p class="muted">Iscriviti alla newsletter per non perderlo.</p><a class="btn btn--outline" href="/newsletter">Iscriviti alla newsletter</a></div></div></section>
 
-  .home-links {
-    display: none;
-  }
+    <section class="section">
+      <div class="container">
+        <div class="section-head section-head--row">
+          <div class="section-head__text">
+            <span class="kicker">Stagione</span>
+            <h2 class="display-m">Programma <span data-season-year>{season ?? ""}</span></h2>
+          </div>
+          <a class="link-arrow" href={season ? `/programma/${season}` : "/programma"} data-current-program>Tutto il programma
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right" /></svg>
+          </a>
+        </div>
+        {programs.map(program => <div data-home-season data-season={program.year} hidden={program.year !== season}><AppointmentList dates={dates.filter(date => date.year === program.year)} preview /></div>)}{!programs.length && <p class="muted">Il programma è in preparazione. Iscriviti alla newsletter per ricevere le nuove date.</p>}
+      </div>
+    </section>
 
-  @media screen and (min-width: 1200px) {
-    .home-links {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Come lavoriamo</span>
+          <h2 class="display-m">Quattro gesti, sempre gli stessi</h2>
+          <p class="lede">Ogni appuntamento nasce da un modo preciso di stare sul territorio: camminarlo, riconoscerlo, raccontarlo e immaginarlo di nuovo abitato.</p>
+        </div>
+        <div class="grid grid--4">
+          <div class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-footprints" /></svg></span>
+            <h3>Camminare</h3>
+            <p>Percorsi a piedi che collegano la costa all’entroterra, lungo sentieri e passaggi poco frequentati.</p>
+          </div>
+          <div class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-compass" /></svg></span>
+            <h3>Riconoscere</h3>
+            <p>Ogni tappa parte dalla lettura del paesaggio: cosa cambia, cosa resta, chi lo abita e come.</p>
+          </div>
+          <div class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-book-open" /></svg></span>
+            <h3>Raccontare</h3>
+            <p>Restituiamo quello che vediamo: storie, incontri e materiali raccolti camminando insieme.</p>
+          </div>
+          <div class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-sprout" /></svg></span>
+            <h3>Riabitare</h3>
+            <p>Guardiamo alle pratiche di chi torna a vivere e coltivare le valli, per immaginare un entroterra abitato.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    .home-links a::after {
-      content: "/";
-      margin-left: 0.5rem;
-    }
-
-    .home-links a:last-child::after {
-      content: "";
-    }
-
-    .logo-section {
-      width: 250px;
-      margin-right: 1.5rem;
-    }
-  }
-</style>
+    <section class="band section">
+      <div class="contour-wrap" aria-hidden="true">
+        <svg class="contour" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice"><use href="#contour-band" /></svg>
+      </div>
+      <div class="container band__inner">
+        <div class="section-head__text">
+          <span class="kicker">Newsletter</span>
+          <h2 class="display-m">Restiamo in cammino</h2>
+          <p class="lede">Nuove date, racconti dal territorio e inviti agli appuntamenti. Ti scriviamo solo quando c’è qualcosa da raccontare.</p>
+        </div>
+        <div>
+          <NewsletterForm compact id="home" />
+        </div>
+      </div>
+    </section>
+  </Layout>

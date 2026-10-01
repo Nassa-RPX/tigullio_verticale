@@ -1,31 +1,10 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Dates from "@/components/Dates.astro";
-
-import { sanityClient, type Program } from "@/lib/sanity";
-import GoBack from "@/components/GoBack/GoBack.astro";
-
-export async function getStaticPaths() {
-  const programs: Array<Program> = await sanityClient.fetch(`*[_type == "program"] { year, title }`);
-  return programs.map((program: any) => ({
-    params: { year: program.year.toString() },
-    props: { program },
-  }));
-}
-
+import ProgramView from "@/components/ProgramView.astro";
+import { getContent, type Program } from "@/lib/sanity";
+export async function getStaticPaths() { const { programs } = await getContent(); return programs.map(program => ({ params: { year: String(program.year) }, props: { program } })); }
+interface Props { program: Program }
 const { program } = Astro.props;
+const { programs, dates } = await getContent();
 ---
-
-<Layout title={`Programma ${program.year}`}>
-  <div class="top-space"></div>
-  <section class="page">
-    <div class="page-title-container gsapped-in">
-      <GoBack id="program-go-back" href={"/"} />
-      <h1 id="program-year" class="page-title">Programma {program.year}</h1>
-    </div>
-
-    <Dates programYear={program.year} />
-  </section>
-</Layout>
-
-<script src="@/scripts/program.script.ts"></script>
+<Layout title={"Programma " + program.year}><ProgramView programs={programs} dates={dates} selected={program.year} /></Layout>

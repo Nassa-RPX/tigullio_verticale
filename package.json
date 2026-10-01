@@ -3,12 +3,13 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "sanity:dev": "sanity dev",
-    "sanity:deploy": "sanity deploy"
+    "dev": "node scripts/run.mjs astro dev",
+    "build": "node scripts/run.mjs astro build",
+    "preview": "node scripts/run.mjs astro preview",
+    "astro": "node scripts/run.mjs astro",
+    "sanity:dev": "node scripts/run.mjs sanity dev",
+    "sanity:deploy": "node scripts/run.mjs studio-deploy",
+    "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@sanity/astro": "^3.5.0",

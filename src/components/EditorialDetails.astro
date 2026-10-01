@@ -1,0 +1,8 @@
+---
+import type { EditorialContent } from '@/lib/sanity';
+interface Props { content: EditorialContent }
+const { content } = Astro.props;
+const leaders = content.leaders?.filter(person => person.trim()) ?? [];
+---
+{content.partners?.trim() && <p class="event-partners">{content.partners}</p>}
+{!!leaders.length && <div class="event-leaders"><h3 class="event-side-title">Conducono</h3><ul class="event-leaders__list">{leaders.map(person => <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-users" /></svg><span>{person}</span></li>)}</ul></div>}

@@ -1,0 +1,8 @@
+---
+import type { PracticalInfo } from '@/lib/sanity';
+interface Props { info?: PracticalInfo; title?: string; required?: boolean }
+const { info, title = 'Informazioni pratiche', required = false } = Astro.props;
+const labels: Record<string, string> = { meeting: 'Appuntamento', distance: 'Distanza', elevation: 'Dislivello', difficulty: 'Difficoltà', duration: 'Durata', equipment: 'Equipaggiamento', booking: 'Prenotazione' };
+const rows = Object.entries(labels).filter(([key]) => info?.[key as keyof PracticalInfo]?.trim());
+---
+{(rows.length > 0 || required) && <section class="event-facts"><h3 class="event-side-title">{title}</h3><dl class="event-facts__list">{rows.map(([key, label]) => <div><dt>{label}</dt><dd>{info![key as keyof PracticalInfo]}</dd></div>)}{required && !info?.booking?.trim() && <div><dt>Prenotazione</dt><dd>Prenotazione obbligatoria</dd></div>}</dl></section>}
