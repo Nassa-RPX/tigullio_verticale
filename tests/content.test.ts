@@ -19,3 +19,11 @@ test('development and preview refuse production or mismatched Studio configurati
   assert.equal(sanityEnvironment({ PUBLIC_SANITY_PROJECT_ID: '879g27iz', PUBLIC_SANITY_DATASET: 'main', VERCEL_ENV: 'production' }).production, true);
   assert.equal(sanityEnvironment({ SANITY_STUDIO_PROJECT_ID: '879g27iz', SANITY_STUDIO_DATASET: 'main', SANITY_STUDIO_TV_ENV: 'production' }).dataset, 'main');
 });
+
+test('explicit Studio deployment selects main without changing development defaults', () => {
+  const env = { PUBLIC_SANITY_PROJECT_ID: '879g27iz', PUBLIC_SANITY_DATASET: 'main', SANITY_STUDIO_PROJECT_ID: '879g27iz', SANITY_STUDIO_DATASET: 'main' };
+  assert.throws(() => sanityEnvironment(env), /must use staging/);
+  assert.deepEqual(sanityEnvironment(env, { studioDeploy: true }), { projectId: '879g27iz', dataset: 'main', production: true });
+  assert.throws(() => sanityEnvironment({ ...env, PUBLIC_SANITY_DATASET: 'staging', SANITY_STUDIO_DATASET: 'staging' }, { studioDeploy: true }), /must use main/);
+  assert.throws(() => sanityEnvironment({ ...env, SANITY_STUDIO_DATASET: 'staging' }, { studioDeploy: true }), /disagree/);
+});

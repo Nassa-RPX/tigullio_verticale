@@ -1,5 +1,6 @@
-export function sanityEnvironment(env) {
+export function sanityEnvironment(env, { studioDeploy = false } = {}) {
   const production =
+    studioDeploy ||
     env.VERCEL_ENV === "production" ||
     env.TV_ENV === "production" ||
     env.TV_ENV === "production-readonly" ||
