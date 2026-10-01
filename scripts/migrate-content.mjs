@@ -56,7 +56,7 @@ async function exportBackup(source) {
   const binary = join(dirname(require.resolve('sanity/package.json')), 'bin/sanity');
   const archive = join(directory, 'dataset.tar.gz');
   await new Promise((resolveRun, reject) => {
-    const child = spawn(process.execPath, [binary, 'datasets', 'export', dataset, archive, '--project-id', projectId, '--raw'], { stdio: 'inherit', env: { ...process.env, SANITY_AUTH_TOKEN: token, PUBLIC_SANITY_PROJECT_ID: projectId, PUBLIC_SANITY_DATASET: dataset, SANITY_STUDIO_PROJECT_ID: projectId, SANITY_STUDIO_DATASET: dataset, TV_ENV: dataset === 'test2' ? 'production-readonly' : 'staging', SANITY_STUDIO_TV_ENV: dataset === 'test2' ? 'production' : 'staging', VERCEL_ENV: dataset === 'test2' ? 'production' : 'development' } });
+    const child = spawn(process.execPath, [binary, 'datasets', 'export', dataset, archive, '--project-id', projectId, '--raw'], { stdio: 'inherit', env: { ...process.env, SANITY_AUTH_TOKEN: token, PUBLIC_SANITY_PROJECT_ID: projectId, PUBLIC_SANITY_DATASET: dataset, SANITY_STUDIO_PROJECT_ID: projectId, SANITY_STUDIO_DATASET: dataset, TV_ENV: dataset === 'main' ? 'production-readonly' : 'staging', SANITY_STUDIO_TV_ENV: dataset === 'main' ? 'production' : 'staging', VERCEL_ENV: dataset === 'main' ? 'production' : 'development' } });
     child.on('error', () => reject(new Error('Could not start dataset export.')));
     child.on('exit', code => code === 0 ? resolveRun() : reject(new Error('Dataset export failed.')));
   });

@@ -47,7 +47,9 @@ test('completed dataset is idempotent but staging completion never suppresses an
   assert.equal(transform([{ _id: STATE_ID, status: 'complete', routes: [] }], {}).complete, true);
   assert.equal(transform([program, parent, child], decision()).complete, false);
   assert.throws(() => transform([{ _id: STATE_ID, status: 'complete' }, parent], {}), /New legacy/);
-  assert.throws(() => assertTarget('879g27iz', 'test2'), /locked/);
+  assert.throws(() => assertTarget('879g27iz', 'main'), /locked/);
+  assert.doesNotThrow(() => assertTarget('879g27iz', 'main', true, true));
+  assert.throws(() => assertTarget('879g27iz', 'test2', true, true), /Explicit project/);
   assert.doesNotThrow(() => assertTarget('879g27iz', 'staging', true));
   assert.throws(() => assertTarget('other', 'staging'), /Explicit project/);
 });
