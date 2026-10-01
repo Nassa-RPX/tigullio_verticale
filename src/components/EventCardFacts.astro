@@ -9,11 +9,11 @@ const count = event.kind === "series" ? event.series?.meetings.length || 0 : 0;
 const bookingLabel =
   event.kind === "series"
     ? event.series?.bookingMode === "series" && event.series.booking?.required
-      ? "Prenotazione della serie obbligatoria"
+      ? "Prenotazione obbligatoria"
       : event.series?.bookingMode === "sessions" && event.series.meetings.some((slot) => slot.booking?.required)
         ? event.series.meetings.every((slot) => slot.booking?.required)
-          ? "Prenotazione dei singoli incontri obbligatoria"
-          : "Prenotazione per alcuni incontri"
+          ? "Prenotazione obbligatoria"
+          : "Prenotazione obbligatoria "
         : undefined
     : event.booking?.required
       ? "Prenotazione obbligatoria"
