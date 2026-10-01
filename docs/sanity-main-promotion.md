@@ -32,7 +32,9 @@ Vercel rileva la produzione con `VERCEL_ENV=production`; su altri host impostare
 
 Il comando `pnpm sanity:deploy` seleziona automaticamente la produzione per lo Studio e richiede che entrambi i dataset siano `main`, anche senza `TV_ENV`. Non occorre impostare `TV_ALLOW_STUDIO_DEPLOY` né configurare Kit per pubblicare lo Studio. Gli argomenti aggiuntivi vengono inoltrati alla CLI, per esempio `pnpm sanity:deploy --help` per verificarne il launcher senza pubblicare. I comandi di sviluppo e preview mantengono il vincolo staging.
 
-La configurazione `.env` locale resta su staging. Merge e deploy sono lasciati all'utente, come richiesto.
+`pnpm dev` e `pnpm sanity:dev` caricano il file obbligatorio `.env.staging`, con entrambi i dataset impostati a `staging`. Astro usa `--mode staging` e Sanity `SANITY_ACTIVE_ENV=staging`, mantenendo questi valori anche nei bundle. Le variabili esplicite di shell/CI hanno precedenza; i controlli impediscono di avviare lo sviluppo su main. Se `.env.staging` manca, il launcher si ferma senza ripiegare su `.env`.
+
+Gli altri comandi, compreso `pnpm sanity:deploy`, continuano a caricare `.env` e le variabili dell'ambiente. Merge e deploy sono lasciati all'utente, come richiesto.
 
 Validazione del codice: 20 test superati e build Astro completata su main con 20 pagine, usando `TV_ENV=production-readonly` e newsletter in modalità mock. L'output di prova è in `.qa/main-build/`; non è stato effettuato alcun deploy.
 

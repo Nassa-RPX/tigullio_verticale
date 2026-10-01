@@ -2,14 +2,13 @@ import { spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { readFileSync } from 'node:fs';
-import { loadEnvFile } from 'node:process';
 import { sanityEnvironment } from '../config/environment.mjs';
+import { commandEnvironment } from './command-environment.mjs';
 
-const inherited = { ...process.env };
-try { loadEnvFile('.env'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-Object.assign(process.env, inherited);
-const [command, ...args] = process.argv.slice(2);
+const [command, ...requestedArgs] = process.argv.slice(2);
 if (!['astro', 'sanity', 'studio-deploy'].includes(command)) throw new Error('Unknown command.');
+const { env, args } = commandEnvironment(command, requestedArgs);
+Object.assign(process.env, env);
 // The dedicated deploy command explicitly selects production, while still requiring main.
 const config = sanityEnvironment(process.env, { studioDeploy: command === 'studio-deploy' });
 process.env.SANITY_STUDIO_PROJECT_ID = config.projectId;
