@@ -1,39 +1,81 @@
-<header class="site-header" data-header>
-    <div class="container site-header__inner">
-      <a class="wordmark" href="/" aria-label="Tigullio Verticale — home" style="padding:0.35rem">
-        <span class="mark" aria-hidden="true"><svg viewBox="0 0 124 131"><use href="#tv-mark" /></svg></span>
-      </a>
-      <nav class="site-nav" aria-label="Sezioni principali">
-        <a href="/programma" aria-current={Astro.url.pathname.startsWith('/programma') ? 'page' : undefined}>Programma</a>
-        <a href="/chi-siamo" aria-current={Astro.url.pathname.startsWith('/chi-siamo') ? 'page' : undefined}>Chi siamo</a>
-        <a href="/newsletter" aria-current={Astro.url.pathname.startsWith('/newsletter') ? 'page' : undefined}>Newsletter</a>
-      </nav>
-      <div class="header-actions">
-        <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-label="Cambia tema">
-          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sun" /></svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-moon" /></svg>
-        </button>
-        <button class="icon-btn menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-drawer" aria-label="Apri il menu">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu" /></svg>
-        </button>
-      </div>
-    </div>
-  </header>
+---
+import Logo from "./Logo.astro";
+---
 
-  <div class="drawer" id="site-drawer" aria-hidden="true" inert>
-    <div class="drawer__overlay" data-menu-close></div>
-    <nav role="dialog" aria-modal="true" class="drawer__panel" aria-label="Menu principale">
-      <button class="drawer__close" type="button" data-menu-close aria-label="Chiudi il menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close" /></svg>
-      </button>
-      <div class="drawer__nav">
-        <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined} >Home</a>
-        <a href="/programma" aria-current={Astro.url.pathname.startsWith('/programma') ? 'page' : undefined}>Programma</a>
-        <a href="/chi-siamo" aria-current={Astro.url.pathname.startsWith('/chi-siamo') ? 'page' : undefined}>Chi siamo</a>
-        <a href="/newsletter" aria-current={Astro.url.pathname.startsWith('/newsletter') ? 'page' : undefined}>Newsletter</a>
-      </div>
-      <div class="drawer__footer">
-        <a class="btn btn--solid btn--block btn--lg" href="/newsletter">Iscriviti alla newsletter</a>
-      </div>
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a class="wordmark site-header__brand" href="/" aria-label="Tigullio Verticale — home">
+      <span class="site-header__logo" aria-hidden="true"><Logo /></span>
+    </a>
+    <nav class="site-nav" aria-label="Sezioni principali">
+      <a href="/programma" aria-current={Astro.url.pathname.startsWith("/programma") ? "page" : undefined}>Programma</a>
+      <a href="/chi-siamo" aria-current={Astro.url.pathname.startsWith("/chi-siamo") ? "page" : undefined}>Chi siamo</a>
+      <a href="/newsletter" aria-current={Astro.url.pathname.startsWith("/newsletter") ? "page" : undefined}
+        >Newsletter</a
+      >
     </nav>
+    <div class="header-actions">
+      <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-label="Cambia tema">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sun"></use></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-moon"></use></svg>
+      </button>
+      <button
+        class="icon-btn menu-btn"
+        type="button"
+        data-menu-open
+        aria-expanded="false"
+        aria-controls="site-drawer"
+        aria-label="Apri il menu"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"></use></svg>
+      </button>
+    </div>
   </div>
+</header>
+
+<div class="drawer" id="site-drawer" aria-hidden="true" inert>
+  <div class="drawer__overlay" data-menu-close></div>
+  <nav role="dialog" aria-modal="true" class="drawer__panel" aria-label="Menu principale">
+    <button class="drawer__close" type="button" data-menu-close aria-label="Chiudi il menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"></use></svg>
+    </button>
+    <div class="drawer__nav">
+      <a href="/" aria-current={Astro.url.pathname === "/" ? "page" : undefined}>Home</a>
+      <a href="/programma" aria-current={Astro.url.pathname.startsWith("/programma") ? "page" : undefined}>Programma</a>
+      <a href="/chi-siamo" aria-current={Astro.url.pathname.startsWith("/chi-siamo") ? "page" : undefined}>Chi siamo</a>
+      <a href="/newsletter" aria-current={Astro.url.pathname.startsWith("/newsletter") ? "page" : undefined}
+        >Newsletter</a
+      >
+    </div>
+    <div class="drawer__footer">
+      <a class="btn btn--solid btn--block btn--lg" href="/newsletter">Iscriviti alla newsletter</a>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .site-header__brand {
+    padding: .35rem;
+    flex: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s .3s;
+  }
+  .site-header.is-scrolled .site-header__brand {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+  .site-header__logo { display: block; width: 4rem; }
+  .site-header__logo :global(svg) { display: block; width: 100%; height: auto; }
+  @media (max-width: 620px) {
+    .site-header__logo { width: 3.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-header__brand { transform: none; transition: none; }
+  }
+</style>
