@@ -13,8 +13,9 @@ test('matching slugs in separate years are valid; duplicate routes and bad refer
 test('development and preview refuse production or mismatched Studio configuration', () => {
   const env = { PUBLIC_SANITY_PROJECT_ID: '879g27iz', PUBLIC_SANITY_DATASET: 'staging', SANITY_STUDIO_DATASET: 'staging' };
   assert.equal(sanityEnvironment(env).dataset, 'staging');
-  assert.throws(() => sanityEnvironment({ ...env, SANITY_STUDIO_DATASET: 'test2' }), /disagree/);
-  assert.throws(() => sanityEnvironment({ PUBLIC_SANITY_PROJECT_ID: '879g27iz', PUBLIC_SANITY_DATASET: 'test2', VERCEL_ENV: 'preview' }), /must use staging/);
-  assert.equal(sanityEnvironment({ PUBLIC_SANITY_PROJECT_ID: '879g27iz', PUBLIC_SANITY_DATASET: 'test2', VERCEL_ENV: 'production' }).production, true);
-  assert.equal(sanityEnvironment({ SANITY_STUDIO_PROJECT_ID: '879g27iz', SANITY_STUDIO_DATASET: 'test2', SANITY_STUDIO_TV_ENV: 'production' }).dataset, 'test2');
+  assert.throws(() => sanityEnvironment({ ...env, SANITY_STUDIO_DATASET: 'main' }), /disagree/);
+  assert.throws(() => sanityEnvironment({ PUBLIC_SANITY_PROJECT_ID: '879g27iz', PUBLIC_SANITY_DATASET: 'main', VERCEL_ENV: 'preview' }), /must use staging/);
+  assert.throws(() => sanityEnvironment({ PUBLIC_SANITY_PROJECT_ID: '879g27iz', PUBLIC_SANITY_DATASET: 'test2', VERCEL_ENV: 'production' }), /must use main/);
+  assert.equal(sanityEnvironment({ PUBLIC_SANITY_PROJECT_ID: '879g27iz', PUBLIC_SANITY_DATASET: 'main', VERCEL_ENV: 'production' }).production, true);
+  assert.equal(sanityEnvironment({ SANITY_STUDIO_PROJECT_ID: '879g27iz', SANITY_STUDIO_DATASET: 'main', SANITY_STUDIO_TV_ENV: 'production' }).dataset, 'main');
 });

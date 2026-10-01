@@ -2,9 +2,9 @@
 
 ## Ambito
 
-Lo staging è migrato: esecuzione `staging-v2-public`, stato `complete`. Vedere il [report](sanity-staging-migration-report.md) e il [modello editoriale](sanity-content-model.md). `test2` non è stato letto né modificato durante questa implementazione.
+Lo staging è migrato: esecuzione `staging-v2-public`, stato `complete`. Vedere il [report](sanity-staging-migration-report.md) e il [modello editoriale](sanity-content-model.md). Il 1 ottobre 2026, dopo un comando esplicito dell'utente, `test2` è stato sostituito con `main` importando l'export completo di staging. Vedere il [report del passaggio](sanity-main-promotion.md).
 
-Il comando `npm run content:migrate -- ...` usa un'unica trasformazione versionata per `staging` e, dopo un comando esplicito dell'utente, `test2`. Senza autorizzazione produzione, **qualsiasi accesso a test2 è bloccato prima di creare il client**, anche per inventario o simulazione.
+Il comando `npm run content:migrate -- ...` usa un'unica trasformazione versionata per `staging` e, dopo un comando esplicito dell'utente, `main`. Senza autorizzazione produzione, **qualsiasi accesso a main è bloccato prima di creare il client**, anche per inventario o simulazione. Il dataset ritirato `test2` non è più un target ammesso.
 
 Per le operazioni remote occorre una sessione Sanity CLI autenticata oppure `SANITY_AUTH_TOKEN` / `SANITY_EDITOR_TOKEN`. Un inventario anonimo non basta: potrebbe omettere bozze e documenti privati. La simulazione con `--source` locale non richiede autenticazione.
 
@@ -75,9 +75,9 @@ I contenuti storici migrati non ricevono orari, ritrovi, relatori o descrizioni 
 
 ## Ripetizione futura su produzione
 
-`test2` rimane bloccato. Solo dopo un comando esplicito dell'utente si abilita una specifica esecuzione con **entrambe** le condizioni `--authorize-production` e `TV_ALLOW_PRODUCTION_MIGRATION=true`. La selezione del dataset da sola non autorizza l'accesso.
+`main` è già migrato: conserva lo stato `complete` importato da staging e una nuova simulazione restituisce zero operazioni. Per qualsiasi futura esecuzione su produzione occorrono un comando esplicito dell'utente e **entrambe** le condizioni `--authorize-production` e `TV_ALLOW_PRODUCTION_MIGRATION=true`. La selezione del dataset da sola non autorizza l'accesso.
 
-Prima di quel passaggio: nuovo inventario di produzione, revisione dei contenuti cambiati e dei nuovi documenti, nuovo piano, snapshot e backup specifici di produzione. Le decisioni staging ancora equivalenti si riutilizzano; le modifiche editoriali presenti soltanto nello staging non si trasferiscono automaticamente.
+Per una futura trasformazione: nuovo inventario di produzione, revisione dei contenuti cambiati e dei nuovi documenti, nuovo piano, snapshot e backup specifici di produzione. Non riutilizzare su main il journal di una migrazione eseguita su staging: l'import conserva i dati e il marker, ma crea nuove revisioni.
 
 Il motore rileva le bozze e le Content Releases. Le bozze richiedono una mappatura `draft` esplicita con la propria impronta. Documenti soltanto in bozza e versioni di release non ancora mappati bloccano la migrazione, senza pubblicazione o eliminazione implicita. Risolvere quelle mappature prima di una futura applicazione quando si presentano nell'inventario.
 
