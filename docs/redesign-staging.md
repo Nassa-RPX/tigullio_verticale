@@ -1,10 +1,15 @@
 # Redesign development and release
 
+> The structural Program → Event migration supersedes the additive-schema instructions below. Current operations are documented in `docs/content-migration-runbook.md` and `docs/sanity-staging-migration-plan.md`. Keep production dataset `test2` untouched until the user explicitly requests its migration. The earlier initial-copy counts and compatibility results below describe the pre-migration baseline.
+
+The staging migration completed on 2026-10-01 (`staging-v2-public`): 2 programs, 11 published events, 15 people, 1 preserved event draft, and 1 migration-state document. See [the execution report](sanity-staging-migration-report.md). No production reads, mutations or hosted deployments were performed for this migration.
+
 The local website and Studio use project `879g27iz`, dataset `staging`. The live dataset is `test2`. The initial copy contains 2 programs, 9 appointments (`appuntamento`), and 12 activities (`event`), with unchanged IDs, references and Portable Text. A website-content backup was exported to `C:/Users/cgiov/Downloads/tv-test2-content-2026-10-01.tar.gz`.
 
 ## Local commands
 
 - `npm run dev`: staging website.
+- The development server refreshes Sanity content on the next request once its five-second cache expires. Static builds keep one consistent content snapshot. If a server was started before a schema migration, restart it on `localhost:4321`; `astro preview` serves the last build separately.
 - `npm run build` and `npm run preview`: staging build and preview; newsletter submissions are mocked.
 - `npm run sanity:dev`: local Studio labelled **Tigullio Verticale — Staging**.
 - `npm test`: calendar, content integrity, environment and newsletter tests.

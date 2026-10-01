@@ -4,7 +4,9 @@ import { editorialFields } from './practicalInfo';
 export default defineType({
   name: 'appuntamento',
   type: 'document',
-  title: 'Appuntamento',
+  title: 'Appuntamento (modello precedente)',
+  readOnly: true,
+  deprecated: { reason: 'I contenuti sono migrati direttamente negli eventi del programma.' },
   fields: [
     ...editorialFields,
     defineField({

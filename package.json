@@ -9,7 +9,8 @@
     "astro": "node scripts/run.mjs astro",
     "sanity:dev": "node scripts/run.mjs sanity dev",
     "sanity:deploy": "node scripts/run.mjs studio-deploy",
-    "test": "tsx --test tests/*.test.ts"
+    "test": "tsx --test tests/*.test.ts",
+    "content:migrate": "node scripts/migrate-content.mjs"
   },
   "dependencies": {
     "@sanity/astro": "^3.5.0",

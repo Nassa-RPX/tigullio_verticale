@@ -1,0 +1,276 @@
+{
+  "date-ritornare-sul-territorio": {
+    "mode": "single",
+    "kind": "walk",
+    "sourceHash": "c5ee4cbe7351172a6a0382487483b495acb283b313c5a1d9f81e272e14b23dd0",
+    "startTime": "09:30",
+    "guides": [
+      [
+        "Guido Chioino",
+        "Guida Ambientale Escursionistica"
+      ],
+      [
+        "Oenone Ann Llloyd",
+        "Presidente associazione Pietre Parlanti"
+      ],
+      [
+        "Osvaldo Garbarino",
+        "Architetto, specialista restauro monumenti"
+      ],
+      [
+        "Renata Allegri",
+        "Docente di Didattica della geografia, Università degli Studi di Genova"
+      ]
+    ],
+    "walk": {
+      "meetingPoint": "Chiesa di Santa Giulia",
+      "elevationGainM": 313,
+      "difficulty": "E",
+      "equipment": "Scarponcini da trekking, scorta d’acqua da 1,5 litri, pranzo al sacco. Consigliati pantaloni lunghi, maglia di ricambio."
+    },
+    "booking": {
+      "required": true,
+      "maxParticipants": 25,
+      "contact": {
+        "name": "Fabio (Scarpinate)",
+        "phone": "3312851961"
+      }
+    }
+  },
+  "date-ricostruire-sul-territorio": {
+    "mode": "single",
+    "kind": "meeting",
+    "sourceHash": "afcfd1562b8456c92f39fe49b523fcf7fb07946937c146337f9b89502134ad61",
+    "startTime": "13:30",
+    "endTime": "17:00",
+    "speakers": [
+      [
+        "Fabio Costantini",
+        "Agricoltore e fondatore di Fescion Farmer"
+      ]
+    ],
+    "booking": {
+      "required": true,
+      "maxParticipants": 12,
+      "contact": {
+        "name": "Floriana (Nassa Rapallo)",
+        "phone": "3489666916"
+      }
+    }
+  },
+  "date-riconoscere-il-territorio": {
+    "mode": "series",
+    "sourceHash": "d91e819619feca1966b6f07d14a875e163e41384c9071f5c3b568232ffc387dc",
+    "activities": {
+      "event-riconoscere-le-piante": {
+        "startTime": "12:00",
+        "speakers": [
+          [
+            "Fabio Costantini",
+            "Fescion Farmer"
+          ]
+        ],
+        "booking": {
+          "contact": {
+            "name": "Floriana",
+            "phone": "3489666916"
+          }
+        }
+      },
+      "event-fare-apicoltura": {
+        "startTime": "14:00",
+        "speakers": [
+          [
+            "Martina Bianchi",
+            "Amarti"
+          ]
+        ],
+        "booking": {
+          "contact": {
+            "name": "Floriana",
+            "phone": "3489666916"
+          }
+        }
+      },
+      "event-pesci-foresti": {
+        "startTime": "15:00",
+        "speakers": [
+          [
+            "Fabio Mattioli",
+            "Curatore settore tropicale dell’Acquario di Genova"
+          ]
+        ]
+      },
+      "event-abbandono-animali-selvatici": {
+        "startTime": "16:00",
+        "speakers": [
+          [
+            "Paolo Rossi",
+            "Documentarista e fotografo"
+          ]
+        ]
+      }
+    }
+  },
+  "date-altra-santa": {
+    "mode": "single",
+    "kind": "walk",
+    "sourceHash": "4ea859481ed3422a495d7f0c26d557ce7546b63ae5bc55bd20aaea4474575fed",
+    "startTime": "10:00",
+    "endTime": "17:00",
+    "guides": [
+      [
+        "Claudio Solimano",
+        "Guida Ambientale Escursionistica"
+      ],
+      [
+        "Fabio Casazza",
+        "Scarpinate"
+      ]
+    ],
+    "walk": {
+      "meetingPoint": "IAT di Santa Margherita Ligure, piazza Vittorio Veneto 1",
+      "elevationGainM": 313,
+      "difficulty": "E",
+      "equipment": "Scarponcini da trekking, scorta d’acqua da 1,5 litri, pranzo al sacco. Consigliati pantaloni lunghi, maglia di ricambio."
+    },
+    "booking": {
+      "required": true,
+      "maxParticipants": 25,
+      "contact": {
+        "name": "Claudio",
+        "email": "claudio_zena@yahoo.it"
+      }
+    }
+  },
+  "date-scarpinassa-resistente": {
+    "mode": "single",
+    "kind": "walk",
+    "sourceHash": "a5f0a772ff0bfe7dc8949d98e6991ad35f5b8a59b551ed37ad51aa8827a09879",
+    "startTime": "09:30",
+    "guides": [
+      [
+        "Flora Labigalini",
+        "Guida Ambientale Escursionistica"
+      ]
+    ],
+    "walk": {
+      "meetingPoint": "Chiesa di Santa Giulia, Lavagna",
+      "elevationGainM": 373,
+      "difficulty": "EE",
+      "equipment": "Calzature da trekking con suola scolpita, borraccia d’acqua, pranzo al sacco."
+    },
+    "booking": {
+      "required": true,
+      "maxParticipants": 25,
+      "contact": {
+        "name": "Fabio (Scarpinate)",
+        "phone": "3312851961"
+      }
+    }
+  },
+  "500e5524-41df-4770-b04f-ad53e12b492d": {
+    "mode": "single",
+    "kind": "meeting",
+    "sourceHash": "b60f47a3e8169184ac9f08b93696e6a997164327ce713a017ba445af3c00d61e"
+  },
+  "9ce7b1a0-4612-4e0e-b5df-04b498d335e6": {
+    "mode": "single",
+    "kind": "walk",
+    "sourceHash": "65971128e5a8ce8866a8c6449de168ade84c620fc08d40e2144ad85227f74c92",
+    "startTime": "19:00",
+    "endTime": "23:30",
+    "guides": [
+      [
+        "Claudio Solimano",
+        "Guida GAE"
+      ],
+      [
+        "Fabio Casazza",
+        "Guida GAE, Scarpinate"
+      ],
+      [
+        "Andrea Chiantore",
+        "Osservazione astronomica, associazione culturale Il Sestante"
+      ]
+    ],
+    "walk": {
+      "meetingPoint": "Parcheggio poco sotto l’Hotel Portofino Kulm",
+      "elevationGainM": 340,
+      "equipment": "Scarpe da trekking con suola scolpita, torcia, borraccia. Cena al sacco."
+    },
+    "booking": {
+      "required": true,
+      "maxParticipants": 40,
+      "contact": {
+        "name": "Fabio Casazza (Scarpinate)",
+        "phone": "3312851961"
+      }
+    }
+  },
+  "8349622f-ad97-4434-9957-da266eb4d70f": {
+    "mode": "split",
+    "sourceHash": "4d38fd17afdb21e0116cb600c52e9e949916a578eda92c1ab44205daa7cd779f",
+    "activities": {
+      "683f305d-ba58-4889-8661-f36cdf2f9a73": {
+        "kind": "walk",
+        "guides": [
+          [
+            "Emiliano Beri",
+            "Professore, UNIGE"
+          ],
+          [
+            "Emanuele Bacigalipo",
+            "Storico"
+          ],
+          [
+            "Claudio Solimano",
+            "Guida GAE"
+          ],
+          [
+            "Fabio Casazza",
+            "Guida GAE, Scarpinate"
+          ]
+        ]
+      },
+      "e7e9879e-2ce3-449b-9999-1e31c779fa19": {
+        "kind": "walk",
+        "guides": [
+          [
+            "Fabio Casazza",
+            "Guida GAE, Scarpinate"
+          ],
+          [
+            "Clara Manzamilla",
+            "Geologa"
+          ]
+        ]
+      }
+    }
+  },
+  "b0c6cbc6-4dbf-4825-8b55-6bf24b92c64e": {
+    "mode": "split",
+    "sourceHash": "5f160385855219a735dfecf46c93d2a4aefb50b576bbb68ff7dca05c40a63bd1",
+    "activities": {
+      "2f43c668-604e-40e0-b58a-a6e8fbac513d": {
+        "kind": "series"
+      },
+      "788ab834-792b-472a-9a20-fc8a226e0edb": {
+        "kind": "walk",
+        "guides": [
+          [
+            "Claudio Solimano",
+            "Guida GAE"
+          ],
+          [
+            "Paolo Rossi",
+            "Documentarista e fotografo"
+          ]
+        ]
+      }
+    },
+    "draft": {
+      "sourceHash": "9cd793d41f9a286313f65bb9454c634c6076d67f4208b5a2046a4ef20d4ad2c8"
+    }
+  }
+}

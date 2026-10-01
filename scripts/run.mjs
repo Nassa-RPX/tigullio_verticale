@@ -16,7 +16,8 @@ process.env.SANITY_STUDIO_TV_ENV = config.production ? 'production' : 'staging';
 delete process.env.SANITY_EDITOR_TOKEN;
 const [command, ...args] = process.argv.slice(2);
 if (!['astro', 'sanity', 'studio-deploy'].includes(command)) throw new Error('Unknown command.');
-if (command === 'sanity' && (args[0] !== 'dev' || config.dataset !== 'staging')) throw new Error('This development wrapper allows only the local staging Studio.');
+const localSchemaCommand = (['schema', 'schemas'].includes(args[0]) && ['validate', 'extract'].includes(args[1])) || (args[0] === 'documents' && args[1] === 'validate' && args.includes('--file'));
+if (command === 'sanity' && ((!localSchemaCommand && args[0] !== 'dev') || config.dataset !== 'staging')) throw new Error('This development wrapper allows only the staging Studio and local schema checks.');
 if (command === 'studio-deploy' && (!config.production || process.env.TV_ALLOW_STUDIO_DEPLOY !== 'true')) {
   throw new Error('Studio deployment is disabled. A release requires TV_ENV=production and TV_ALLOW_STUDIO_DEPLOY=true.');
 }
