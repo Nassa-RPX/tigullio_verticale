@@ -2,9 +2,17 @@
 import Layout from "@/layouts/Layout.astro";
 import ProgramView from "@/components/ProgramView.astro";
 import { getContent, type Program } from "@/lib/sanity";
-export async function getStaticPaths() { const { programs } = await getContent(); return programs.map(program => ({ params: { year: String(program.year) }, props: { program } })); }
-interface Props { program: Program }
+export async function getStaticPaths() {
+  const { programs } = await getContent();
+  return programs.map((program) => ({ params: { year: String(program.year) }, props: { program } }));
+}
+interface Props {
+  program: Program;
+}
 const { program } = Astro.props;
 const { programs, dates } = await getContent();
 ---
-<Layout title={"Programma " + program.year}><ProgramView programs={programs} dates={dates} selected={program.year} /></Layout>
+
+<Layout title={"Programma " + program.year}
+  ><ProgramView programs={programs} dates={dates} selected={program.year} /></Layout
+>

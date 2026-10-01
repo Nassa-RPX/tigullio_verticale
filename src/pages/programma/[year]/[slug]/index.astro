@@ -1,46 +1,101 @@
 ---
-import { PortableText } from 'astro-portabletext';
-import Layout from '@/layouts/Layout.astro';
-import EditorialDetails from '@/components/EditorialDetails.astro';
-import PracticalInformation from '@/components/PracticalInformation.astro';
-import { getContent, type DateDoc } from '@/lib/sanity';
-import { dateParts } from '@/lib/calendar';
+import { PortableText } from "astro-portabletext";
+import Layout from "@/layouts/Layout.astro";
+import EditorialDetails from "@/components/EditorialDetails.astro";
+import PracticalInformation from "@/components/PracticalInformation.astro";
+import { getContent, type DateDoc } from "@/lib/sanity";
+import { dateParts } from "@/lib/calendar";
 export async function getStaticPaths() {
   const { dates } = await getContent();
-  return dates.map(date => ({ params: { year: String(date.year), slug: date.slug }, props: { date } }));
+  return dates.map((date) => ({ params: { year: String(date.year), slug: date.slug }, props: { date } }));
 }
-interface Props { date: DateDoc }
+interface Props {
+  date: DateDoc;
+}
 const { date } = Astro.props;
 const { dates } = await getContent();
-const related = dates.filter(item => item.year === date.year && item._id !== date._id);
+const related = dates.filter((item) => item.year === date.year && item._id !== date._id);
 const parts = dateParts(date.date);
-const hasDescription = !!date.body?.length || date.events.some(event => event.hasDescription && event.body?.length);
+const hasDescription = !!date.body?.length || date.events.some((event) => event.hasDescription && event.body?.length);
 ---
+
 <Layout title={date.title} description={date.subtitle || undefined}>
-  <section class="page-hero"><div class="container page-hero__inner">
-    <a class="back" href={`/programma/${date.year}`}><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-left" /></svg><span>Programma {date.year}</span></a>
-    <span class="kicker">Programma {date.year}</span><h1 class="display-l">{date.title}</h1>
-    {date.subtitle && <p class="lede">{date.subtitle}</p>}
-    <div class="event-meta"><time class="event-meta__date" datetime={date.date}>{parts.long}</time><span class="event-meta__place">{date.location}</span>{date.timeInfo && <span class="event-meta__info">{date.timeInfo}</span>}</div>
-  </div></section>
-  <section class="section section--tight"><div class="container event-layout">
-    <div class="event-body">
-      {!!date.body?.length && <div class="prose"><PortableText value={date.body} /></div>}
-      <EditorialDetails content={date} />
-      {date.events.map(event => <section class="event-section" id={`activity-${event._id}`}>
-        <h2 class="event-section__title">{event.title}</h2>
-        {event.subtitle && <p class="event-lede">{event.subtitle}</p>}
-        {(event.location || event.info) && <p class="event-meta__info">{[event.location, event.info].filter(Boolean).join(' · ')}</p>}
-        {event.requiredPrenotation && <span class="badge-next">Prenotazione obbligatoria</span>}
-        {event.hasDescription && !!event.body?.length && <div class="prose"><PortableText value={event.body} /></div>}
-        <EditorialDetails content={event} />
-      </section>)}
-      {!hasDescription && <p class="muted">Descrizione dettagliata in arrivo.</p>}
+  <section class="page-hero">
+    <div class="container page-hero__inner">
+      <a class="back" href={`/programma/${date.year}`}
+        ><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-left"></use></svg><span
+          >Programma {date.year}</span
+        ></a
+      >
+      <!-- <span class="kicker">Programma {date.year}</span> -->
+      <h1 class="display-l">{date.title}</h1>
+
+      {date.subtitle && <p class="lede">{date.subtitle}</p>}
+      <div class="event-meta">
+        <time class="event-meta__date" datetime={date.date}>{parts.long}</time><span class="event-meta__place"
+          >{date.location}</span
+        >{date.timeInfo && <span class="event-meta__info">{date.timeInfo}</span>}
+      </div>
     </div>
-    <aside class="event-side" aria-label="Informazioni e altri appuntamenti">
-      <PracticalInformation info={date.practicalInfo} />
-      {date.events.map(event => <PracticalInformation info={event.practicalInfo} title={event.title} required={event.requiredPrenotation} />)}
-      {!!related.length && <section class="event-related"><h2 class="event-side-title">Altri appuntamenti {date.year}</h2><div class="event-related__list">{related.map(item => <a class="event-related__item" href={`/programma/${item.year}/${item.slug}`}><time class="event-related__date" datetime={item.date}>{dateParts(item.date).long}</time><span class="event-related__title">{item.title}</span></a>)}</div></section>}
-    </aside>
-  </div></section>
+  </section>
+  <section class="section section--tight-top">
+    <div class="container event-layout">
+      <div class="event-body">
+        {
+          !!date.body?.length && (
+            <div class="prose">
+              <PortableText value={date.body} />
+            </div>
+          )
+        }
+        <EditorialDetails content={date} />
+        {
+          date.events.map((event) => (
+            <section class="event-section" id={`activity-${event._id}`}>
+              <h2 class="event-section__title">{event.title}</h2>
+              {event.subtitle && <p class="event-lede">{event.subtitle}</p>}
+              {(event.location || event.info) && (
+                <p class="event-meta__info">{[event.location, event.info].filter(Boolean).join(" · ")}</p>
+              )}
+              {event.requiredPrenotation && <span class="badge-next">Prenotazione obbligatoria</span>}
+              {event.hasDescription && !!event.body?.length && (
+                <div class="prose">
+                  <PortableText value={event.body} />
+                </div>
+              )}
+              <EditorialDetails content={event} />
+            </section>
+          ))
+        }
+        {!hasDescription && <p class="muted">Descrizione dettagliata in arrivo.</p>}
+      </div>
+      <aside class="event-side" aria-label="Informazioni e altri appuntamenti">
+        <PracticalInformation info={date.practicalInfo} />
+        {
+          date.events.map((event) => (
+            <PracticalInformation info={event.practicalInfo} title={event.title} required={event.requiredPrenotation} />
+          ))
+        }
+        {
+          !!related.length && (
+            <section class="event-related">
+              <>
+                <h2 class="event-side-title">Altri appuntamenti {date.year}</h2>
+                <div class="event-related__list">
+                  {related.map((item) => (
+                    <a class="event-related__item" href={`/programma/${item.year}/${item.slug}`}>
+                      <time class="event-related__date" datetime={item.date}>
+                        {dateParts(item.date).long}
+                      </time>
+                      <span class="event-related__title">{item.title}</span>
+                    </a>
+                  ))}
+                </div>
+              </>
+            </section>
+          )
+        }
+      </aside>
+    </div>
+  </section>
 </Layout>

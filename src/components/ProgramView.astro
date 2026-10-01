@@ -1,12 +1,73 @@
 ---
-import type { Program, DateDoc } from '@/lib/sanity';
-import AppointmentList from './AppointmentList.astro';
-import Contour from './Contour.astro';
-interface Props { programs: Program[]; dates: DateDoc[]; selected?: number }
+import type { Program, DateDoc } from "@/lib/sanity";
+import AppointmentList from "./AppointmentList.astro";
+import Contour from "./Contour.astro";
+interface Props {
+  programs: Program[];
+  dates: DateDoc[];
+  selected?: number;
+}
 const { programs, dates, selected } = Astro.props;
 ---
-<section class="page-hero"><Contour /><div class="container page-hero__inner"><span class="kicker">Programma</span><h1 class="display-l">Gli appuntamenti</h1><p class="lede">Camminate e incontri che attraversano il territorio, stagione per stagione. Gli appuntamenti già svolti restano in archivio.</p></div></section>
-<section class="section section--tight"><div class="container"><div class="section-head section-head--row"><div class="section-head__text"><span class="kicker">Stagioni</span><h2 class="display-m">Scegli l’anno</h2></div><nav class="tabs" aria-label="Stagioni del programma">{programs.map(program => <a class="tab" href={`/programma/${program.year}`} aria-current={program.year === selected ? 'page' : undefined}>{program.year}</a>)}</nav></div>
-  {selected !== undefined ? <div class="season-panel"><h2 class="visually-hidden">Programma {selected}</h2><AppointmentList dates={dates.filter(date => date.year === selected)} /></div> : <p class="muted">Il programma è in preparazione. Iscriviti alla newsletter per ricevere le nuove date.</p>}
-</div></section>
-<section class="section section--tight"><div class="container"><div class="panel panel--fill program-cta"><div class="section-head__text"><h2 class="display-s">Vuoi sapere quando escono le nuove date?</h2><p class="muted">Iscriviti alla newsletter: ti avvisiamo a ogni nuovo appuntamento.</p></div><a class="btn btn--outline" href="/newsletter">Iscriviti alla newsletter</a></div></div></section>
+
+<section class="page-hero" data-program-motion>
+  <Contour /><div class="container page-hero__inner">
+    <span class="kicker">Programma</span><h1 class="display-l">Gli appuntamenti</h1><p class="lede">
+      Camminate e incontri che attraversano il territorio, stagione per stagione. Gli appuntamenti già svolti restano in
+      archivio.
+    </p>
+  </div>
+</section>
+<section class="section section--tight" data-program-list>
+  <div class="container">
+    <div class="section-head section-head--row" data-program-years>
+      <div class="section-head__text">
+        <span class="kicker">Stagioni</span><h2 class="display-m">Scegli l’anno</h2>
+      </div><nav class="tabs" aria-label="Stagioni del programma">
+        {
+          programs.map((program) => (
+            <a
+              class="tab"
+              href={`/programma/${program.year}`}
+              aria-current={program.year === selected ? "page" : undefined}
+            >
+              {program.year}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+    {
+      selected !== undefined ? (
+        <div class="season-panel">
+          <>
+            <h2 class="visually-hidden">Programma {selected}</h2>
+            <AppointmentList dates={dates.filter((date) => date.year === selected)} />
+          </>
+        </div>
+      ) : (
+        <p class="muted">Il programma è in preparazione. Iscriviti alla newsletter per ricevere le nuove date.</p>
+      )
+    }
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="panel panel--fill program-cta" data-program-cta>
+      <div class="section-head__text">
+        <h2 class="display-s">Vuoi sapere quando escono le nuove date?</h2><p class="muted">
+          Iscriviti alla newsletter: ti avvisiamo a ogni nuovo appuntamento.
+        </p>
+      </div><a class="btn btn--outline" href="/newsletter">Iscriviti alla newsletter</a>
+    </div>
+  </div>
+</section>
+<script src="@/scripts/program-motion.ts"></script>
+<style>
+  .page-hero[data-program-motion] .page-hero__inner > * { animation: none; }
+  [data-program-list] :global(.event-card) {
+    opacity: calc(var(--program-card-opacity, 1) * var(--program-card-reveal, 1));
+  }
+  [data-program-list] :global(.event-card--past) { --program-card-opacity: .72; }
+  [data-program-list] :global(.event-card:hover) { --program-card-opacity: 1; }
+</style>

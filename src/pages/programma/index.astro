@@ -4,4 +4,5 @@ import ProgramView from "@/components/ProgramView.astro";
 import { getContent } from "@/lib/sanity";
 const { programs, dates } = await getContent();
 ---
+
 <Layout title="Programma"><ProgramView programs={programs} dates={dates} selected={programs[0]?.year} /></Layout>

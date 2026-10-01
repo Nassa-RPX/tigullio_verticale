@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { createScrollReveal } from '../scroll-reveal';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -36,7 +37,7 @@ scrollLink?.addEventListener('click', event => {
 reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) scrollTween?.kill(); });
 
 const media = gsap.matchMedia();
-const revealed = new WeakSet<Element>();
+const reveal = createScrollReveal();
 let heroAnimated = false;
 media.add('(prefers-reduced-motion: no-preference)', () => {
   if (!hero) return;
@@ -53,23 +54,6 @@ media.add('(prefers-reduced-motion: no-preference)', () => {
     scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: .6 },
   });
 
-  const reveal = (targets: Element | Element[], trigger: Element, stagger = 0) => {
-    const nodes = (Array.isArray(targets) ? targets : [targets]).filter(node => !revealed.has(node));
-    if (!nodes.length) return;
-    // Restored scroll positions and preference changes must not hide visible content.
-    if (trigger.getBoundingClientRect().top <= innerHeight * .88) {
-      nodes.forEach(node => revealed.add(node));
-      return;
-    }
-    // Cards retain their CSS hover transform; GSAP only fades them.
-    const move = !nodes.some(node => node.matches('.event-card'));
-    gsap.from(nodes, {
-      opacity: 0, ...(move ? { y: distance } : {}), duration: .85, stagger, ease: 'power3.out',
-      immediateRender: true, clearProps: move ? 'opacity,transform' : 'opacity',
-      onStart: () => { nodes.forEach(node => revealed.add(node)); },
-      scrollTrigger: { trigger, start: 'top 88%', once: true },
-    });
-  };
   const ideaHead = idea?.querySelector('.idea-editorial__head');
   if (ideaHead) reveal(Array.from(ideaHead.children), ideaHead, .12);
   idea?.querySelectorAll('.idea-editorial__body > *').forEach(node => reveal(node, node));
