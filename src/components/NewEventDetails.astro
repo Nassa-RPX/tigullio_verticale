@@ -4,14 +4,12 @@ import Participants from "./Participants.astro";
 import BookingInformation from "./BookingInformation.astro";
 import PracticalInformation from "./PracticalInformation.astro";
 import { dateParts } from "@/lib/calendar";
-import EventType from "./EventType.astro";
 import EventDateRange from "./EventDateRange.astro";
 import EventDescription from "./EventDescription.astro";
 interface Props {
   event: DateDoc;
-  related: DateDoc[];
 }
-const { event, related } = Astro.props;
+const { event } = Astro.props;
 const walk = event.kind === "walk" ? event.walk : undefined;
 const duration = walk?.durationMinutes;
 const info: PracticalInfo = walk
@@ -32,139 +30,101 @@ const info: PracticalInfo = walk
 const meetings = event.kind === "series" ? event.series?.meetings || [] : [];
 ---
 
-<section class="section section--tight-top">
-  <div class="container event-layout">
-    <div class="event-body">
-      {[...new Set(event.legacyAnchors || [])].map((id) => <span class="event-legacy-anchor" id={id} />)}
-      <EventDescription body={event.body} title={event.title} />
-      {!event.body?.length && <p class="muted">La descrizione dell’evento è in aggiornamento.</p>}
-      {walk && <PracticalInformation info={info} />}
-      {event.kind === "walk" && <Participants people={walk?.guides} title="Guide e accompagnatori" />}
-      {
-        event.kind === "meeting" && (
-          <>
-            <>
-              <Participants people={event.meeting?.speakers} />
-              <Participants people={event.meeting?.moderator ? [event.meeting.moderator] : []} title="Modera" />
-            </>
-          </>
-        )
-      }
-      {
-        event.kind === "series" && (
-          <section class="event-series" id="incontri" tabindex="-1" aria-labelledby="incontri-heading">
-            <header class="event-series__header">
-              <>
-                <span class="kicker">Il programma della serie</span>
-                <h2 class="display-s" id="incontri-heading">
-                  Gli incontri
-                </h2>
-              </>
-            </header>
-            {meetings.length > 0 ? (
-              <>
-                <nav class="event-agenda" aria-label="Vai a un incontro della serie">
-                  <ol>
-                    {meetings.map((slot, index) => (
-                      <li>
-                        <a href={`#meeting-${slot._key}`}>
-                          <span class="event-agenda__number" aria-hidden="true">
-                            {String(index + 1).padStart(2, "0")}
+<div class="event-body">
+  {[...new Set(event.legacyAnchors || [])].map((id) => <span class="event-legacy-anchor" id={id} />)}
+  <EventDescription body={event.body} title={event.title} />
+  {!event.body?.length && <p class="muted">La descrizione dell’evento è in aggiornamento.</p>}
+  {walk && <PracticalInformation info={info} />}
+  {event.kind === "walk" && <Participants people={walk?.guides} title="Guide e accompagnatori" />}
+  {
+    event.kind === "meeting" && (
+      <>
+        <>
+          <Participants people={event.meeting?.speakers} />
+          <Participants people={event.meeting?.moderator ? [event.meeting.moderator] : []} title="Modera" />
+        </>
+      </>
+    )
+  }
+  {
+    event.kind === "series" && (
+      <>
+        <section class="event-series" id="incontri" tabindex="-1" aria-labelledby="incontri-heading">
+          <header class="event-series__header">
+            <h2 class="event-side-title" id="incontri-heading">
+              Riepilogo degli incontri
+            </h2>
+          </header>
+          {meetings.length > 0 ? (
+            <nav class="event-agenda" aria-label="Vai a un incontro della serie">
+              <ol>
+                {meetings.map((slot) => (
+                  <li>
+                    <a href={`#meeting-${slot._key}`}>
+                      <span class="event-agenda__number" aria-hidden="true" />
+                      <span class="event-agenda__content">
+                        {(slot.date || slot.startTime) && (
+                          <span class="event-agenda__time">
+                            {[slot.date ? dateParts(slot.date).long : undefined, slot.startTime]
+                              .filter(Boolean)
+                              .join(" · ")}
                           </span>
-                          <span class="event-agenda__content">
-                            {(slot.date || slot.startTime) && (
-                              <span class="event-agenda__time">
-                                {[slot.date ? dateParts(slot.date).long : undefined, slot.startTime]
-                                  .filter(Boolean)
-                                  .join(" · ")}
-                              </span>
-                            )}
-                            <span>{slot.title}</span>
-                          </span>
-                          <span aria-hidden="true">↓</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
-                </nav>
-                <div class="event-meetings">
-                  {meetings.map((slot, index) => (
-                    <section class="event-section" id={`meeting-${slot._key}`} tabindex="-1">
-                      {slot._key.startsWith("meeting-") && (
-                        <span class="event-legacy-anchor" id={`activity-${slot._key.slice(8)}`} />
-                      )}
-                      <span class="kicker">Incontro {index + 1}</span>
-                      <h3 class="event-section__title">{slot.title}</h3>
-                      <div class="event-meta event-meeting-meta">
-                        <EventDateRange date={slot.date || event.date} />
-                        {slot.startTime && (
-                          <span>Ore {[slot.startTime, slot.endTime].filter(Boolean).join(" – ")}</span>
                         )}
-                        <span class="event-meta__place">{slot.location || event.location}</span>
-                      </div>
-                      <EventDescription body={slot.body} title={slot.title} />
-                      <Participants people={slot.speakers} heading="h4" />
-                      <Participants people={slot.moderator ? [slot.moderator] : []} title="Modera" heading="h4" />
-                      {event.series?.bookingMode === "sessions" && (
-                        <BookingInformation
-                          booking={slot.booking}
-                          title="Prenotazione dell’incontro"
-                          id={`prenotazione-${slot._key}`}
-                          heading="h4"
-                        />
-                      )}
-                    </section>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <p class="muted">Il programma dei singoli incontri è in aggiornamento.</p>
-            )}
-          </section>
-        )
-      }
-      {
-        event.partners && (
-          <section class="event-partners">
-            <>
-              <h2 class="event-side-title">In collaborazione con</h2>
-              <p>{event.partners}</p>
-            </>
-          </section>
-        )
-      }
-    </div>
-    <aside class="event-side" aria-label="Informazioni e altri eventi">
-      {event.kind !== "series" && <BookingInformation booking={event.booking} id="prenotazione-evento" />}
-      {
-        event.kind === "series" && event.series?.bookingMode === "series" && (
-          <BookingInformation
-            booking={event.series.booking}
-            title="Prenotazione della serie"
-            id="prenotazione-evento"
-          />
-        )
-      }
-      {
-        related.length > 0 && (
-          <section class="event-related">
-            <>
-              <h2 class="event-side-title">Altri eventi {event.year}</h2>
-              <div class="event-related__list">
-                {related.map((item) => (
-                  <a class="event-related__item" href={`/programma/${item.year}/${item.slug}`}>
-                    <EventType kind={item.kind} />
-                    <span class="event-related__date">
-                      <EventDateRange date={item.date} endDate={item.endDate} />
-                    </span>
-                    <span class="event-related__title">{item.title}</span>
-                  </a>
+                        <span>{slot.title}</span>
+                      </span>
+                      <span aria-hidden="true">↓</span>
+                    </a>
+                  </li>
                 ))}
-              </div>
-            </>
-          </section>
-        )
-      }
-    </aside>
-  </div>
-</section>
+              </ol>
+            </nav>
+          ) : (
+            <p class="muted">Il programma dei singoli incontri è in aggiornamento.</p>
+          )}
+        </section>
+        {meetings.length > 0 && (
+          <div class="event-meetings">
+            {meetings.map((slot) => (
+              <section class="event-section" id={`meeting-${slot._key}`} tabindex="-1">
+                {slot._key.startsWith("meeting-") && (
+                  <span class="event-legacy-anchor" id={`activity-${slot._key.slice(8)}`} />
+                )}
+                <span class="kicker">
+                  {slot.startTime && <span>Ore {[slot.startTime, slot.endTime].filter(Boolean).join(" – ")}</span>}
+                </span>
+
+                <h3 class="event-section__title">{slot.title}</h3>
+                <div class="event-meta event-meeting-meta">
+                  <EventDateRange date={slot.date || event.date} />
+                  {slot.startTime && <span>Ore {[slot.startTime, slot.endTime].filter(Boolean).join(" – ")}</span>}
+                  <span class="event-meta__place">{slot.location || event.location}</span>
+                </div>
+                <EventDescription body={slot.body} title={slot.title} />
+                <Participants people={slot.speakers} heading="h4" />
+                <Participants people={slot.moderator ? [slot.moderator] : []} title="Modera" heading="h4" />
+                {event.series?.bookingMode === "sessions" && (
+                  <BookingInformation
+                    booking={slot.booking}
+                    title="Prenotazione dell’incontro"
+                    id={`prenotazione-${slot._key}`}
+                    heading="h4"
+                  />
+                )}
+              </section>
+            ))}
+          </div>
+        )}
+      </>
+    )
+  }
+  {
+    event.partners && (
+      <section class="event-partners">
+        <>
+          <h2 class="event-side-title">In collaborazione con</h2>
+          <p>{event.partners}</p>
+        </>
+      </section>
+    )
+  }
+</div>

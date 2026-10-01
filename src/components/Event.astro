@@ -1,35 +1,36 @@
 ---
-import { PortableText } from 'astro-portabletext';
+import { PortableText } from "astro-portabletext";
 
-interface Props { body: unknown[]; }
+interface Props {
+  body: unknown[];
+}
 
 const { body } = Astro.props;
 ---
 
-<div class='event-content'>
+<div class="event-content">
   <PortableText value={body} />
 </div>
 
 <style is:global>
-.event-content {
-  font-size: 1rem;
-  line-height: 1.3;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+  .event-content {
+    font-size: 1rem;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
 
-.event-content p {
-  font-size: 0.9rem;
-}
+  .event-content p {
+    font-size: 0.9rem;
+  }
 
-.event-content ul {
-  width: 90%;
-  margin: 0 auto;
-}
+  .event-content ul {
+    width: 90%;
+    margin: 0 auto;
+  }
 
-.event-content a {
-  color: inherit;
-}
+  .event-content a {
+    color: inherit;
+  }
 </style>
-

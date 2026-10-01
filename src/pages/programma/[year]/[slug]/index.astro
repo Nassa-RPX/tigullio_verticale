@@ -4,10 +4,10 @@ import Layout from "@/layouts/Layout.astro";
 import EditorialDetails from "@/components/EditorialDetails.astro";
 import PracticalInformation from "@/components/PracticalInformation.astro";
 import NewEventDetails from "@/components/NewEventDetails.astro";
+import EventSidebar from "@/components/EventSidebar.astro";
 import EventType from "@/components/EventType.astro";
 import EventDateRange from "@/components/EventDateRange.astro";
 import { getContent, type DateDoc, type LegacyRoute } from "@/lib/sanity";
-import { dateParts } from "@/lib/calendar";
 export async function getStaticPaths() {
   const { dates, legacyRoutes } = await getContent();
   const paths = dates.map((date) => ({ params: { year: String(date.year), slug: date.slug }, props: { date } }));
@@ -44,125 +44,115 @@ console.log("legacyRoute", legacyRoute);
 ---
 
 <Layout title={date.title} description={date.summary || date.subtitle || undefined}>
-  <section class="page-hero">
-    <div class="container page-hero__inner">
-      <a class="back" href={`/programma/${date.year}`}
-        ><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-left"></use></svg><span
-          >Programma {date.year}</span
-        ></a
-      >
-      {!legacyRoute && <EventType kind={date.kind} />}
-      <h1 class="display-l">{date.title}</h1>
+  <div class:list={["container", "event-layout", "event-layout--detail", { "event-layout--overview": !!legacyRoute }]}>
+    <div class="event-main">
+      <section class="page-hero">
+        <div class="page-hero__inner">
+          <a class="back" href={`/programma/${date.year}`}
+            ><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-left"></use></svg><span
+              >Programma {date.year}</span
+            ></a
+          >
+          {!legacyRoute && <EventType kind={date.kind} />}
+          <h1 class="display-l">{date.title}</h1>
 
-      {!date.kind && date.subtitle && <p class="lede">{date.subtitle}</p>}
-      <div class="event-meta">
-        <EventDateRange date={date.date} endDate={legacyRoute ? undefined : date.endDate} />
-        {
-          !legacyRoute && date.timeInfo && (
-            <span class="event-meta__info">
-              {date.kind === "walk" ? "Ritrovo" : "Ore"} {date.timeInfo}
-            </span>
-          )
-        }
-        <span class="event-meta__place">{date.location}</span>
-      </div>
+          {!date.kind && date.subtitle && <p class="lede">{date.subtitle}</p>}
+          <div class="event-meta">
+            <EventDateRange date={date.date} endDate={legacyRoute ? undefined : date.endDate} />
+            {
+              !legacyRoute && date.timeInfo && (
+                <span class="event-meta__info">
+                  {date.kind === "walk" ? "Ritrovo" : "Ore"} {date.timeInfo}
+                </span>
+              )
+            }
+            <span class="event-meta__place">{date.location}</span>
+          </div>
+          <!-- {
+            !legacyRoute && eventBooking?.required && (
+              <a class="event-booking-link" href="#prenotazione-evento">
+                Prenotazione obbligatoria <span aria-hidden="true">↓</span>
+              </a>
+            )
+          } -->
+          {
+            !legacyRoute && hasSessionBooking && (
+              <a class="event-booking-link" href="#incontri">
+                Prenotazione dei singoli incontri <span aria-hidden="true">↓</span>
+              </a>
+            )
+          }
+        </div>
+      </section>
       {
-        !legacyRoute && eventBooking?.required && (
-          <a class="event-booking-link" href="#prenotazione-evento">
-            Prenotazione obbligatoria <span aria-hidden="true">↓</span>
-          </a>
+        legacyRoute && (
+          <section class="section section--tight-top">
+            <div class="event-body">
+              <p>Scopri gli eventi di questa giornata.</p>
+              {targets.map((target) => (
+                <section
+                  class="event-section"
+                  id={`activity-${legacyRoute.anchors.find((anchor) => anchor.targetId === target._id)?.oldId || target._id}`}
+                >
+                  <EventType kind={target.kind} />
+                  <h2 class="event-section__title">
+                    <a href={`/programma/${target.year}/${target.slug}`}>{target.title}</a>
+                  </h2>
+                  <p>{target.summary}</p>
+                  <a class="link-arrow" href={`/programma/${target.year}/${target.slug}`}>
+                    Scopri l’evento
+                  </a>
+                </section>
+              ))}
+            </div>
+          </section>
         )
       }
       {
-        !legacyRoute && hasSessionBooking && (
-          <a class="event-booking-link" href="#incontri">
-            Prenotazione dei singoli incontri <span aria-hidden="true">↓</span>
-          </a>
+        !legacyRoute && date.kind && (
+          <section class="section section--tight-top">
+            <NewEventDetails event={date} />
+          </section>
+        )
+      }
+      {
+        !legacyRoute && !date.kind && (
+          <section class="section section--tight-top">
+            <div class="event-body">
+              {!!date.body?.length && (
+                <div class="prose">
+                  <PortableText value={date.body} />
+                </div>
+              )}
+              <PracticalInformation info={date.practicalInfo} />
+              <EditorialDetails content={date} />
+              {date.events.map((event) => (
+                <section class="event-section" id={`activity-${event._id}`}>
+                  <h2 class="event-section__title">{event.title}</h2>
+                  {event.subtitle && <p class="event-lede">{event.subtitle}</p>}
+                  {(event.location || event.info) && (
+                    <p class="event-meta__info">{[event.location, event.info].filter(Boolean).join(" · ")}</p>
+                  )}
+                  {event.requiredPrenotation && <span class="badge-next">Prenotazione obbligatoria</span>}
+                  {event.hasDescription && !!event.body?.length && (
+                    <div class="prose">
+                      <PortableText value={event.body} />
+                    </div>
+                  )}
+                  <PracticalInformation
+                    info={event.practicalInfo}
+                    title={event.title}
+                    required={event.requiredPrenotation}
+                  />
+                  <EditorialDetails content={event} />
+                </section>
+              ))}
+              {!hasDescription && <p class="muted">Descrizione dettagliata in arrivo.</p>}
+            </div>
+          </section>
         )
       }
     </div>
-  </section>
-  {
-    legacyRoute && (
-      <section class="section section--tight-top">
-        <div class="container event-body">
-          <p>Scopri gli eventi di questa giornata.</p>
-          {targets.map((target) => (
-            <section
-              class="event-section"
-              id={`activity-${legacyRoute.anchors.find((anchor) => anchor.targetId === target._id)?.oldId || target._id}`}
-            >
-              <EventType kind={target.kind} />
-              <h2 class="event-section__title">
-                <a href={`/programma/${target.year}/${target.slug}`}>{target.title}</a>
-              </h2>
-              <p>{target.summary}</p>
-              <a class="link-arrow" href={`/programma/${target.year}/${target.slug}`}>
-                Scopri l’evento
-              </a>
-            </section>
-          ))}
-        </div>
-      </section>
-    )
-  }
-  {!legacyRoute && date.kind && <NewEventDetails event={date} related={related} />}
-  {
-    !legacyRoute && !date.kind && (
-      <section class="section section--tight-top">
-        <div class="container event-layout">
-          <div class="event-body">
-            {!!date.body?.length && (
-              <div class="prose">
-                <PortableText value={date.body} />
-              </div>
-            )}
-            <PracticalInformation info={date.practicalInfo} />
-            <EditorialDetails content={date} />
-            {date.events.map((event) => (
-              <section class="event-section" id={`activity-${event._id}`}>
-                <h2 class="event-section__title">{event.title}</h2>
-                {event.subtitle && <p class="event-lede">{event.subtitle}</p>}
-                {(event.location || event.info) && (
-                  <p class="event-meta__info">{[event.location, event.info].filter(Boolean).join(" · ")}</p>
-                )}
-                {event.requiredPrenotation && <span class="badge-next">Prenotazione obbligatoria</span>}
-                {event.hasDescription && !!event.body?.length && (
-                  <div class="prose">
-                    <PortableText value={event.body} />
-                  </div>
-                )}
-                <PracticalInformation
-                  info={event.practicalInfo}
-                  title={event.title}
-                  required={event.requiredPrenotation}
-                />
-                <EditorialDetails content={event} />
-              </section>
-            ))}
-            {!hasDescription && <p class="muted">Descrizione dettagliata in arrivo.</p>}
-          </div>
-          <aside class="event-side" aria-label="Informazioni e altri appuntamenti">
-            {!!related.length && (
-              <section class="event-related">
-                <>
-                  <h2 class="event-side-title">Altri appuntamenti {date.year}</h2>
-                  <div class="event-related__list">
-                    {related.map((item) => (
-                      <a class="event-related__item" href={`/programma/${item.year}/${item.slug}`}>
-                        <time class="event-related__date" datetime={item.date}>
-                          {dateParts(item.date).long}
-                        </time>
-                        <span class="event-related__title">{item.title}</span>
-                      </a>
-                    ))}
-                  </div>
-                </>
-              </section>
-            )}
-          </aside>
-        </div>
-      </section>
-    )
-  }
+    {!legacyRoute && <EventSidebar event={date} related={related} />}
+  </div>
 </Layout>

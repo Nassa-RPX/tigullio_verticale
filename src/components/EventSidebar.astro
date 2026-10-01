@@ -1,0 +1,41 @@
+---
+import type { DateDoc } from "@/lib/content";
+import BookingInformation from "./BookingInformation.astro";
+import EventType from "./EventType.astro";
+import EventDateRange from "./EventDateRange.astro";
+interface Props {
+  event: DateDoc;
+  related: DateDoc[];
+}
+const { event, related } = Astro.props;
+const booking =
+  event.kind === "series" ? (event.series?.bookingMode === "series" ? event.series.booking : undefined) : event.booking;
+---
+
+<aside class="event-side" aria-label="Informazioni e altri eventi">
+  <BookingInformation
+    booking={booking}
+    title={event.kind === "series" ? "Prenotazione della serie" : "Prenotazione"}
+    id="prenotazione-evento"
+  />
+  {
+    related.length > 0 && (
+      <section class="event-related">
+        <h2 class="event-side-title">
+          {event.kind ? "Altri eventi" : "Altri appuntamenti"} {event.year}
+        </h2>
+        <div class="event-related__list">
+          {related.map((item) => (
+            <a class="event-related__item" href={`/programma/${item.year}/${item.slug}`}>
+              <EventType kind={item.kind} />
+              <span class="event-related__date">
+                <EventDateRange date={item.date} endDate={item.endDate} />
+              </span>
+              <span class="event-related__title">{item.title}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</aside>

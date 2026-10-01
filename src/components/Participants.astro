@@ -1,12 +1,33 @@
 ---
-import type { Participation } from '@/lib/content';
-interface Props { people?: Participation[]; title?: string; heading?: 'h2' | 'h3' | 'h4' }
-const { people = [], title = 'Relatori', heading: Heading = 'h2' } = Astro.props;
+import type { Participation } from "@/lib/content";
+interface Props {
+  people?: Participation[];
+  title?: string;
+  heading?: "h2" | "h3" | "h4";
+}
+const { people = [], title = "Relatori", heading: Heading = "h2" } = Astro.props;
 ---
-{people.length > 0 && <section class="event-leaders" aria-label={title}>
-  <Heading class="event-side-title">{title}</Heading>
-  <ul class="event-leaders__list">{people.map(person => <li>
-    <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-users" /></svg>
-    <div class="event-person"><strong>{person.name}</strong>{person.label && <span class="event-person__label">{person.label}</span>}{person.bio && <p class="event-person__bio">{person.bio}</p>}</div>
-  </li>)}</ul>
-</section>}
+
+{
+  people.length > 0 && (
+    <section class="event-leaders" aria-label={title}>
+      <Heading class="event-side-title">{title}</Heading>
+      <ul class="event-leaders__list">
+        {people.map((person) => (
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#i-users" />
+            </svg>
+            <div class="event-person">
+              <p>
+                <strong>{person.name}</strong> -{" "}
+                {person.label && <span class="event-person__label">{person.label}</span>}
+              </p>
+              {person.bio && <p class="event-person__bio">{person.bio}</p>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

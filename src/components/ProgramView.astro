@@ -67,9 +67,6 @@ const program = programs.find((program) => program.year === selected);
 </section>
 <script src="@/scripts/program-motion.ts"></script>
 <style>
-  .page-hero[data-program-motion] .page-hero__inner > * {
-    animation: none;
-  }
   [data-program-list] :global(.event-card) {
     opacity: calc(var(--program-card-opacity, 1) * var(--program-card-reveal, 1));
   }
