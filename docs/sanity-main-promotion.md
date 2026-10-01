@@ -30,6 +30,8 @@ SANITY_STUDIO_DATASET=main
 
 Vercel rileva la produzione con `VERCEL_ENV=production`; su altri host impostare `TV_ENV=production`. Lo Studio ospitato richiede un proprio deploy con le stesse variabili: il deploy del sito Astro non ripubblica automaticamente lo Studio. Se il webhook di rebuild era limitato a test2, aggiornare il suo target a main.
 
+Il comando `pnpm sanity:deploy` seleziona automaticamente la produzione per lo Studio e richiede che entrambi i dataset siano `main`, anche senza `TV_ENV`. Non occorre impostare `TV_ALLOW_STUDIO_DEPLOY` né configurare Kit per pubblicare lo Studio. Gli argomenti aggiuntivi vengono inoltrati alla CLI, per esempio `pnpm sanity:deploy --help` per verificarne il launcher senza pubblicare. I comandi di sviluppo e preview mantengono il vincolo staging.
+
 La configurazione `.env` locale resta su staging. Merge e deploy sono lasciati all'utente, come richiesto.
 
 Validazione del codice: 20 test superati e build Astro completata su main con 20 pagine, usando `TV_ENV=production-readonly` e newsletter in modalità mock. L'output di prova è in `.qa/main-build/`; non è stato effettuato alcun deploy.

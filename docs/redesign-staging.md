@@ -55,7 +55,7 @@ Development and previews never call Kit. `?newsletter-test=error` and `?newslett
 3. Confirm generated routes, existing bodies and all child activities. Missing optional fields must not block rendering.
 4. Replace the exposed Sanity editor token in all consumers before revoking it through Sanity Manage. Local builds already omit it. Administrator access and production hosting configuration are needed for coordinated rotation.
 5. Review the preview and run a controlled Kit test after credentials are configured. Retain the previous frontend deployment for rollback.
-6. Deploy the compatible frontend, then deploy the optional Studio schema. Studio deployment requires production environment settings and `TV_ALLOW_STUDIO_DEPLOY=true`; the development command is guarded.
+6. Deploy the compatible frontend, then deploy the optional Studio schema. The dedicated `sanity:deploy` command selects production and requires both dataset settings to be `main`; the development command remains restricted to staging. See `docs/sanity-main-promotion.md` for current release settings.
 7. Editors can gradually populate optional fields in production. Content publication requires a website rebuild. Verify any existing production deployment webhook excludes `staging`.
 
 Never import staging over production at launch. Never refresh staging with replacement flags after enrichment: preserve the staging work first and review any intended merge separately.
