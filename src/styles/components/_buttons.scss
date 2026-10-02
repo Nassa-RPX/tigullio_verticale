@@ -1,4 +1,5 @@
 /* --- Buttons --------------------------------------------------------------- */
+
 .btn {
   --btn-bg: transparent;
   --btn-fg: var(--fg);
@@ -24,58 +25,65 @@
     color 0.22s var(--ease),
     border-color 0.22s var(--ease),
     transform 0.22s var(--ease);
-}
-.btn svg {
-  width: 1.05em;
-  height: 1.05em;
-  flex: none;
-}
-.btn:hover {
-  transform: translateY(-2px);
-}
-.btn:active {
-  transform: translateY(0);
-}
-.btn[disabled] {
-  opacity: 0.7;
-  cursor: wait;
-  transform: none;
-}
 
-.btn--solid {
-  --btn-bg: var(--fg);
-  --btn-fg: var(--bg);
-  --btn-border: var(--fg);
-}
-.btn--solid:hover {
-  --btn-bg: var(--accent);
-  --btn-border: var(--accent);
-  --btn-fg: oklch(25% 0.04 148);
-}
+  svg {
+    width: 1.05em;
+    height: 1.05em;
+    flex: none;
+  }
 
-.btn--outline:hover {
-  --btn-bg: var(--fg);
-  --btn-fg: var(--bg);
-  --btn-border: var(--fg);
-}
+  &:hover {
+    transform: translateY(-2px);
+  }
 
-.btn--ghost {
-  --btn-border: transparent;
-  --btn-fg: var(--muted);
-  padding-inline: 0.4rem;
-  min-height: 44px;
-}
-.btn--ghost:hover {
-  --btn-fg: var(--fg);
-}
+  &:active {
+    transform: translateY(0);
+  }
 
-.btn--lg {
-  padding: 0.95rem 1.7rem;
-  font-size: 0.86rem;
-  min-height: 54px;
-}
-.btn--block {
-  width: 100%;
+  &[disabled] {
+    opacity: 0.7;
+    cursor: wait;
+    transform: none;
+  }
+
+  &--solid {
+    --btn-bg: var(--fg);
+    --btn-fg: var(--bg);
+    --btn-border: var(--fg);
+
+    &:hover {
+      --btn-bg: var(--accent);
+      --btn-border: var(--accent);
+      --btn-fg: oklch(25% 0.04 148);
+    }
+  }
+
+  &--outline:hover {
+    --btn-bg: var(--fg);
+    --btn-fg: var(--bg);
+    --btn-border: var(--fg);
+  }
+
+  &--ghost {
+    --btn-border: transparent;
+    --btn-fg: var(--muted);
+    padding-inline: 0.4rem;
+    min-height: 44px;
+
+    &:hover {
+      --btn-fg: var(--fg);
+    }
+  }
+
+  &--lg {
+    padding: 0.95rem 1.7rem;
+    font-size: 0.86rem;
+    min-height: 54px;
+  }
+
+  &--block {
+    width: 100%;
+  }
 }
 
 .link-arrow {
@@ -93,17 +101,20 @@
     border-color 0.2s var(--ease),
     gap 0.2s var(--ease),
     color 0.2s var(--ease);
-}
-.link-arrow svg {
-  width: 1em;
-  height: 1em;
-  transition: transform 0.2s var(--ease);
-}
-.link-arrow:hover {
-  border-color: var(--accent);
-  gap: 0.75rem;
-  color: var(--accent-ink);
-}
-.link-arrow:hover svg {
-  transform: translateX(2px);
+
+  svg {
+    width: 1em;
+    height: 1em;
+    transition: transform 0.2s var(--ease);
+  }
+
+  &:hover {
+    border-color: var(--accent);
+    gap: 0.75rem;
+    color: var(--accent-ink);
+
+    svg {
+      transform: translateX(2px);
+    }
+  }
 }
