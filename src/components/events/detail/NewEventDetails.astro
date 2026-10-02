@@ -1,11 +1,11 @@
 ---
 import type { DateDoc, PracticalInfo } from "@/lib/content";
-import Participants from "./Participants.astro";
-import BookingInformation from "./BookingInformation.astro";
-import PracticalInformation from "./PracticalInformation.astro";
+import Participants from "@/components/events/detail/Participants.astro";
+import BookingInformation from "@/components/events/detail/BookingInformation.astro";
+import PracticalInformation from "@/components/events/detail/PracticalInformation.astro";
 import { dateParts } from "@/lib/calendar";
-import EventDateRange from "./EventDateRange.astro";
-import EventDescription from "./EventDescription.astro";
+import EventDateRange from "@/components/events/shared/EventDateRange.astro";
+import EventDescription from "@/components/events/detail/EventDescription.astro";
 interface Props {
   event: DateDoc;
 }

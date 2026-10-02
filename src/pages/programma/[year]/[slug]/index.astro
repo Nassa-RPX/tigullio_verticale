@@ -1,17 +1,18 @@
 ---
 import { PortableText } from "astro-portabletext";
 import Layout from "@/layouts/Layout.astro";
-import EditorialDetails from "@/components/EditorialDetails.astro";
-import PracticalInformation from "@/components/PracticalInformation.astro";
-import NewEventDetails from "@/components/NewEventDetails.astro";
-import EventSidebar from "@/components/EventSidebar.astro";
-import EventType from "@/components/EventType.astro";
-import EventDateRange from "@/components/EventDateRange.astro";
+import EditorialDetails from "@/components/events/detail/EditorialDetails.astro";
+import PracticalInformation from "@/components/events/detail/PracticalInformation.astro";
+import NewEventDetails from "@/components/events/detail/NewEventDetails.astro";
+import EventSidebar from "@/components/events/detail/EventSidebar.astro";
+import EventType from "@/components/events/shared/EventType.astro";
+import EventDateRange from "@/components/events/shared/EventDateRange.astro";
 import { getContent, type DateDoc, type LegacyRoute } from "@/lib/sanity";
 export async function getStaticPaths() {
   const { dates, legacyRoutes } = await getContent();
   const paths = dates.map((date) => ({ params: { year: String(date.year), slug: date.slug }, props: { date } }));
   const existing = new Set(dates.map((date) => `${date.year}/${date.slug}`));
+  console.log("legacyRoutes", legacyRoutes);
   return [
     ...paths,
     ...legacyRoutes
@@ -32,8 +33,6 @@ const targets = legacyRoute ? dates.filter((item) => legacyRoute.targetIds.inclu
 if (legacyRoute && !targets.length) throw new Error("Missing legacy route targets.");
 const date: DateDoc = Astro.props.date || { ...targets[0], title: legacyRoute!.title, slug: legacyRoute!.slug };
 const related = dates.filter((item) => item.year === date.year && item._id !== date._id);
-const eventBooking =
-  date.kind === "series" ? (date.series?.bookingMode === "series" ? date.series.booking : undefined) : date.booking;
 const hasSessionBooking =
   date.kind === "series" &&
   date.series?.bookingMode === "sessions" &&
@@ -68,13 +67,6 @@ console.log("legacyRoute", legacyRoute);
             }
             <span class="event-meta__place">{date.location}</span>
           </div>
-          <!-- {
-            !legacyRoute && eventBooking?.required && (
-              <a class="event-booking-link" href="#prenotazione-evento">
-                Prenotazione obbligatoria <span aria-hidden="true">↓</span>
-              </a>
-            )
-          } -->
           {
             !legacyRoute && hasSessionBooking && (
               <a class="event-booking-link" href="#incontri">

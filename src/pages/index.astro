@@ -1,9 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import AppointmentList from "@/components/AppointmentList.astro";
-import FeaturedAppointment from "@/components/FeaturedAppointment.astro";
-import NewsletterForm from "@/components/NewsletterForm.astro";
-import Logo from "@/components/Logo.astro";
+import AppointmentList from "@/components/appointments/AppointmentList.astro";
+import FeaturedAppointment from "@/components/appointments/FeaturedAppointment.astro";
+import NewsletterForm from "@/components/newsletter/NewsletterForm.astro";
+import Logo from "@/components/brand/Logo.astro";
 import { getContent } from "@/lib/sanity";
 import { activeSeason, splitDates } from "@/lib/calendar";
 const { programs, dates } = await getContent();

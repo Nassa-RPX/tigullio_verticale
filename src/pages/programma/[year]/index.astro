@@ -1,6 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import ProgramView from "@/components/ProgramView.astro";
+import ProgramView from "@/components/program/ProgramView.astro";
 import { getContent, type Program } from "@/lib/sanity";
 export async function getStaticPaths() {
   const { programs } = await getContent();

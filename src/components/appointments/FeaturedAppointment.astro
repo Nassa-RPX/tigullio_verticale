@@ -1,8 +1,8 @@
 ---
 import type { DateDoc } from '@/lib/sanity';
 import { dateParts } from '@/lib/calendar';
-import EventType from './EventType.astro';
-import EventCardFacts from './EventCardFacts.astro';
+import EventType from '@/components/events/shared/EventType.astro';
+import EventCardFacts from '@/components/events/cards/EventCardFacts.astro';
 interface Props { date: DateDoc; hidden: boolean }
 const { date, hidden } = Astro.props;
 const parts = dateParts(date.date);
