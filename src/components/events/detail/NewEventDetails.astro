@@ -61,7 +61,6 @@ const meetings = event.kind === "series" ? event.series?.meetings || [] : [];
                 {meetings.map((slot) => (
                   <li>
                     <a href={`#meeting-${slot._key}`}>
-                      <span class="event-agenda__number" aria-hidden="true" />
                       <span class="event-agenda__content">
                         {(slot.date || slot.startTime) && (
                           <span class="event-agenda__time">

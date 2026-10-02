@@ -4,6 +4,7 @@ import AppointmentList from "@/components/appointments/AppointmentList.astro";
 import FeaturedAppointment from "@/components/appointments/FeaturedAppointment.astro";
 import NewsletterForm from "@/components/newsletter/NewsletterForm.astro";
 import Logo from "@/components/brand/Logo.astro";
+import LogoSmall from "@/assets/icons/logo-small.svg";
 import { getContent } from "@/lib/sanity";
 import { activeSeason, splitDates } from "@/lib/calendar";
 const { programs, dates } = await getContent();
@@ -45,7 +46,7 @@ const next = splitDates(dates).upcoming[0];
         <div class="idea-axis" aria-label="La relazione fra costa ed entroterra">
           <span class="idea-axis__place">Costa</span>
           <span class="idea-axis__line" aria-hidden="true">
-            <span class="idea-axis__mark"><svg viewBox="0 0 124 131"><use href="#tv-mark"></use></svg></span>
+            <span class="idea-axis__mark"><LogoSmall class="logo-small" aria-hidden="true" focusable="false" /></span>
           </span>
           <span class="idea-axis__place">Entroterra</span>
         </div>

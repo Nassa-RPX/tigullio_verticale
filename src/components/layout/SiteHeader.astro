@@ -55,16 +55,21 @@ import Logo from "@/components/brand/Logo.astro";
 
 <style>
   .site-header__brand {
-    padding: .35rem;
+    padding: 0.35rem;
     flex: none;
-    transition: opacity .3s var(--ease), transform .3s var(--ease);
+    transition:
+      opacity 0.3s var(--ease),
+      transform 0.3s var(--ease);
   }
   .site-header[data-home]:not(.is-scrolled) .site-header__brand {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transform: translateY(-6px);
-    transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s .3s;
+    transition:
+      opacity 0.3s var(--ease),
+      transform 0.3s var(--ease),
+      visibility 0s 0.3s;
   }
   .site-header.is-scrolled .site-header__brand {
     opacity: 1;
@@ -73,12 +78,24 @@ import Logo from "@/components/brand/Logo.astro";
     transform: translateY(0);
     transition-delay: 0s;
   }
-  .site-header__logo { display: block; width: 4rem; }
-  .site-header__logo :global(svg) { display: block; width: 100%; height: auto; }
+  .site-header__logo {
+    display: block;
+    width: 4rem;
+  }
+  .site-header__logo :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
   @media (max-width: 620px) {
-    .site-header__logo { width: 3.5rem; }
+    .site-header__logo {
+      width: 3.5rem;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
-    .site-header__brand { transform: none; transition: none; }
+    .site-header__brand {
+      transform: none;
+      transition: none;
+    }
   }
 </style>

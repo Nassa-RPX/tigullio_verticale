@@ -13,11 +13,7 @@ const booking =
 ---
 
 <aside class="event-side" aria-label="Informazioni e altri eventi">
-  <BookingInformation
-    booking={booking}
-    title={event.kind === "series" ? "Prenotazione della serie" : "Prenotazione"}
-    id="prenotazione-evento"
-  />
+  <BookingInformation booking={booking} title={"Prenotazione"} id="prenotazione-evento" />
   {
     related.length > 0 && (
       <section class="event-related">
