@@ -1,0 +1,48 @@
+/* Startup entrance states are present before the first paint; GSAP animates them to rest. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion-ready] .hero[data-home-motion] .hero__inner > *,
+  html[data-motion-ready] .page-hero[data-about-motion] .page-hero__inner > *,
+  html[data-motion-ready] .page-hero[data-program-motion] .page-hero__inner > *,
+  html[data-motion-ready] .page-hero[data-newsletter-motion] .page-hero__inner > * {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  html[data-motion-ready] [data-program-years] .section-head__text > *,
+  html[data-motion-ready] [data-program-years] .tabs,
+  html[data-motion-ready] [data-newsletter-benefits] > .kicker,
+  html[data-motion-ready] [data-newsletter-benefits] > h2,
+  html[data-motion-ready] [data-newsletter-benefits] .feature {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  html[data-motion-ready] .hero[data-home-motion] .hero__logo {
+    transform: none;
+  }
+
+  html[data-motion-ready] .hero[data-home-motion] .hero__scroll {
+    opacity: 0;
+  }
+}
+
+/* Keep page exits deliberately short and low-motion. */
+main {
+  transition: opacity 160ms var(--ease), transform 160ms var(--ease);
+}
+html.is-leaving main {
+  opacity: 0.86;
+  transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

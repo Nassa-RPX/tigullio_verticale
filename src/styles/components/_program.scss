@@ -1,0 +1,128 @@
+/* Season tabs */
+.tabs {
+  display: inline-flex;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.tab {
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition:
+    background-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.tab:hover {
+  color: var(--fg);
+}
+.tab[aria-selected="true"] {
+  background: var(--fg);
+  color: var(--bg);
+}
+.season-panel[hidden] {
+  display: none;
+}
+.season-group + .season-group {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+.season-group__label {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.4rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.season-group__label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* --- Featured next event --------------------------------------------------- */
+.next-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(1.2rem, 3.5vw, 2.6rem);
+  padding: clamp(1.6rem, 4vw, 2.8rem);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--accent) 9%, var(--surface));
+}
+.next-card__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: clamp(1.2rem, 3vw, 2.2rem);
+  border-right: 1px solid var(--border-strong);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+.next-card__day {
+  font-size: clamp(3rem, 2rem + 5vw, 5rem);
+}
+.next-card__month {
+  font-size: clamp(0.85rem, 0.8rem + 0.4vw, 1.05rem);
+  color: var(--accent-ink);
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.next-card__year {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+.next-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-width: 0;
+}
+.next-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+.next-card__meta .place {
+  color: var(--muted);
+}
+.next-card__title {
+  font-size: clamp(1.7rem, 1.2rem + 2.4vw, 3rem);
+}
+.next-card__detail {
+  color: var(--muted);
+  font-style: italic;
+}
+.next-card__cta {
+  align-self: center;
+}
+
+.tabs .tab[aria-current="page"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.program-cta { flex-direction: row; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+[data-preview="true"] .season-group + .season-group { margin-top: .9rem; }
+.next-card__title { overflow-wrap: anywhere; }
+.tabs { flex-wrap: wrap; }

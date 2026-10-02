@@ -1,0 +1,109 @@
+/* --- Buttons --------------------------------------------------------------- */
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--fg);
+  --btn-border: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.78rem 1.35rem;
+  min-height: 46px;
+  border: 2px solid var(--btn-border);
+  border-radius: var(--radius-sm);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  transition:
+    background-color 0.22s var(--ease),
+    color 0.22s var(--ease),
+    border-color 0.22s var(--ease),
+    transform 0.22s var(--ease);
+}
+.btn svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn[disabled] {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+.btn--solid {
+  --btn-bg: var(--fg);
+  --btn-fg: var(--bg);
+  --btn-border: var(--fg);
+}
+.btn--solid:hover {
+  --btn-bg: var(--accent);
+  --btn-border: var(--accent);
+  --btn-fg: oklch(25% 0.04 148);
+}
+
+.btn--outline:hover {
+  --btn-bg: var(--fg);
+  --btn-fg: var(--bg);
+  --btn-border: var(--fg);
+}
+
+.btn--ghost {
+  --btn-border: transparent;
+  --btn-fg: var(--muted);
+  padding-inline: 0.4rem;
+  min-height: 44px;
+}
+.btn--ghost:hover {
+  --btn-fg: var(--fg);
+}
+
+.btn--lg {
+  padding: 0.95rem 1.7rem;
+  font-size: 0.86rem;
+  min-height: 54px;
+}
+.btn--block {
+  width: 100%;
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg);
+  padding-block: 0.35rem;
+  border-bottom: 2px solid transparent;
+  transition:
+    border-color 0.2s var(--ease),
+    gap 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.link-arrow svg {
+  width: 1em;
+  height: 1em;
+  transition: transform 0.2s var(--ease);
+}
+.link-arrow:hover {
+  border-color: var(--accent);
+  gap: 0.75rem;
+  color: var(--accent-ink);
+}
+.link-arrow:hover svg {
+  transform: translateX(2px);
+}

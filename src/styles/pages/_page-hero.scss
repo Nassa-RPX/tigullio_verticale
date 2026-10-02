@@ -1,0 +1,35 @@
+/* --- Page header (interior pages) ------------------------------------------ */
+.page-hero {
+  position: relative;
+  padding: clamp(7.5rem, 15vw, 11rem) 0 clamp(2.5rem, 6vw, 4rem);
+  overflow: hidden;
+}
+.page-hero__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.page-hero .back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.page-hero .back svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  transition: transform 0.2s var(--ease);
+}
+.page-hero .back:hover {
+  color: var(--fg);
+}
+.page-hero .back:hover svg {
+  transform: translateX(-3px);
+}

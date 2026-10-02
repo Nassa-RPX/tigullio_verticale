@@ -1,0 +1,115 @@
+/* --- Cards / grids --------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.6rem);
+}
+.grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.panel {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(1.4rem, 3vw, 2.1rem);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.panel--fill {
+  background: var(--surface);
+  border-color: transparent;
+}
+.panel--invert {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+.panel--invert .panel__index {
+  color: var(--accent-ink);
+}
+.panel__index {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  color: var(--accent-ink);
+  line-height: 1;
+}
+.panel h3 {
+  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.5rem);
+}
+.panel p {
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+.panel--invert p {
+  color: color-mix(in oklab, var(--bg) 82%, var(--fg));
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.feature__icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  color: var(--accent-ink);
+}
+.feature__icon svg {
+  width: 100%;
+  height: 100%;
+}
+.feature h3 {
+  font-size: 1.3rem;
+}
+.feature p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* --- Quote + figure panel -------------------------------------------------- */
+.quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 1.1rem + 1.8vw, 2.35rem);
+  line-height: 1.08;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.figure-card {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  min-height: clamp(240px, 32vw, 380px);
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+.figure-card .contour-wrap {
+  opacity: 0.42;
+}
+.figure-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+.figure-card__mark {
+  width: clamp(56px, 9vw, 84px);
+  color: var(--accent);
+}
+.figure-card__mark svg {
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+}

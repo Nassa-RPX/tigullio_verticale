@@ -22,7 +22,7 @@
 
 ## High-Value File Map
 
-- `src/layouts/Layout.astro`: global shell; imports all global styles and common scripts.
+- `src/layouts/Layout.astro`: global shell; imports `src/styles/main.scss` and common scripts.
 - `src/pages/index.astro`: home entrypoint and GSAP-triggered navigation.
 - `src/pages/programma/index.astro`: archive page listing available program years from Sanity.
 - `src/pages/programma/[year]/index.astro`: static paths generated from `program` Sanity documents.
@@ -34,5 +34,5 @@
 ## Conventions That Matter Here
 
 - Path alias `@/*` -> `src/*` is enabled in `tsconfig.json`; existing code uses it heavily.
-- Theme/fonts/colors are centralized in `src/styles/theme.css`; global reset/typography in `src/styles/global.css`.
+- Global styles enter through `src/styles/main.scss`; Sass partials are grouped under `base/`, `layout/`, `components/`, and `pages/`, with design tokens in `_tokens.scss`.
 - Page transitions and interactions rely on GSAP scripts in `src/scripts/**`; preserve CSS selectors/classes used by those scripts when editing markup.

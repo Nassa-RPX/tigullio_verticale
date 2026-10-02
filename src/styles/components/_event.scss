@@ -1,3 +1,113 @@
+/* --- Event cards ----------------------------------------------------------- */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.event-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1.1rem, 2.4vw, 1.6rem) clamp(1.2rem, 2.6vw, 2rem);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  transition:
+    border-color 0.25s var(--ease),
+    background-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+.event-card:hover {
+  border-color: var(--fg);
+  background: color-mix(in oklab, var(--fg) 5%, transparent);
+  transform: translateX(4px);
+}
+.event-card__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  min-width: 4.6rem;
+  padding-right: clamp(0.8rem, 2vw, 1.4rem);
+  border-right: 1px solid var(--border);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.event-card__day {
+  font-size: 2rem;
+  letter-spacing: 0.01em;
+}
+.event-card__month {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.event-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+.event-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+.event-card__meta .place {
+  color: var(--muted);
+}
+.event-card__title {
+  font-size: clamp(1.3rem, 1rem + 1.4vw, 1.85rem);
+}
+.event-card__detail {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--muted);
+}
+.event-card__index {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--faint);
+  align-self: flex-start;
+}
+
+.event-card--next {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+.badge-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.22rem 0.62rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: oklch(25% 0.04 148);
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.event-card--past {
+  opacity: 0.72;
+}
+.event-card--past:hover {
+  opacity: 1;
+}
+
 .event-meta {
   display: flex;
   flex-wrap: wrap;
@@ -291,7 +401,7 @@
 }
 .event-agenda a {
   display: grid;
-  grid-template-columns: 1.8rem minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) 1.4rem;
   gap: 0.8rem;
   align-items: center;
   padding: 1rem 0.4rem;
@@ -346,6 +456,54 @@
 .event-legacy-anchor {
   scroll-margin-top: 7rem;
 }
+
+.event-body .prose {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.event-body .prose ul,
+.event-body .prose ol {
+  padding-left: 1.4rem;
+}
+.event-body .prose li + li {
+  margin-top: 0.35rem;
+}
+.event-body .prose a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.event-body .prose h2 {
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.9rem);
+}
+.event-body .prose h3 {
+  font-size: 1.2rem;
+}
+.event-body .prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+}
+.event-body .prose p {
+  white-space: pre-line;
+}
+.event-facts__list dd {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.event-side,
+.event-body {
+  min-width: 0;
+}
+.event-meta__info {
+  color: var(--muted);
+}
+.event-section .badge-next {
+  align-self: flex-start;
+}
+.event-section__title,
+.event-card__title {
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 620px) {
   .event-card__date {
     align-self: flex-start;

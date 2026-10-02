@@ -1,15 +1,18 @@
 ---
-import '@/styles/theme.css';
-import '@/styles/global.css';
-import '@/styles/editorial.css';
-import '@/styles/event.css';
-import '@/styles/production.css';
-import BrandSprite from '@/components/brand/BrandSprite.astro';
-import SiteHeader from '@/components/layout/SiteHeader.astro';
-import SiteFooter from '@/components/layout/SiteFooter.astro';
-interface Props { title: string; description?: string }
-const { title, description = 'Tigullio Verticale vuole riscoprire la relazione fra costa ed entroterra, fra il territorio e chi lo abita.' } = Astro.props;
+import "@/styles/main.scss";
+import BrandSprite from "@/components/brand/BrandSprite.astro";
+import SiteHeader from "@/components/layout/SiteHeader.astro";
+import SiteFooter from "@/components/layout/SiteFooter.astro";
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = "Tigullio Verticale vuole riscoprire la relazione fra costa ed entroterra, fra il territorio e chi lo abita.",
+} = Astro.props;
 ---
+
 <!doctype html>
 <html lang="it" data-theme="dark">
   <head>
@@ -19,13 +22,30 @@ const { title, description = 'Tigullio Verticale vuole riscoprire la relazione f
     <link rel="preload" href="/fonts/norwester.otf" as="font" type="font/otf" crossorigin />
     <link rel="preload" href="/fonts/noto-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline>
-      (() => { let saved; try { saved = localStorage.getItem('tv-theme'); } catch {} const theme = saved === 'light' || saved === 'dark' ? saved : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; document.documentElement.dataset.theme = theme; document.documentElement.style.colorScheme = theme; })();
+      (() => {
+        let saved;
+        try {
+          saved = localStorage.getItem("tv-theme");
+        } catch {}
+        const theme =
+          saved === "light" || saved === "dark"
+            ? saved
+            : matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
     </script>
     <script is:inline>
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.motionReady = '';
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.dataset.motionReady = "";
     </script>
   </head>
-  <body><a class="skip-link" href="#main">Vai al contenuto</a><BrandSprite /><SiteHeader /><main id="main" tabindex="-1"><slot /></main><SiteFooter /></body>
+  <body>
+    <a class="skip-link" href="#main">Vai al contenuto</a><BrandSprite /><SiteHeader /><main id="main" tabindex="-1">
+      <slot />
+    </main><SiteFooter /></body
+  >
 </html>
 <script src="@/scripts/site.ts"></script>
 <script src="@/scripts/calendar.ts"></script>

@@ -1,0 +1,71 @@
+/* --- Logo ------------------------------------------------------------------ */
+.logo-mark {
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+}
+.logo-small path {
+  fill: currentColor;
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--fg);
+}
+.wordmark .mark {
+  width: 32px;
+  flex: none;
+  color: var(--fg);
+}
+.wordmark .mark svg {
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+}
+.wordmark__text {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  font-size: 0.98rem;
+  display: flex;
+  flex-direction: column;
+}
+.wordmark__text span:last-child {
+  color: var(--accent);
+}
+
+/* --- Contour motif --------------------------------------------------------- */
+.contour {
+  color: var(--fg);
+  opacity: 0.16;
+  pointer-events: none;
+}
+.contour-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 74%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 74%, transparent);
+}
+.contour-wrap .contour {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 132%;
+  top: -16%;
+}
+
+.contour-divider {
+  height: clamp(90px, 14vw, 170px);
+  overflow: hidden;
+  position: relative;
+  opacity: 0.34;
+}
+.contour-divider .contour {
+  width: 100%;
+  height: 100%;
+}
