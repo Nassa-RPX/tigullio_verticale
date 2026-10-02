@@ -1,0 +1,10 @@
+// Shared viewport thresholds; CSS custom properties remain in _tokens.scss.
+$small: 620px;
+$medium: 860px;
+$large: 1024px;
+
+@mixin down($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}

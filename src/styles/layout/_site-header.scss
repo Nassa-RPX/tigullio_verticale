@@ -1,3 +1,5 @@
+@use "../breakpoints" as bp;
+
 /* --- Header ---------------------------------------------------------------- */
 .site-header {
   position: fixed;
@@ -25,6 +27,10 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
+
+  @include bp.down(bp.$medium) {
+    display: none;
+  }
 }
 .site-nav a {
   position: relative;
@@ -100,6 +106,10 @@
 /* Mobile drawer */
 .menu-btn {
   display: none;
+
+  @include bp.down(bp.$medium) {
+    display: grid;
+  }
 }
 .drawer {
   position: fixed;

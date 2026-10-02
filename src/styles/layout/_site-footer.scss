@@ -1,3 +1,5 @@
+@use "../breakpoints" as bp;
+
 /* --- Footer ---------------------------------------------------------------- */
 .site-footer {
   border-top: 1px solid var(--border);
@@ -8,6 +10,19 @@
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: clamp(2rem, 5vw, 4rem);
   align-items: start;
+
+  @include bp.down(bp.$large) {
+    grid-template-columns: 1fr 1fr;
+
+    > :first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @include bp.down(bp.$small) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 .footer-nav {
   display: flex;

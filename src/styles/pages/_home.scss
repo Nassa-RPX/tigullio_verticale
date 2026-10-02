@@ -1,3 +1,5 @@
+@use "../breakpoints" as bp;
+
 /* --- Hero ------------------------------------------------------------------ */
 .hero {
   position: relative;
@@ -7,6 +9,10 @@
   padding: 7rem var(--gutter) 3rem;
   overflow: hidden;
   isolation: isolate;
+
+  @include bp.down(bp.$small) {
+    padding-top: 8.5rem;
+  }
 }
 .hero__inner {
   position: relative;
@@ -46,6 +52,15 @@
   gap: 0.85rem;
   justify-content: center;
   margin-top: 0.4rem;
+
+  @include bp.down(bp.$small) {
+    width: 100%;
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
 }
 .hero__scroll {
   position: absolute;

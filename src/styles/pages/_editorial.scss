@@ -1,3 +1,5 @@
+@use "../breakpoints" as bp;
+
 #idea.idea-editorial {
   position: relative;
   overflow: hidden;
@@ -112,7 +114,7 @@
   line-height: 1.62;
 }
 
-@media (max-width: 860px) {
+@include bp.down(bp.$medium) {
   #idea .idea-editorial__inner {
     grid-template-columns: 1fr;
     gap: 2.5rem;
@@ -127,7 +129,7 @@
   }
 }
 
-@media (max-width: 620px) {
+@include bp.down(bp.$small) {
   #idea .idea-editorial__quote {
     max-width: none;
   }

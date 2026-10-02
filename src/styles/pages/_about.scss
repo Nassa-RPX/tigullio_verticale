@@ -1,15 +1,27 @@
+@use "../breakpoints" as bp;
+
 /* --- Split / editorial rows ------------------------------------------------ */
 .split {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
-}
-.split--wide-left {
-  grid-template-columns: 1.2fr 1fr;
-}
-.split__media {
-  position: relative;
+
+  &--wide-left {
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  &__media {
+    position: relative;
+  }
+
+  @include bp.down(bp.$medium) {
+    &,
+    &--wide-left {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
 }
 
 .stat-row {
@@ -98,6 +110,10 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(1.5rem, 4vw, 3rem);
+
+  @include bp.down(bp.$medium) {
+    grid-template-columns: 1fr;
+  }
 }
 .territory__col {
   display: flex;

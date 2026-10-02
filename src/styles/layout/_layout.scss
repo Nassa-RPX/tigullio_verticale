@@ -1,3 +1,5 @@
+@use "../breakpoints" as bp;
+
 /* --- Layout ---------------------------------------------------------------- */
 .container {
   width: 100%;
@@ -35,6 +37,10 @@
   gap: 2rem;
   max-width: none;
   flex-wrap: wrap;
+
+  @include bp.down(bp.$small) {
+    align-items: flex-start;
+  }
 }
 .section-head__text {
   display: flex;
